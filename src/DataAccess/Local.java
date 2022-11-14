@@ -22,7 +22,7 @@ import objects.Currency;
  * Todas los accesos a datos implementan la interfaz de Datos
  */
 
-public class Local {
+public class Local implements I_Data_Access{
 	
 	File FileCatalog; // Fichero de productos
 	File FileCurrency; // Fichero de monedero
@@ -156,6 +156,8 @@ public class Local {
 
 		return todoOK;
 	}
+
+
 
 
 }
