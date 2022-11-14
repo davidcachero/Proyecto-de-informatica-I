@@ -70,13 +70,19 @@ public class Currency {
 	 * Metodos de recogida y el ajuste de la cantidad de las monedas
 	 * 
 	 */
-	public void add(){
-		amount++;
+	
+	public int getAmount() {
+		return amount;
+	}
+
+
+	public void addAmount(){
+		amount = amount + 1;
 	}
 	
 	
-	public void takeOff(){
-		amount--;
+	public void removeAmount(){
+		amount = amount - 1;
 	}
 	
 	

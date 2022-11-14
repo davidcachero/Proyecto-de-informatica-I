@@ -84,12 +84,17 @@ public class Catalog {
 		 * Metodos de recogida y el ajuste de la cantidad del producto
 		 * 
 		 */
-		public void add(){
+		
+		public int getAmount() {
+			return amount;
+		}
+		
+		public void addAmount(){
 			amount++;
 		}
 		
 		
-		public void takeOff(){
+		public void removeAmount(){
 			amount--;
 		}
 		
