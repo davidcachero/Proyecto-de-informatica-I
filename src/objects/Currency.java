@@ -6,7 +6,7 @@ package objects;
  */
 public class Currency {
 
-	/*
+	/**
 	 *  Aributos
 	 *  
 	 *  id  - Codigo de identificacion en el modelo de datos
@@ -37,6 +37,9 @@ public class Currency {
 
 	// METODOS DE USO DE DATOS
 	
+	public int getTotalPrice() {
+		return value * amount;
+	}
 	
 	// METODOS DE CAMBIO DIRECTO DE ATRIBUTOS
 	
@@ -77,12 +80,12 @@ public class Currency {
 
 
 	public void addAmount(){
-		amount = amount + 1;
+		amount += 1;
 	}
 	
 	
 	public void removeAmount(){
-		amount = amount - 1;
+		amount -= 1;
 	}
 	
 	
