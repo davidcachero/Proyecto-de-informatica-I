@@ -30,7 +30,7 @@ public class Local implements I_Data_Access{
 	
 	public HashMap<Integer, Currency> getCurrencyData() {
 		
-		HashMap<Integer, Currency> depositosCreados = new HashMap<Integer, Currency>();
+		HashMap<Integer, Currency> actualCurrency = new HashMap<Integer, Currency>();
 		FileCurrency = new File("Files/data/currency.txt");
 
 		BufferedReader reader = null;
@@ -51,7 +51,7 @@ public class Local implements I_Data_Access{
 						Integer.parseInt(splitData[2])
 					);
 				
-				depositosCreados.put(id, currency);
+				actualCurrency.put(id, currency);
 
 			}
 			
@@ -64,7 +64,7 @@ public class Local implements I_Data_Access{
 			e.printStackTrace();
 		}
 		
-		return depositosCreados;
+		return actualCurrency;
 	}
 	
 
@@ -113,7 +113,7 @@ public class Local implements I_Data_Access{
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
 
-			for(Integer key:currency.keySet()) {
+			for(Integer key : currency.keySet()) {
 				Currency value = currency.get(key);
 				 pw.println(value.getName() + ";" + key + ";" + value.getAmount());
 			}
