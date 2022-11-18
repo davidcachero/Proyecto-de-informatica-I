@@ -2,8 +2,8 @@ package auxiliar;
 
 import java.util.HashMap;
 
-import objects.Catalog;
-import objects.Currency;
+import models.Catalog;
+import models.Currency;
 
 public interface I_Data_Access {
 	

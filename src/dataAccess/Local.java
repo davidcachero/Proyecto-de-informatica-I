@@ -1,4 +1,4 @@
-package DataAccess;
+package dataAccess;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,8 +13,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import auxiliar.I_Data_Access;
-import objects.Catalog;
-import objects.Currency;
+import models.Catalog;
+import models.Currency;
 
 
 

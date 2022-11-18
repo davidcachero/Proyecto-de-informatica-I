@@ -2,8 +2,8 @@ package controller;
 
 import java.util.HashMap;
 
-import objects.Catalog;
-import objects.Currency;
+import models.Catalog;
+import models.Currency;
 
 public class LogicalController {
 

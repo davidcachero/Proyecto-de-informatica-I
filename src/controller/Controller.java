@@ -1,9 +1,10 @@
 package controller;
 
 import java.util.HashMap;
-import DataAccess.Local;
-import objects.Catalog;
-import objects.Currency;
+
+import dataAccess.Local;
+import models.Catalog;
+import models.Currency;
 
 
 
