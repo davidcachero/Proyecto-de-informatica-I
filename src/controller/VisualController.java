@@ -5,11 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import models.Catalog;
 
 public class VisualController implements ActionListener {
 
@@ -40,8 +43,6 @@ public class VisualController implements ActionListener {
 		btns = new ArrayList<JButton>();
 		index = 0;
 		
-		addProdBtn();
-		
 		// Button end program listener
 		screen.addWindowListener( new WindowAdapter() {
 			public void windowClosing( WindowEvent evt ) {
@@ -57,8 +58,13 @@ public class VisualController implements ActionListener {
 	
 	// TODO machine data interaccions
 	
-	private void addProdBtn() {
+	private void addProdBtn(HashMap<String, Catalog> products) {
+		// llamada al obj Catalog para sacarlos productos
+		
+		// bucle para crear un boton por producto
 		JButton boton = new JButton(/*datos del producto (img & nombre)*/);
+		
+		// incluir en el panel
 		
 	}
 	
