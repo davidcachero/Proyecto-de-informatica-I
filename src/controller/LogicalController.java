@@ -17,4 +17,15 @@ public class LogicalController {
 		// TODO create visual controller conection
 	}
 
+	public boolean insertCoin(int value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void returnCoin() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
