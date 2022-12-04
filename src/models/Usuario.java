@@ -26,7 +26,7 @@ public class Usuario {
 	}
 	
 	public boolean checkId (String id) {
-		return this.id == id;
+		return this.id.equals(id);
 	}
 	
 	public void calcularSaldo (float saldo) {
