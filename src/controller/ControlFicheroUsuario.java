@@ -13,7 +13,7 @@ public class ControlFicheroUsuario {
 	File fichero;
 	Scanner scLector;
 	PrintWriter pwEscritor;
-	Usuario usuario;
+
 	
 	Vector<Usuario> listaUsuarios;
 	
@@ -37,8 +37,8 @@ public Vector<Usuario> leerUsuario(){
 
 			String id = scLector.next();
 			float saldo = Float.parseFloat(scLector.next());
-			usuario =new Usuario(id, saldo); ////Si esta definido?
-			listaUsuarios.add(usuario);
+			Usuario user =new Usuario(id, saldo); ////Si esta definido?
+			listaUsuarios.add(user);
 			
 			scLector.nextLine();
 		}
