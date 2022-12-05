@@ -44,7 +44,19 @@ public Vector<Usuario> leerUsuario(){
 		}
 		return listaUsuarios;
 		}
-		
+public void guardarUsuario(Vector <Usuario> listaUsuarios) {
+	
+	try {
+		pwEscritor = new PrintWriter(fichero);
+		for (Usuario u: listaUsuarios){
+			pwEscritor.println(u);
+			}
+			pwEscritor.close();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 }
 	
 	
