@@ -10,10 +10,10 @@ import models.Currency;
 
 public class Controller {
 	
-	Local access;
-	private HashMap<Integer, Currency> currency;
-	private HashMap<String, Catalog> catalog;
+	private Local access;
 	private LogicalController machine;
+	private VisualController view;
+	
 
 	public Controller() {
 		access = new Local();
@@ -52,7 +52,6 @@ public class Controller {
 	// Conexion con accesos - monedas
 	public void saveData() {
 		
-
 		boolean saveCurrency = access.saveCurrency(currency);
 		boolean saveCatalog = access.saveCatalog(catalog);
 		
@@ -66,18 +65,28 @@ public class Controller {
 	}
 	
 	// Conexion con visual - monedas
-	public void insertarMonedas(int value) {
+	public boolean insertarMonedas(int value) {
 		
-		machine.insertCoin(value);
+		return machine.insertCoin(value);
 	}
 	
 	public void returnCoins() {
 		machine.returnCoin();
 	}
 	
+	public String showCurrency() {
+		return machine.getTotalCurrency();
+	}
+	
 
 	// Conexion con accesos - productos
+	public boolean comprobarExistencias(int idProduct) {
+		return machine.hasProduct(idProduct);
+	}
 	
+	public void takeProduct() {
+		machine.takeProduct();
+	}
 	
 	
 	// finalizar programa
