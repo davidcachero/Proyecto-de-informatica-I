@@ -13,7 +13,6 @@ public class Controller {
 	private Local access;
 	private LogicalController machine;
 	private VisualController view;
-	
 
 	public Controller() {
 		access = new Local();
@@ -23,8 +22,8 @@ public class Controller {
 	public void getFileAccess() {
 		
 
-		currency = access.getCurrencyData();
-		catalog = access.getCatalogData();
+		HashMap<Integer, Currency> currency = access.getCurrencyData();
+		HashMap<String, Catalog> catalog = access.getCatalogData();
 	
 		if((catalog != null) && (currency != null)) {
 			// TODO crear logica maquina refrescos
@@ -52,8 +51,8 @@ public class Controller {
 	// Conexion con accesos - monedas
 	public void saveData() {
 		
-		boolean saveCurrency = access.saveCurrency(currency);
-		boolean saveCatalog = access.saveCatalog(catalog);
+		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
+		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
 		
 		if (saveCurrency && saveCatalog){
 			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
@@ -74,7 +73,7 @@ public class Controller {
 		machine.returnCoin();
 	}
 	
-	public String showCurrency() {
+	public int showCurrency() {
 		return machine.getTotalCurrency();
 	}
 	

@@ -45,4 +45,12 @@ public class LogicalController {
 		return this.balance;
 	}
 
+	public HashMap<Integer, Currency> getCurrencyData() {
+		return currency;
+	}
+
+	public HashMap<String, Catalog> getCatalogData() {
+		return catalog;
+	}
+
 }
