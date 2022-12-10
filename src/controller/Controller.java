@@ -5,6 +5,7 @@ import java.util.HashMap;
 import dataAccess.Local;
 import models.Catalog;
 import models.Currency;
+import vista.VendingMachine;
 
 
 
@@ -12,31 +13,29 @@ public class Controller {
 	
 	private Local access;
 	private LogicalController machine;
-	private VisualController view;
+	private VendingMachine view;
 
 	public Controller() {
 		access = new Local();
 	}
 
 	// Inicializar conexiones
-	public void getFileAccess() {
+	public void start() {
 		
 
 		HashMap<Integer, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
 	
 		if((catalog != null) && (currency != null)) {
-			// TODO crear logica maquina refrescos
-			
+			System.out.println("[DEV] finded data");
 			
 			machine = new LogicalController(currency, catalog);
 			
 			if (machine != null) {
-				System.out.println("[DEV] correct data connection ");
-				
-				// TODO init visual
-								
-				
+
+				view = new VendingMachine();
+				view.startView();
+					
 			} else {
 				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
@@ -46,6 +45,8 @@ public class Controller {
 			System.exit(1);
 		}
 	}
+	
+	
 	
 	
 	// Conexion con accesos - monedas

@@ -6,7 +6,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("Inicio Ejecucion - Maquina Refrescos");
 		
-		Controller miControlador = new Controller();		
+		Controller miControlador = new Controller();	
+		miControlador.start();
 
 	}
 
