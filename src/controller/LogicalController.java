@@ -29,6 +29,8 @@ public class LogicalController {
 
 	public void returnCoin() {
 		// TODO Auto-generated method stub
+		
+		System.out.println("devolucion llegando");
 
 	}
 

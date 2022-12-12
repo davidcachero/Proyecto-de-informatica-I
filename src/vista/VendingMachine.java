@@ -16,6 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import controller.Controller;
+
 import javax.swing.JLabel;
 
 public class VendingMachine extends JFrame implements ActionListener, ItemListener, ChangeListener {
@@ -23,7 +26,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JPanel contentPane;
 	private JTextField textFieldPrecio;
 	private JButton btnCocaCola;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnAgua;
 	private JButton btnFanta;
 	private JButton btnCafe;
@@ -41,34 +43,28 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txtGluten;
 	private JTextField txtSulfitos;
 	private JTextField txtFrutosSecos;
-
-	/**
-	 * Launch the application.
-	 */
-	public void startView() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VendingMachine frame = new VendingMachine();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
-	/**
-	 * Create the frame.
-	 */
-	public VendingMachine() {
+	private Controller contr;
+
+	
+	public VendingMachine(Controller controller) {
+		// set components
+		contr = controller;
 		
 		// metadata
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setTitle("COFFEEBREAK");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 500, 441);
+		buildView();
+	}
+	
+	/**
+	 * Create the frame.
+	 */
+	public void buildView() {
 		
+
 		// principal panel
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -142,6 +138,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnDevolverDinero = new JButton("DEVOLVER DINERO");
 		btnDevolverDinero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				contr.returnCoins();
 			}
 			
 		});

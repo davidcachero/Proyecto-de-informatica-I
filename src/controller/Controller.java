@@ -33,8 +33,10 @@ public class Controller {
 			
 			if (machine != null) {
 
-				view = new VendingMachine();
-				view.startView();
+				view = new VendingMachine(this);
+				view.setVisible(true);
+				
+				System.out.println("BUILDING WINDOW..........");
 					
 			} else {
 				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
@@ -45,8 +47,6 @@ public class Controller {
 			System.exit(1);
 		}
 	}
-	
-	
 	
 	
 	// Conexion con accesos - monedas
