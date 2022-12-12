@@ -20,6 +20,8 @@ import javax.swing.event.ChangeListener;
 import controller.Controller;
 
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VendingMachine extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
@@ -43,6 +45,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txtGluten;
 	private JTextField txtSulfitos;
 	private JTextField txtFrutosSecos;
+	private JLabel lblSelection;
+	private JLabel lblGlucosa;
 	
 	private Controller contr;
 
@@ -82,28 +86,64 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		textFieldPrecio.setColumns(10);
 
 		btnCocaCola = new JButton("CocaCola");
+		btnCocaCola.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("coca");
+			}
+		});
 		btnCocaCola.addActionListener(this);
 		btnCocaCola.setBounds(24, 66, 78, 35);
 		contentPane.add(btnCocaCola);
 
 		btnAgua = new JButton("Agua");
 		btnAgua.setBounds(24, 112, 78, 35);
+		btnAgua.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Agua");
+			}
+		});
 		contentPane.add(btnAgua);
 
 		btnFanta = new JButton("Fanta");
 		btnFanta.setBounds(112, 66, 78, 35);
+		btnFanta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Fanta");
+			}
+		});
 		contentPane.add(btnFanta);
 
 		btnCafe = new JButton("Cafe");
 		btnCafe.setBounds(24, 158, 78, 35);
+		btnCafe.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Cafe");
+			}
+		});
 		contentPane.add(btnCafe);
 
 		btnPepsi = new JButton("Pepsi");
 		btnPepsi.setBounds(112, 112, 78, 35);
+		btnPepsi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Pepsi");
+			}
+		});
 		contentPane.add(btnPepsi);
 
 		btnNesquik = new JButton("Nesquik");
 		btnNesquik.setBounds(200, 158, 78, 35);
+		btnNesquik.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Nesquik");
+			}
+		});
 		contentPane.add(btnNesquik);
 
 		btnExtraer_6 = new JButton("");
@@ -116,19 +156,32 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		btnColacao = new JButton("Colacao");
 		btnColacao.setBounds(112, 158, 78, 35);
+		btnColacao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Colacao");
+			}
+		});
 		contentPane.add(btnColacao);
 
 		btnNestea = new JButton("Nestea");
 		btnNestea.setBounds(200, 66, 78, 35);
+		btnNestea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Nestea");
+			}
+		});
 		contentPane.add(btnNestea);
 
 		btnAquarius = new JButton("Aquarius");
-		btnAquarius.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+		btnAquarius.setBounds(200, 112, 78, 35);
+		btnAquarius.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectProduct("Aquarius");
 			}
 		});
-		btnAquarius.setBounds(200, 112, 78, 35);
 		contentPane.add(btnAquarius);
 
 		btnExtraer_11 = new JButton("");
@@ -177,10 +230,15 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtFrutosSecos.setBounds(200, 298, 78, 20);
 		contentPane.add(txtFrutosSecos);
 		
-		JLabel lblGlucosa = new JLabel("Glucosa");
+		lblGlucosa = new JLabel("Glucosa");
 		lblGlucosa.setBounds(54, 359, 48, 14);
 		lblGlucosa.setBackground(Color.blue);
 		contentPane.add(lblGlucosa);
+		
+		lblSelection = new JLabel("");
+		lblSelection.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblSelection.setBounds(24, 26, 251, 35);
+		contentPane.add(lblSelection);
 
 	}
 
@@ -199,6 +257,21 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	private void selectProduct(String value) {
+		contr.takeProduct(value);
+	}
+
+	public void setTextFieldPrecio(String newTxt) {
+		textFieldPrecio.setText(newTxt);
+		
+	}
+	
+
+	public void setLblTxt(String newTxt) {
+		lblSelection.setText(newTxt);
 		
 	}
 }

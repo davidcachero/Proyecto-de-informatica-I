@@ -27,10 +27,9 @@ public class LogicalController {
 		return false;
 	}
 
-	public void returnCoin() {
-		// TODO Auto-generated method stub
-		
+	public int returnCoin() {
 		System.out.println("devolucion llegando");
+		return balance;
 
 	}
 
@@ -39,7 +38,7 @@ public class LogicalController {
 
 	}
 
-	public boolean hasProduct(int idProduct) {
+	public boolean hasProduct(String idProduct) {
 		return catalog.containsKey(idProduct);
 	}
 
@@ -53,6 +52,10 @@ public class LogicalController {
 
 	public HashMap<String, Catalog> getCatalogData() {
 		return catalog;
+	}
+
+	public String getProd(String prod) {
+		return catalog.get(prod).getName();
 	}
 
 }
