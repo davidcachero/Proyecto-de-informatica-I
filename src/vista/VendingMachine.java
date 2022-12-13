@@ -40,7 +40,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JButton btnAquarius;
 	private JButton btnExtraer_11;
 	private JButton btnDevolverDinero;
-	private JButton btnReseteo;
+	private JButton btnPagar;
 	private JTextField txtGlucosa;
 	private JTextField txtGluten;
 	private JTextField txtSulfitos;
@@ -71,15 +71,20 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		// principal panel
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		// Componentes de la pantalla
 		textFieldPrecio = new JTextField();
+		textFieldPrecio.setBackground(new Color(115, 147, 19));
+		textFieldPrecio.setForeground(new Color(0, 0, 0));
 		textFieldPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldPrecio.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		textFieldPrecio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textFieldPrecio.setText("");
+		textFieldPrecio.setEditable(false);
 
 		textFieldPrecio.setBounds(317, 66, 146, 81);
 		contentPane.add(textFieldPrecio);
@@ -189,6 +194,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.add(btnExtraer_11);
 
 		btnDevolverDinero = new JButton("DEVOLVER DINERO");
+		btnDevolverDinero.setBackground(new Color(8, 8, 8));
 		btnDevolverDinero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contr.returnCoins();
@@ -198,13 +204,14 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnDevolverDinero.setBounds(317, 158, 146, 35);
 		contentPane.add(btnDevolverDinero);
 
-		btnReseteo = new JButton("RESETEAR");
-		btnReseteo.addActionListener(new ActionListener() {
+		btnPagar = new JButton("PAGAR");
+		btnPagar.setBackground(new Color(8, 8, 8));
+		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnReseteo.setBounds(317, 204, 146, 35);
-		contentPane.add(btnReseteo);
+		btnPagar.setBounds(317, 204, 146, 35);
+		contentPane.add(btnPagar);
 
 		txtGlucosa = new JTextField();
 		txtGlucosa.setText("Glucosa");
@@ -236,9 +243,18 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.add(lblGlucosa);
 		
 		lblSelection = new JLabel("");
+		lblSelection.setBackground(new Color(115, 147, 19));
 		lblSelection.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblSelection.setBounds(24, 26, 251, 35);
 		contentPane.add(lblSelection);
+		
+		JButton btnLogOff = new JButton("LOG OFF");
+		btnLogOff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnLogOff.setBounds(317, 301, 146, 35);
+		contentPane.add(btnLogOff);
 
 	}
 

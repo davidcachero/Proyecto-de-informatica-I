@@ -54,8 +54,12 @@ public class LogicalController {
 		return catalog;
 	}
 
-	public String getProd(String prod) {
+	public String getProdName(String prod) {
 		return catalog.get(prod).getName();
+	}
+	
+	public int getProdPrice(String prod) {
+		return catalog.get(prod).getprice();
 	}
 
 }

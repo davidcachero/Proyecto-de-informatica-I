@@ -84,8 +84,9 @@ public class Controller {
 	public void takeProduct(String prod) {
 		if(machine.hasProduct(prod)) {
 			System.out.println("PRODUCTO EXISTE");
-			view.setLblTxt("Producto seleccionado: " + machine.getProd(prod));
-		}
+			view.setLblTxt("Producto seleccionado: " + machine.getProdName(prod));
+			view.setTextFieldPrecio("precio: " + Integer.toString(machine.getProdPrice(prod)) + " ctms");
+		} 
 	}
 
 	// finalizar programa
