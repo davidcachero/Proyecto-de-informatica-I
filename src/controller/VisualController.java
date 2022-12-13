@@ -29,8 +29,7 @@ public class VisualController implements ActionListener {
 		 * local machine data
 		 * 
 		 */
-
-	private JFrame screen;	
+	Controller controller;
 	VendingMachine machine;
 	
 	
@@ -42,41 +41,31 @@ public class VisualController implements ActionListener {
 	
 	// Botones 
 	
-	public VisualController() {
-		
-		// init needed atributes
-		screen = new JFrame();
-		btns = new ArrayList<JButton>();
-		index = 0;
-		
+	public VisualController(Controller controller) {
+			
 		// Button end program listener
-		screen.addWindowListener( new WindowAdapter() {
-			public void windowClosing( WindowEvent evt ) {
-				System.out.println("CERRANDO");
-				finalizarMaquina();
-			}
-		}); 
+		this.controller = controller;
+		this.machine = new VendingMachine(this);
 	}
 	
-	private void finalizarMaquina(){
-		// TODO llamar al metodo que guarda los datos y termina el programa
+	public void open() {
+		
+		machine.setVisible(true);
+		
+		machine.addWindowListener( new WindowAdapter() {
+			public void windowClosing( WindowEvent evt ) {
+				System.out.println("CERRANDO PROGRAMA");
+			}
+		}); 
+		
 	}
 	
 	// TODO machine data interaccions
 	
-	private void addProdBtn(HashMap<String, Catalog> products) {
-		// llamada al obj Catalog para sacarlos productos
-		
-		// bucle para crear un boton por producto
-		JButton boton = new JButton(/*datos del producto (img & nombre)*/);
-		
-		// incluir en el panel
-		
-	}
-	
 	// TODO user data interaccion
 	
 	// Para controlar los eventos de la pantalla (pulsar botones)
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -84,10 +73,15 @@ public class VisualController implements ActionListener {
 		JButton source = (JButton) e.getSource();
 		
 		String nombreBoton = source.getName();
+		
 		String[] parts = nombreBoton.split("-");
+		
 		String prefijo = parts[0];
 		String sufijo = parts[1];
+		
+		// TODO aqui tendremos que llamar a CURRENCY para ver que monedas podemos recibir
 		String [] options = {"1.00", "2.00","0.50","0.20","0.10"};
+		
 		boolean usr=false;
 		
 		Usuario cliente;
@@ -164,5 +158,22 @@ public class VisualController implements ActionListener {
 		}		
 		*/
 	}
+
+	public void takeProduct(String value) {
+		Catalog prod = controller.takeProduct(value);
+		machine.setLblTxt("Producto seleccionado: " + prod.getName());
+		machine.setTextFieldPrecio("precio: " + Integer.toString(prod.getprice()) + " ctms");
+	
+	}
+
+	public void returnCoins() {
+		machine.setTextFieldPrecio(controller.returnCoins());
+		
+	}
+
+
+
+
+
 }
  	
