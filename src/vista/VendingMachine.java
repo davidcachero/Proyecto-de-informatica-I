@@ -9,12 +9,17 @@ import java.awt.event.ItemListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import controller.VisualController;
 
 public class VendingMachine extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
@@ -39,16 +44,23 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txtGluten;
 	private JTextField txtSulfitos;
 	private JTextField txtFrutosSecos;
-
+	private JMenuBar menu;
+	private JMenu pagos;
+	private JMenuItem tarjeta;
+	private JMenuItem monedas;
+	
+	VisualController controller;
 	/**
+	 * 
+	 
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VendingMachine frame = new VendingMachine();
-					frame.setVisible(true);
+/*					VendingMachine frame = new VendingMachine();
+					frame.setVisible(true);*/
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,7 +71,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	/**
 	 * Create the frame.
 	 */
-	public VendingMachine() {
+	public VendingMachine(VisualController controller) {
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setTitle("COFFEEBREAK");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,6 +90,26 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.add(textFieldPrecio);
 		textFieldPrecio.setColumns(10);
 
+		/////Menu
+		this.menu= new JMenuBar();
+		setJMenuBar(menu);
+		
+		this.pagos= new JMenu("Metodo pago");	
+		this.tarjeta=new JMenuItem("Tarjeta");
+		tarjeta.addActionListener(controller);
+		tarjeta.setActionCommand("target");
+		this.monedas=new JMenuItem("Monedas");
+		monedas.addActionListener(controller);
+		monedas.setActionCommand("monedas");
+		
+		this.pagos.add(tarjeta);
+		this.pagos.add(monedas);
+		this.menu.add(pagos);
+		
+		
+		
+		
+		
 		btnCocaCola = new JButton("CocaCola");
 		btnCocaCola.addActionListener(this);
 		btnCocaCola.setBounds(24, 66, 78, 35);

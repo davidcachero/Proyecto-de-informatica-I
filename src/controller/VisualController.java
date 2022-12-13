@@ -7,12 +7,16 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import models.Catalog;
+import models.Usuario;
+import vista.VendingMachine;
 
 public class VisualController implements ActionListener {
 
@@ -27,6 +31,8 @@ public class VisualController implements ActionListener {
 		 */
 
 	private JFrame screen;	
+	VendingMachine machine;
+	
 	
 	// Lista botones de productos
 	private List<JButton> btns;
@@ -81,7 +87,65 @@ public class VisualController implements ActionListener {
 		String[] parts = nombreBoton.split("-");
 		String prefijo = parts[0];
 		String sufijo = parts[1];
+		String [] options = {"1.00", "2.00","0.50","0.20","0.10"};
+		boolean usr=false;
 		
+		Usuario cliente;
+		
+		Vector<Usuario> listaUsuarios;
+		
+		ControlFicheroUsuario controlUsuario;
+		//////////Sistema para introducir las monedas
+		if(e.getActionCommand()=="monedas") {
+			String optionstr = (String)JOptionPane.showInputDialog(machine,"Selecciona una moneda","Monedas",
+					JOptionPane.INFORMATION_MESSAGE,null,options,options[1]);
+			
+			
+			if (optionstr.equals("2.00")) {
+				////Logica monedas
+				
+		}
+			if (optionstr.equals("1.00")) {
+				/////Logica monedas
+				
+			}
+			if (optionstr.equals("0.50")) {
+				////Logica monedas
+				
+		}
+			if (optionstr.equals("0.20")) {
+				/////Logica monedas
+				
+			}
+			if (optionstr.equals("0.10")) {
+				////Logica monedas
+				
+		}
+			
+		}
+		/////Sistema para recoger el número de tarjeta
+		if(e.getActionCommand()=="target") {
+			String idcliente = (String)JOptionPane.showInputDialog(machine,"Introduce el ID de tu tarjeta");
+			
+			listaUsuarios =new Vector<Usuario>();
+			
+			controlUsuario= new ControlFicheroUsuario(".\\Usuarios.txt"); //////// Hay que hacer el fichero
+			listaUsuarios= controlUsuario.leerUsuario();
+			////Compruebo que la tarjeta es correcta
+			for (Usuario u : listaUsuarios) {
+				if (idcliente.equals(u.getId())) {
+					cliente = new Usuario(idcliente, u.getSaldo());
+					usr=true;
+				}
+			}
+			if (!usr) {
+				 JOptionPane.showMessageDialog(machine, "Tarjeta incorrecta",
+					      "Error", JOptionPane.ERROR_MESSAGE);
+				 usr=false;
+			}
+			
+	
+		}
 		// Dependiendo de la primera parte del nombre del boton sabemos si han pulsado moneda, producto o retorno
 		//System.out.println(prefijo);
 		
