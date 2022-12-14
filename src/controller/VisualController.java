@@ -165,11 +165,12 @@ public class VisualController implements ActionListener {
 		
 		if(msg.getType() == "PROD") {
 			Catalog prod = (Catalog) msg.getMsg();
-			machine.setTextFieldProduct("Producto seleccionado: " + prod.getName());
+			machine.setSelectedProd(prod.getId());
+			machine.setTextFieldProduct(prod.getName());
 			machine.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
 			
 		} else if(msg.getType() == "ERR") {
-			machine.setTextFieldProduct("Producto seleccionado: " + value);
+			machine.setTextFieldProduct(value);
 			machine.setTextFieldStatus((String) msg.getMsg());
 
 		} else {
@@ -178,14 +179,37 @@ public class VisualController implements ActionListener {
 		}
 	
 	}
+	
+	public void sellProduct(String value) {
+		VisualMsg msg = controller.sellProduct(value);
+		
+		if(msg.getType() == "PROD") {
+			Catalog prod = (Catalog) msg.getMsg();
+			machine.setSelectedProd(prod.getId());
+			machine.setTextFieldProduct(prod.getName());
+			machine.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
+			
+			
+		} else if(msg.getType() == "ERR") {
+			machine.setTextFieldProduct(value);
+			machine.setTextFieldStatus((String) msg.getMsg());
 
-	public void returnCoins() {
-		machine.setTextFieldStatus(controller.returnCoins());
+		} else {
+			machine.clnTextFieldProduct();
+			machine.setTextFieldStatus("Error del selector, llame a mantenimiento");
+		}
 		
 	}
 
+	public void returnCoins() {
+		machine.setTextFieldBalance(controller.returnCoins());
+		
+	}
 
-
+	public void updateBalance(int newValue) {
+		machine.setTextFieldBalance(newValue); //- update balance when product its sell
+		
+	}
 
 
 }

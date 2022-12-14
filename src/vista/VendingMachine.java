@@ -50,10 +50,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JMenu pagos;
 	private JMenuItem tarjeta;
 	private JMenuItem monedas;
-	private JLabel lblSelection;
 	private JTextField txfProducto;
+	private JTextField txfSaldo;
 
 	VisualController controller;
+	String prodSelected;
 
 	/**
 	 * Create the frame.
@@ -93,7 +94,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfEstado.setText("");
 		txfEstado.setEditable(false);
 
-		txfEstado.setBounds(433, 32, 254, 71);
+		txfEstado.setBounds(433, 32, 254, 47);
 		contentPane.add(txfEstado);
 		txfEstado.setColumns(10);
 
@@ -105,9 +106,20 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfProducto.setEditable(false);
 		txfProducto.setColumns(10);
 		txfProducto.setBackground(new Color(115, 147, 19));
-		txfProducto.setBounds(433, 106, 254, 71);
+		txfProducto.setBounds(433, 84, 254, 47);
 		contentPane.add(txfProducto);
 
+		txfSaldo = new JTextField();
+		txfSaldo.setText("");
+		txfSaldo.setHorizontalAlignment(SwingConstants.CENTER);
+		txfSaldo.setForeground(Color.BLACK);
+		txfSaldo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txfSaldo.setEditable(false);
+		txfSaldo.setColumns(10);
+		txfSaldo.setBackground(new Color(115, 147, 19));
+		txfSaldo.setBounds(433, 137, 254, 47);
+		contentPane.add(txfSaldo);
+		
 		///// Menu
 		this.menu = new JMenuBar();
 		setJMenuBar(menu);
@@ -139,10 +151,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnPagar = new JButton("PAGAR");
 		btnPagar.setBackground(new Color(8, 8, 8));
 		btnPagar.setForeground(Color.white);
-		btnPagar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnPagar.setBounds(516, 250, 171, 35);
 		contentPane.add(btnPagar);
 
@@ -177,12 +185,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtFrutosSecos.setColumns(10);
 		txtFrutosSecos.setBounds(424, 350, 78, 20);
 		contentPane.add(txtFrutosSecos);
-
-		lblSelection = new JLabel("");
-		lblSelection.setBackground(new Color(115, 147, 19));
-		lblSelection.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSelection.setBounds(394, 160, 251, 35);
-		contentPane.add(lblSelection);
 
 		JButton btnLogOff = new JButton("LOG OFF");
 		btnLogOff.addActionListener(new ActionListener() {
@@ -234,9 +236,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnExtraer_11 = new JButton("");
 		panel.add(btnExtraer_11);
 		
-
-		
-		
+	
+		btnPagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.sellProduct(prodSelected);
+			}
+		});
 		
 		btnNesquik.addMouseListener(new MouseAdapter() {
 			@Override
@@ -319,8 +324,9 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	public void setTextFieldProduct(String newTxt) {
-		txfProducto.setText(newTxt);
+	public void setTextFieldProduct(String newProduct) {
+		prodSelected = newProduct;
+		txfProducto.setText("Producto seleccionado: " + newProduct);
 
 	}
 
@@ -328,4 +334,19 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setTextFieldStatus("");
 		
 	}
+	
+	public void setTextFieldBalance(String newBalance) {
+		txfSaldo.setText("Saldo: " + newBalance + " ctms");
+
+	}
+	public void setTextFieldBalance(int newBalance) {
+		txfSaldo.setText("Saldo: " + Integer.toString(newBalance) + " ctms");
+
+	}
+
+	public void setSelectedProd(int id) {
+		prodSelected = Integer.toString(id);
+		
+	}
+	
 }

@@ -6,7 +6,6 @@ public class VisualMsg {
 	private Object msg;
 
 	
-	
 	public VisualMsg(String type, Object msg) {
 		this.type = type;
 		this.msg = msg;

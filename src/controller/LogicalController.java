@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import models.Catalog;
 import models.Currency;
+import models.VisualMsg;
 
 public class LogicalController {
 
@@ -30,8 +31,22 @@ public class LogicalController {
 
 	}
 
-	public void takeProduct() {
-		// TODO Auto-generated method stub
+	public VisualMsg takeProduct(String prodId) {
+		Catalog prod = catalog.get(prodId);
+
+		// Restar del saldo el precio del producto
+		if (this.balance > prod.getprice())
+			this.balance -= prod.getprice();
+		else
+			return new VisualMsg("ERR", "Saldo insuficiente para comprar " + prod.getName());
+
+		// TODO Añades monedas a la caja
+
+		// Restar de la cantidad guardada del producto
+		prod.removeAmount();
+
+		// Enviar producto
+		return new VisualMsg("SENDED", balance);
 
 	}
 
@@ -54,13 +69,17 @@ public class LogicalController {
 	public Catalog getProd(String prod) {
 		return catalog.get(prod);
 	}
-	
+
 	public String getProdName(String prod) {
 		return catalog.get(prod).getName();
 	}
-	
+
 	public int getProdPrice(String prod) {
 		return catalog.get(prod).getprice();
+	}
+
+	public boolean productNoEmpty(String prod) {
+		return catalog.get(prod).getAmount() != 0;
 	}
 
 }

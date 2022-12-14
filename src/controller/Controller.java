@@ -1,14 +1,11 @@
 package controller;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import dataAccess.Local;
 import models.Catalog;
 import models.Currency;
 import models.VisualMsg;
-import vista.VendingMachine;
 
 public class Controller {
 
@@ -70,9 +67,9 @@ public class Controller {
 		return machine.insertCoin(value);
 	}
 
-	public String returnCoins() {
+	public int returnCoins() {
 
-		return "Saldo: " + Integer.toString(machine.returnCoin());
+		return machine.returnCoin();
 
 	}
 
@@ -96,11 +93,35 @@ public class Controller {
 			
 		}
 	}
+	
+	public VisualMsg sellProduct(String prod) {
+		
+		System.out.println("COMPRANDO........ " + prod);
+		
+		if (machine.hasProduct(prod)) {
+			if (machine.productNoEmpty(prod)) {
+
+				VisualMsg msg = machine.takeProduct(prod);
+				view.updateBalance((int) msg.getMsg());
+				
+				System.out.println("PRODUCTO VENDIDO :" + prod);
+				
+				return new VisualMsg("PROD", machine.getProd(prod));
+			}	
+			else {
+				return new VisualMsg("ERR", "Producto sin existencias");
+			}
+		} else {
+			return new VisualMsg("ERR", "Producto no seleccionado");
+			
+		}
+	}
 
 	// finalizar programa
 
 	public void endProgram() {
 		System.exit(0);
 	}
+
 
 }
