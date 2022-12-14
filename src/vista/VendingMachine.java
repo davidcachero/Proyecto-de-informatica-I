@@ -30,12 +30,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txfEstado;
 	private JButton btnCocaCola;
 	private JButton btnAgua;
-	private JButton btnFanta;
+	private JButton btnFantal;
 	private JButton btnCafe;
 	private JButton btnPepsi;
 	private JButton btnNesquik;
 	private JButton btnExtraer_6;
-	private JButton btnExtraer_7;
+	private JButton btnFantaN;
 	private JButton btnColacao;
 	private JButton btnNestea;
 	private JButton btnAquarius;
@@ -203,8 +203,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnCocaCola = new JButton("CocaCola");
 		panel.add(btnCocaCola);
 
-		btnFanta = new JButton("Fanta");
-		panel.add(btnFanta);
+		btnFantal = new JButton("fanta limon");
+		panel.add(btnFantal);
 
 		btnNestea = new JButton("Nestea");
 		panel.add(btnNestea);
@@ -212,7 +212,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnAgua = new JButton("Agua");
 		panel.add(btnAgua);
 
-		btnPepsi = new JButton("Pepsi");
+		btnPepsi = new JButton("Pepsi"); // En datos de prueba no existe
 		panel.add(btnPepsi);
 
 		btnAquarius = new JButton("Aquarius");
@@ -224,11 +224,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnColacao = new JButton("Colacao");
 		panel.add(btnColacao);
 
-		btnNesquik = new JButton("Nesquik");
+		btnNesquik = new JButton("Nesquik"); // En datos de prueba no existe
 		panel.add(btnNesquik);
 
-		btnExtraer_7 = new JButton("");
-		panel.add(btnExtraer_7);
+		btnFantaN = new JButton("fanta naranja"); // En datos de prueba excede saldo
+		panel.add(btnFantaN);
 
 		btnExtraer_6 = new JButton("");
 		panel.add(btnExtraer_6);
@@ -258,13 +258,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnCafe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Cafe");
+				controller.takeProduct("cafe");
 			}
 		});
 		btnAquarius.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Aquarius");
+				controller.takeProduct("acua");
 			}
 		});
 		btnPepsi.addMouseListener(new MouseAdapter() {
@@ -276,19 +276,25 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnAgua.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Agua");
+				controller.takeProduct("agua");
 			}
 		});
 		btnNestea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Nestea");
+				controller.takeProduct("nestea");
 			}
 		});
-		btnFanta.addMouseListener(new MouseAdapter() {
+		btnFantal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Fanta");
+				controller.takeProduct("fantal");
+			}
+		});
+		btnFantaN.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.takeProduct("fantan");
 			}
 		});
 		btnCocaCola.addMouseListener(new MouseAdapter() {
