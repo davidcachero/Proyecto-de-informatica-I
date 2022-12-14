@@ -29,6 +29,7 @@ public class Local implements I_Data_Access{
 
 	
 	public HashMap<Integer, Currency> getCurrencyData() {
+		System.out.println("1");
 		
 		HashMap<Integer, Currency> actualCurrency = new HashMap<Integer, Currency>();
 		FileCurrency = new File("Files/data/currency.txt");
@@ -69,6 +70,7 @@ public class Local implements I_Data_Access{
 	
 
 	public HashMap<String, Catalog> getCatalogData() {
+		System.out.println("2");
 		
 		HashMap<String, Catalog> actualCatalog = new HashMap<String, Catalog>();
 		FileCatalog = new File("Files/data/Catalog.txt");
@@ -82,6 +84,7 @@ public class Local implements I_Data_Access{
 			String clave = null;
 
 			while ((text = reader.readLine()) != null) {
+				System.out.println("leyendo archivo.........");
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();

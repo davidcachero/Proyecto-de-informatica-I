@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import models.Catalog;
 import models.Usuario;
+import models.VisualMsg;
 import vista.VendingMachine;
 
 public class VisualController implements ActionListener {
@@ -160,14 +161,26 @@ public class VisualController implements ActionListener {
 	}
 
 	public void takeProduct(String value) {
-		Catalog prod = controller.takeProduct(value);
-		machine.setLblTxt("Producto seleccionado: " + prod.getName());
-		machine.setTextFieldPrecio("precio: " + Integer.toString(prod.getprice()) + " ctms");
+		VisualMsg msg = controller.selectProduct(value);
+		
+		if(msg.getType() == "PROD") {
+			Catalog prod = (Catalog) msg.getMsg();
+			machine.setTextFieldProduct("Producto seleccionado: " + prod.getName());
+			machine.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
+			
+		} else if(msg.getType() == "ERR") {
+			machine.setTextFieldProduct("Producto seleccionado: " + value);
+			machine.setTextFieldStatus((String) msg.getMsg());
+
+		} else {
+			machine.clnTextFieldProduct();
+			machine.setTextFieldStatus("Error del selector, llame a mantenimiento");
+		}
 	
 	}
 
 	public void returnCoins() {
-		machine.setTextFieldPrecio(controller.returnCoins());
+		machine.setTextFieldStatus(controller.returnCoins());
 		
 	}
 

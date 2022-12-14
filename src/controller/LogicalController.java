@@ -15,11 +15,8 @@ public class LogicalController {
 		// TODO create atributes
 		this.currency = currency;
 		this.catalog = catalog;
-		this.balance = 0;
+		this.balance = 200; // TODO cambiar
 
-		// TODO create text controller conection
-
-		// TODO create visual controller conection
 	}
 
 	public boolean insertCoin(int value) {

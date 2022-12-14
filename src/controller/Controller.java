@@ -7,6 +7,7 @@ import java.util.HashMap;
 import dataAccess.Local;
 import models.Catalog;
 import models.Currency;
+import models.VisualMsg;
 import vista.VendingMachine;
 
 public class Controller {
@@ -21,6 +22,7 @@ public class Controller {
 
 	// Inicializar conexiones
 	public void start() {
+		System.out.println("0");
 
 		HashMap<Integer, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
@@ -36,8 +38,7 @@ public class Controller {
 				view.open();
 
 				System.out.println("BUILDING WINDOW..........");
-				
-				
+
 			} else {
 				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
@@ -84,12 +85,16 @@ public class Controller {
 		return machine.hasProduct(idProduct);
 	}
 
-	public Catalog takeProduct(String prod) {
-		if(machine.hasProduct(prod)) {
+	public VisualMsg selectProduct(String prod) {
+		
+		if (machine.hasProduct(prod)) {
 			System.out.println("PRODUCTO EXISTE");
-			return machine.getProd(prod);
-		} 
-		return null;
+			return new VisualMsg("PROD", machine.getProd(prod));
+			
+		} else {
+			return new VisualMsg("ERR", "Producto no encontrado");
+			
+		}
 	}
 
 	// finalizar programa
