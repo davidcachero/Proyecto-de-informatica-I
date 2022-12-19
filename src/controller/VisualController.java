@@ -22,52 +22,43 @@ import vista.VendingMachine;
 public class VisualController implements ActionListener {
 
 
-
 		/*
 		 * TODO GENERATE ATRIBUTES
 		 * 
 		 * local user data
-		 * local machine data
+		 * local screen data
 		 * 
 		 */
 	Controller controller;
-	VendingMachine machine;
+	VendingMachine screen;
 	
 	
 	// Lista botones de productos
 	private List<JButton> btns;
 	private int index;
-	
-	// Botones de configuracion
-	
-	// Botones 
-	
+
 	public VisualController(Controller controller) {
-			
+
 		// Button end program listener
 		this.controller = controller;
-		this.machine = new VendingMachine(this);
+		this.screen = new VendingMachine(this);
 	}
-	
+
 	public void open() {
-		
-		machine.setVisible(true);
-		
-		machine.addWindowListener( new WindowAdapter() {
+
+		screen.setVisible(true);
+
+		screen.addWindowListener( new WindowAdapter() {
 			public void windowClosing( WindowEvent evt ) {
 				System.out.println("CERRANDO PROGRAMA");
+				controller.saveData();
 			}
 		}); 
-		
+
+		screen.setTextFieldBalance(controller.showCurrency());
+
 	}
-	
-	// TODO machine data interaccions
-	
-	// TODO user data interaccion
-	
-	// Para controlar los eventos de la pantalla (pulsar botones)
-	
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -92,7 +83,7 @@ public class VisualController implements ActionListener {
 		ControlFicheroUsuario controlUsuario;
 		//////////Sistema para introducir las monedas
 		if(e.getActionCommand()=="monedas") {
-			String optionstr = (String)JOptionPane.showInputDialog(machine,"Selecciona una moneda","Monedas",
+			String optionstr = (String)JOptionPane.showInputDialog(screen,"Selecciona una moneda","Monedas",
 					JOptionPane.INFORMATION_MESSAGE,null,options,options[1]);
 			
 			
@@ -120,7 +111,7 @@ public class VisualController implements ActionListener {
 		}
 		/////Sistema para recoger el número de tarjeta
 		if(e.getActionCommand()=="target") {
-			String idcliente = (String)JOptionPane.showInputDialog(machine,"Introduce el ID de tu tarjeta");
+			String idcliente = (String)JOptionPane.showInputDialog(screen,"Introduce el ID de tu tarjeta");
 			
 			listaUsuarios =new Vector<Usuario>();
 			
@@ -134,7 +125,7 @@ public class VisualController implements ActionListener {
 				}
 			}
 			if (!usr) {
-				 JOptionPane.showMessageDialog(machine, "Tarjeta incorrecta",
+				 JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta",
 					      "Error", JOptionPane.ERROR_MESSAGE);
 				 usr=false;
 			}
@@ -165,49 +156,53 @@ public class VisualController implements ActionListener {
 		
 		if(msg.getType() == "PROD") {
 			Catalog prod = (Catalog) msg.getMsg();
-			machine.setSelectedProd(prod.getId());
-			machine.setTextFieldProduct(prod.getName());
-			machine.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
+			screen.setSelectedProd(prod.getKey());
+			screen.setTextFieldProduct(prod.getName());
+			screen.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
 			
 		} else if(msg.getType() == "ERR") {
-			machine.setTextFieldProduct(value);
-			machine.setTextFieldStatus((String) msg.getMsg());
+			screen.setTextFieldProduct(value);
+			screen.setTextFieldStatus((String) msg.getMsg());
 
 		} else {
-			machine.clnTextFieldProduct();
-			machine.setTextFieldStatus("Error del selector, llame a mantenimiento");
+			screen.clnTextFieldProduct();
+			screen.setTextFieldStatus("Error del selector, llame a mantenimiento");
 		}
 	
 	}
-	
+
 	public void sellProduct(String value) {
 		VisualMsg msg = controller.sellProduct(value);
 		
 		if(msg.getType() == "PROD") {
 			Catalog prod = (Catalog) msg.getMsg();
-			machine.setSelectedProd(prod.getId());
-			machine.setTextFieldProduct(prod.getName());
-			machine.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
+			screen.setSelectedProd(prod.getKey());
+			screen.setTextFieldProduct(prod.getName());
+			screen.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
 			
 			
 		} else if(msg.getType() == "ERR") {
-			machine.setTextFieldProduct(value);
-			machine.setTextFieldStatus((String) msg.getMsg());
+			screen.setTextFieldProduct(value);
+			screen.setTextFieldStatus((String) msg.getMsg());
 
 		} else {
-			machine.clnTextFieldProduct();
-			machine.setTextFieldStatus("Error del selector, llame a mantenimiento");
+			screen.clnTextFieldProduct();
+			screen.setTextFieldStatus("Error del selector, llame a mantenimiento");
 		}
 		
 	}
 
 	public void returnCoins() {
-		machine.setTextFieldBalance(controller.returnCoins());
+		if(controller.returnCoins()) {
+			screen.setTextFieldBalance(0);
+		} else {
+			screen.setTextFieldStatus("Error al devolver las monedas, intentelo de nuevo o llame al servicio técnico");
+		}
 		
 	}
 
-	public void updateBalance(int newValue) {
-		machine.setTextFieldBalance(newValue); //- update balance when product its sell
+	public void updateBalance(String newValue) {
+		screen.setTextFieldBalance(newValue); //- update balance when product its sell
 		
 	}
 

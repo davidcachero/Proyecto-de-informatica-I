@@ -331,7 +331,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 
 	public void setTextFieldProduct(String newProduct) {
-		prodSelected = newProduct;
 		txfProducto.setText("Producto seleccionado: " + newProduct);
 
 	}
@@ -350,8 +349,9 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	public void setSelectedProd(int id) {
-		prodSelected = Integer.toString(id);
+	public void setSelectedProd(String id) {
+		System.out.println("[DEV] SELECCIONANDO PRODUCTO " + id);
+		prodSelected = id;
 		
 	}
 	

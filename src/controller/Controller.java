@@ -67,7 +67,7 @@ public class Controller {
 		return machine.insertCoin(value);
 	}
 
-	public int returnCoins() {
+	public boolean returnCoins() {
 
 		return machine.returnCoin();
 
@@ -93,7 +93,7 @@ public class Controller {
 			
 		}
 	}
-	
+
 	public VisualMsg sellProduct(String prod) {
 		
 		System.out.println("COMPRANDO........ " + prod);
@@ -102,11 +102,21 @@ public class Controller {
 			if (machine.productNoEmpty(prod)) {
 
 				VisualMsg msg = machine.takeProduct(prod);
-				view.updateBalance((int) msg.getMsg());
-				
-				System.out.println("PRODUCTO VENDIDO :" + prod);
-				
-				return new VisualMsg("PROD", machine.getProd(prod));
+
+				if (msg.getType() == "SENDED") {
+					view.updateBalance((String) msg.getMsg());
+					
+					System.out.println("PRODUCTO VENDIDO :" + prod);
+					
+					return new VisualMsg("PROD", machine.getProd(prod));
+				}
+				else if (msg.getType() == "ERR") {
+					return msg;
+				}
+				else {
+					return null;
+				}
+
 			}	
 			else {
 				return new VisualMsg("ERR", "Producto sin existencias");
@@ -120,6 +130,7 @@ public class Controller {
 	// finalizar programa
 
 	public void endProgram() {
+		
 		System.exit(0);
 	}
 

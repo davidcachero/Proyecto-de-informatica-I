@@ -13,10 +13,10 @@ public class LogicalController {
 	private int balance;
 
 	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog) {
-		// TODO create atributes
+
 		this.currency = currency;
 		this.catalog = catalog;
-		this.balance = 200; // TODO cambiar
+		this.balance = 200; // TODO cambiar al terminar de debugear
 
 	}
 
@@ -25,9 +25,9 @@ public class LogicalController {
 		return false;
 	}
 
-	public int returnCoin() {
-		System.out.println("devolucion llegando");
-		return balance;
+	public boolean returnCoin() {
+		balance = 0;
+		return true;
 
 	}
 
@@ -46,7 +46,7 @@ public class LogicalController {
 		prod.removeAmount();
 
 		// Enviar producto
-		return new VisualMsg("SENDED", balance);
+		return new VisualMsg("SENDED", Integer.toString(balance));
 
 	}
 
