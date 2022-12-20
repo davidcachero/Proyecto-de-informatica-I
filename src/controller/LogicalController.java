@@ -19,12 +19,19 @@ public class LogicalController {
 		this.currency = currency;
 		this.catalog = catalog;
 		this.users = users;
-		this.balance = 200; // TODO cambiar al terminar de debugear
+		this.balance = 0; 
 
 	}
 
-	public void insertCoin(int value) {
+	public VisualMsg insertCoin(int value) {
 		balance += value;
+		Currency currencyUpdated = currency.get(value);
+		
+		currencyUpdated.addAmount();
+		
+		currency.put(value, currencyUpdated);
+
+		return new VisualMsg("MSG", Float.toString(balance));
 	}
 
 	public boolean returnCoin() {

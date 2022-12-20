@@ -24,7 +24,7 @@ import models.Usuario;
  * Todas los accesos a datos implementan la interfaz de Datos
  */
 
-public class Local implements I_Data_Access{
+public class LocalModelConnexion implements I_Data_Access{
 
 	
 	private String usersAddress;
@@ -32,11 +32,11 @@ public class Local implements I_Data_Access{
 	private String currencyAddress;
 	private String filesCurrecytypes;
 	
-	public Local() {
+	public LocalModelConnexion() {
 		usersAddress = "Files/data/Users.txt";
 		catalogAddress = "Files/data/Catalog.txt";
 		currencyAddress = "Files/data/Currency.txt";
-		currencyAddress = "Files/struct/Currencytypes.txt";
+		filesCurrecytypes = "Files/struct/CurrencyTypes.txt";
 	}
 
 	// data files
@@ -234,7 +234,7 @@ public class Local implements I_Data_Access{
 	public String[] getCurrencyTypes() {
 		
 		String[] types;
-		File FileCurrecyTypes = new File(currencyAddress);
+		File FileCurrecyTypes = new File(filesCurrecytypes);
 
 		BufferedReader reader = null;
 

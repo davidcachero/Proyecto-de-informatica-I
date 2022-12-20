@@ -3,7 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dataAccess.Local;
+import dataAccess.LocalModelConnexion;
 import models.Catalog;
 import models.Currency;
 import models.Usuario;
@@ -11,12 +11,12 @@ import models.VisualMsg;
 
 public class Controller {
 
-	private Local access;
+	private LocalModelConnexion access;
 	private LogicalController machine;
 	private VisualController view;
 
 	public Controller() {
-		access = new Local();
+		access = new LocalModelConnexion();
 	}
 
 	// Inicializar conexiones
@@ -77,15 +77,14 @@ public class Controller {
 
 	// Conexion con visual - monedas
 	public void insertarMonedas(int value) {
-
-		machine.insertCoin(value);
+		VisualMsg msg = machine.insertCoin(value);
+		if(msg.getType() == "MSG")
+			view.updateBalance((String) msg.getMsg());
 		
 	}
 
 	public boolean returnCoins() {
-
 		return machine.returnCoin();
-
 	}
 
 	public float showCurrency() {
@@ -152,6 +151,8 @@ public class Controller {
 		
 		System.exit(0);
 	}
+	
+	
 
 	public boolean hasUser(String idcliente) {
 		return machine.hasUser(idcliente);
@@ -160,6 +161,5 @@ public class Controller {
 	public String[] getCurrencyTypes() {
 		return access.getCurrencyTypes();
 	}
-
 
 }

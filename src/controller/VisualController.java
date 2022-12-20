@@ -65,7 +65,6 @@ public class VisualController implements ActionListener {
 		
 		String[] typeCurrency = controller.getCurrencyTypes();
 		
-		ControlFicheroUsuario controlUsuario;
 		//////////Sistema para introducir las monedas
 		if(e.getActionCommand()=="monedas") {
 			String optionstr = (String)JOptionPane.showInputDialog(
@@ -89,20 +88,6 @@ public class VisualController implements ActionListener {
 		/////Sistema para recoger el número de tarjeta
 		if(e.getActionCommand()=="target") {
 			String idcliente = (String)JOptionPane.showInputDialog(screen,"Introduce el ID de tu tarjeta");
-			
-			//listaUsuarios =new Vector<Usuario>();
-			
-			//controlUsuario= new ControlFicheroUsuario(".\\Usuarios.txt"); //////// Hay que hacer el fichero
-			
-//			listaUsuarios= controlUsuario.leerUsuario();
-//			////Compruebo que la tarjeta es correcta
-//			for (Usuario u : listaUsuarios) {
-//				if (idcliente.equals(u.getId())) {
-//					cliente = new Usuario(idcliente, u.getSaldo());
-//					usr=true;
-//				}
-//			}
-			
 			
 			if (!controller.hasUser(idcliente)) {
 				 JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta",
