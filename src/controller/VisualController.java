@@ -81,8 +81,7 @@ public class VisualController implements ActionListener {
 			List<String> listTypes = new ArrayList<>(Arrays.asList(typeCurrency));
 
 			if (listTypes.contains(optionstr)) {
-				int value = String.valueOf(optionstr);
-				controller.insertarMonedas(String.valueOf(optionstr));
+				controller.insertarMonedas(Integer.parseInt(optionstr));
 			}
 
 			
@@ -108,7 +107,6 @@ public class VisualController implements ActionListener {
 			if (!controller.hasUser(idcliente)) {
 				 JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta",
 					      "Error", JOptionPane.ERROR_MESSAGE);
-				 usr=false;
 			}
 			
 	
