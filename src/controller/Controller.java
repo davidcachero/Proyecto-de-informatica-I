@@ -5,6 +5,7 @@ import java.util.HashMap;
 import dataAccess.Local;
 import models.Catalog;
 import models.Currency;
+import models.Usuario;
 import models.VisualMsg;
 
 public class Controller {
@@ -23,11 +24,12 @@ public class Controller {
 
 		HashMap<Integer, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
+		HashMap<String, Usuario> users = access.getUsersData();
 
-		if ((catalog != null) && (currency != null)) {
+		if ((catalog != null) && (currency != null) && (users != null)) {
 			System.out.println("[DEV] finded data");
 
-			machine = new LogicalController(currency, catalog);
+			machine = new LogicalController(currency, catalog, users);
 
 			if (machine != null) {
 
@@ -51,6 +53,7 @@ public class Controller {
 
 		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
 		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
+		boolean saveUsers = access.saveCatalog(machine.getCatalogData());
 
 		if (saveCurrency && saveCatalog) {
 			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
@@ -59,6 +62,16 @@ public class Controller {
 			System.err.println("[DEV][ERROR] BBDD no se ha podido actualizar");
 		}
 
+	}
+	
+	// Conexion con visual - usuarios
+	public boolean logIn(String idUser) {
+		if(machine.hasUser(idUser)) {
+			Usuario usr = machine.getUser(idUser);
+			machine.insertCoin((int) usr.getSaldo());
+			view.updateBalance(Float.toString(usr.getSaldo()));
+		}
+		return true;
 	}
 
 	// Conexion con visual - monedas
@@ -73,7 +86,7 @@ public class Controller {
 
 	}
 
-	public int showCurrency() {
+	public float showCurrency() {
 		return machine.getTotalCurrency();
 	}
 

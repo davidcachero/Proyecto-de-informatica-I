@@ -4,18 +4,21 @@ import java.util.HashMap;
 
 import models.Catalog;
 import models.Currency;
+import models.Usuario;
 import models.VisualMsg;
 
 public class LogicalController {
 
 	private HashMap<Integer, Currency> currency;
 	private HashMap<String, Catalog> catalog;
-	private int balance;
+	private HashMap<String, Usuario> users;
+	private float balance;
 
-	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog) {
+	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog, HashMap<String, Usuario> users) {
 
 		this.currency = currency;
 		this.catalog = catalog;
+		this.users = users;
 		this.balance = 200; // TODO cambiar al terminar de debugear
 
 	}
@@ -46,7 +49,7 @@ public class LogicalController {
 		prod.removeAmount();
 
 		// Enviar producto
-		return new VisualMsg("SENDED", Integer.toString(balance));
+		return new VisualMsg("SENDED", Float.toString(balance));
 
 	}
 
@@ -54,7 +57,7 @@ public class LogicalController {
 		return catalog.containsKey(idProduct);
 	}
 
-	public int getTotalCurrency() {
+	public float getTotalCurrency() {
 		return this.balance;
 	}
 
@@ -80,6 +83,14 @@ public class LogicalController {
 
 	public boolean productNoEmpty(String prod) {
 		return catalog.get(prod).getAmount() != 0;
+	}
+
+	public boolean hasUser(String idUser) {
+		return users.containsKey(idUser);
+	}
+
+	public Usuario getUser(String idUser) {
+		return users.get(idUser);
 	}
 
 }

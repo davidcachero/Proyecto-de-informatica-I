@@ -55,7 +55,7 @@ public class VisualController implements ActionListener {
 			}
 		}); 
 
-		screen.setTextFieldBalance(controller.showCurrency());
+		screen.setTextFieldBalance(Float.toString(controller.showCurrency()));
 
 	}
 
