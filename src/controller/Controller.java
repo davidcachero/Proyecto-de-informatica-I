@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import dataAccess.Local;
@@ -55,7 +56,7 @@ public class Controller {
 		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
 		boolean saveUsers = access.saveCatalog(machine.getCatalogData());
 
-		if (saveCurrency && saveCatalog) {
+		if (saveCurrency && saveCatalog && saveUsers) {
 			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
 
 		} else {
@@ -75,9 +76,10 @@ public class Controller {
 	}
 
 	// Conexion con visual - monedas
-	public boolean insertarMonedas(int value) {
+	public void insertarMonedas(int value) {
 
-		return machine.insertCoin(value);
+		machine.insertCoin(value);
+		
 	}
 
 	public boolean returnCoins() {
@@ -140,11 +142,23 @@ public class Controller {
 		}
 	}
 
+	
+	public Usuario getUser(String idUser) {
+		return machine.getUser(idUser);
+	}
 	// finalizar programa
 
 	public void endProgram() {
 		
 		System.exit(0);
+	}
+
+	public boolean hasUser(String idcliente) {
+		return machine.hasUser(idcliente);
+	}
+
+	public String[] getCurrencyTypes() {
+		return access.getCurrencyTypes();
 	}
 
 

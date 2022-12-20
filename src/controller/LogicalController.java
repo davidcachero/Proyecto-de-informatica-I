@@ -23,9 +23,8 @@ public class LogicalController {
 
 	}
 
-	public boolean insertCoin(int value) {
-		// TODO Auto-generated method stub
-		return false;
+	public void insertCoin(int value) {
+		balance += value;
 	}
 
 	public boolean returnCoin() {

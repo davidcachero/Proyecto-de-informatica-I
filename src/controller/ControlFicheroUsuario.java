@@ -21,7 +21,7 @@ public class ControlFicheroUsuario {
 		fichero= new File(rutaArchivo);
 		
 		try {
-			scLector= new Scanner(new FileReader(fichero));
+			scLector= new BufferedReader(new FileReader(fichero));
 			scLector.useDelimiter(";");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

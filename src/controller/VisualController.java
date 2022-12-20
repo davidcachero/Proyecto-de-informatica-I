@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
@@ -62,69 +63,49 @@ public class VisualController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		JButton source = (JButton) e.getSource();
-		
-		String nombreBoton = source.getName();
-		
-		String[] parts = nombreBoton.split("-");
-		
-		String prefijo = parts[0];
-		String sufijo = parts[1];
-		
-		// TODO aqui tendremos que llamar a CURRENCY para ver que monedas podemos recibir
-		String [] options = {"1.00", "2.00","0.50","0.20","0.10"};
-		
-		boolean usr=false;
-		
-		Usuario cliente;
-		
-		Vector<Usuario> listaUsuarios;
+		String[] typeCurrency = controller.getCurrencyTypes();
 		
 		ControlFicheroUsuario controlUsuario;
 		//////////Sistema para introducir las monedas
 		if(e.getActionCommand()=="monedas") {
-			String optionstr = (String)JOptionPane.showInputDialog(screen,"Selecciona una moneda","Monedas",
-					JOptionPane.INFORMATION_MESSAGE,null,options,options[1]);
-			
-			
-			if (optionstr.equals("2.00")) {
-				////Logica monedas
-				
-		}
-			if (optionstr.equals("1.00")) {
-				/////Logica monedas
-				
+			String optionstr = (String)JOptionPane.showInputDialog(
+					screen,
+					"Selecciona una moneda",
+					"Monedas",
+					JOptionPane.INFORMATION_MESSAGE,
+					null,
+					typeCurrency,
+					typeCurrency[1]
+				);
+
+			List<String> listTypes = new ArrayList<>(Arrays.asList(typeCurrency));
+
+			if (listTypes.contains(optionstr)) {
+				int value = String.valueOf(optionstr);
+				controller.insertarMonedas(String.valueOf(optionstr));
 			}
-			if (optionstr.equals("0.50")) {
-				////Logica monedas
-				
-		}
-			if (optionstr.equals("0.20")) {
-				/////Logica monedas
-				
-			}
-			if (optionstr.equals("0.10")) {
-				////Logica monedas
-				
-		}
+
 			
 		}
 		/////Sistema para recoger el número de tarjeta
 		if(e.getActionCommand()=="target") {
 			String idcliente = (String)JOptionPane.showInputDialog(screen,"Introduce el ID de tu tarjeta");
 			
-			listaUsuarios =new Vector<Usuario>();
+			//listaUsuarios =new Vector<Usuario>();
 			
-			controlUsuario= new ControlFicheroUsuario(".\\Usuarios.txt"); //////// Hay que hacer el fichero
-			listaUsuarios= controlUsuario.leerUsuario();
-			////Compruebo que la tarjeta es correcta
-			for (Usuario u : listaUsuarios) {
-				if (idcliente.equals(u.getId())) {
-					cliente = new Usuario(idcliente, u.getSaldo());
-					usr=true;
-				}
-			}
-			if (!usr) {
+			//controlUsuario= new ControlFicheroUsuario(".\\Usuarios.txt"); //////// Hay que hacer el fichero
+			
+//			listaUsuarios= controlUsuario.leerUsuario();
+//			////Compruebo que la tarjeta es correcta
+//			for (Usuario u : listaUsuarios) {
+//				if (idcliente.equals(u.getId())) {
+//					cliente = new Usuario(idcliente, u.getSaldo());
+//					usr=true;
+//				}
+//			}
+			
+			
+			if (!controller.hasUser(idcliente)) {
 				 JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta",
 					      "Error", JOptionPane.ERROR_MESSAGE);
 				 usr=false;
