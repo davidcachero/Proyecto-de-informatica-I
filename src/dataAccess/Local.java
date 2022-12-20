@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,6 +16,7 @@ import java.util.TreeSet;
 import auxiliar.I_Data_Access;
 import models.Catalog;
 import models.Currency;
+import models.Usuario;
 
 
 
@@ -23,15 +25,27 @@ import models.Currency;
  */
 
 public class Local implements I_Data_Access{
-	
-	File FileCatalog; // Fichero de productos
-	File FileCurrency; // Fichero de monedero
 
 	
+	private String usersAddress;
+	private String catalogAddress;
+	private String currencyAddress;
+	private String filesCurrecytypes;
+	
+	public Local() {
+		usersAddress = "Files/data/Users.txt";
+		catalogAddress = "Files/data/Catalog.txt";
+		currencyAddress = "Files/data/Currency.txt";
+		currencyAddress = "Files/struct/Currencytypes.txt";
+	}
+
+	// data files
+	
 	public HashMap<Integer, Currency> getCurrencyData() {
+		System.out.println("1");
 		
 		HashMap<Integer, Currency> actualCurrency = new HashMap<Integer, Currency>();
-		FileCurrency = new File("Files/data/currency.txt");
+		File FileCurrency = new File(currencyAddress);
 
 		BufferedReader reader = null;
 
@@ -67,11 +81,11 @@ public class Local implements I_Data_Access{
 		return actualCurrency;
 	}
 	
-
 	public HashMap<String, Catalog> getCatalogData() {
+		System.out.println("2");
 		
 		HashMap<String, Catalog> actualCatalog = new HashMap<String, Catalog>();
-		FileCatalog = new File("Files/data/Catalog.txt");
+		File FileCatalog = new File(catalogAddress);
 
 		BufferedReader reader = null;
 
@@ -82,6 +96,7 @@ public class Local implements I_Data_Access{
 			String clave = null;
 
 			while ((text = reader.readLine()) != null) {
+				System.out.println("leyendo archivo.........");
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
@@ -103,12 +118,45 @@ public class Local implements I_Data_Access{
 		return actualCatalog;
 		
 	}
+	
+	public HashMap<String, Usuario> getUsersData() {
+		HashMap<String, Usuario> actualUsers = new HashMap<String, Usuario>();
+		File FileUsers = new File(usersAddress);
+
+		BufferedReader reader = null;
+
+		try {
+			reader = new BufferedReader(new FileReader(FileUsers));
+			String text = null;
+			Usuario users = null;
+			String clave = null;
+
+			while ((text = reader.readLine()) != null) {
+				System.out.println("leyendo archivo.........");
+
+				String[] splitData = text.split(";");
+				clave = splitData[0].toString();
+				users = new Usuario(
+						clave, 
+						Float.parseFloat(splitData[1])
+					);
+				
+				actualUsers.put(clave, users);
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return actualUsers;
+	}
 
 
 	public boolean saveCurrency(HashMap<Integer, Currency> currency) {
 
 		boolean todoOK = true;
-		FileCurrency = new File("Files/data/currency.txt");
+		File FileCurrency = new File(currencyAddress);
 		
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
@@ -132,12 +180,11 @@ public class Local implements I_Data_Access{
 
 	}
 
-
 	public boolean saveCatalog(HashMap<String, Catalog> catalog) {
 
 		boolean todoOK = true;
 		PrintWriter pw = null;
-		FileCatalog = new File("Ficheros/datos/dispensadores.txt");
+		File FileCatalog = new File(catalogAddress);
 		
 		try {
 			pw = new PrintWriter(FileCatalog);
@@ -155,6 +202,58 @@ public class Local implements I_Data_Access{
 		
 
 		return todoOK;
+	}
+
+	public boolean saveUser(HashMap<String, Usuario> users) {
+
+		boolean todoOK = true;
+		PrintWriter pw = null;
+		File FileUsers = new File(usersAddress);
+		
+		try {
+			pw = new PrintWriter(FileUsers);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			for(String key : users.keySet()) {
+				Usuario value=users.get(key);
+				 pw.println(key+";"+value.getSaldo());
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		
+
+		return todoOK;
+	}
+
+
+	// struct files
+	
+	public String[] getCurrencyTypes() {
+		
+		String[] types;
+		File FileCurrecyTypes = new File(currencyAddress);
+
+		BufferedReader reader = null;
+
+		try {
+			reader = new BufferedReader(new FileReader(FileCurrecyTypes));
+	
+			types = reader.readLine().split(";");
+
+			reader.close();
+			
+			return types;
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new String[0];
 	}
 
 
