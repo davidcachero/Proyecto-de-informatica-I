@@ -44,6 +44,7 @@ public class VisualController implements ActionListener {
 		});
 
 		screen.setTextFieldBalance(Float.toString(controller.showCurrency()));
+		screen.hideIntolerance();
 
 	}
 
@@ -140,6 +141,31 @@ public class VisualController implements ActionListener {
 
 	public void updateUserName(String name) {
 		screen.setUserLoggedName(name);
+
+	}
+
+	public void updateIntolerances(String[] productIntolerances) {
+		
+		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
+		
+		if (listTypes.contains("1")) {
+			System.err.println("FRUTOS SECOS");
+			screen.showIntoleranceFrutSecos();
+			
+		} else if (listTypes.contains("2")) {
+			screen.showIntoleranceGlucosa();
+			
+		} else if (listTypes.contains("3")) {
+			screen.showIntoleranceGluten();
+			
+		} else if (listTypes.contains("4")) {
+			screen.showIntoleranceSulfitos();
+			
+		}
+	}
+
+	public void resetIntolerancesVisibility() {
+		screen.hideIntolerance();
 		
 	}
 

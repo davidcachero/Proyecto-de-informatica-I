@@ -140,5 +140,9 @@ public class LogicalController {
 		
 	}
 
+	public String[] getProductIntolerances(String prod) {
+		return catalog.get(prod).getIntolerances();
+	}
+
 
 }

@@ -1,12 +1,14 @@
 package vista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,7 +24,11 @@ import controller.VisualController;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 public class VendingMachine extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
@@ -64,10 +70,24 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		// set components
 		this.controller = controller;
+		
+		Image image;
+		
+		BufferedImage bufferedImage;
+		try {
+			bufferedImage = ImageIO.read(new File("Files/assets/icon_button/Logo_CoffeeBreak.png"));
+	        image = bufferedImage.getScaledInstance(2000, 2000, Image.SCALE_DEFAULT);
+	        
+		} catch (IOException e) {
+			System.err.println("fallo icono");
+			image = new ImageIcon("Files/assets/icon_button/Logo_CoffeeBreak.png").getImage();
+		}
+
 
 		// metadata
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setTitle("COFFEEBREAK");
+		setIconImage(image);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
 		buildView();
@@ -368,5 +388,57 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		else
 			lbluserLoggedName.setText("User logged : " + name);
 
+	}
+	
+	public void hideIntoleranceFrutSecos() {
+		txtFrutosSecos.setVisible(false);
+	}
+	
+	public void hideIntoleranceGluten() {
+		txtGluten.setVisible(false);
+	}
+	
+	public void show() {
+		txtGlucosa.setVisible(false);
+	}
+	
+	public void hideIntoleranceSulfitos() {
+		txtSulfitos.setVisible(false);
+	}
+
+	public void hideIntolerance() {
+		txtFrutosSecos.setVisible(false);
+		txtGluten.setVisible(false);
+		txtGlucosa.setVisible(false);
+		txtSulfitos.setVisible(false);
+		
+	}
+
+	public void showIntoleranceFrutSecos() {
+		txtFrutosSecos.setVisible(true);
+		
+	}
+
+	public void showIntoleranceGlucosa() {
+		txtGlucosa.setVisible(true);
+		
+	}
+
+	public void showIntoleranceGluten() {
+		txtGluten.setVisible(true);
+		
+	}
+
+	public void showIntoleranceSulfitos() {
+		txtSulfitos.setVisible(true);
+		
+	}
+	
+	public void showIntolerance() {
+		txtFrutosSecos.setVisible(true);
+		txtGluten.setVisible(true);
+		txtGlucosa.setVisible(true);
+		txtSulfitos.setVisible(true);
+		
 	}
 }

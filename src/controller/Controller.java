@@ -114,19 +114,22 @@ public class Controller {
 	}
 
 	public VisualMsg selectProduct(String prod) {
+		view.resetIntolerancesVisibility();
 		
 		if (machine.hasProduct(prod)) {
 			System.out.println("PRODUCTO EXISTE");
+			view.updateIntolerances(machine.getProductIntolerances(prod));
 			return new VisualMsg("PROD", machine.getProd(prod));
 			
 		} else {
-			return new VisualMsg("ERR", "Producto no encontrado");
+			return new VisualMsg("ERR", "Producto agotado");
 			
 		}
 	}
 
 	public VisualMsg sellProduct(String prod) {
 		
+		view.resetIntolerancesVisibility();
 		System.out.println("COMPRANDO........ " + prod);
 		
 		if (machine.hasProduct(prod)) {

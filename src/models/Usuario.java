@@ -7,9 +7,9 @@ public class Usuario {
 	private float saldo;
 	
 	public Usuario(String id, String name, float saldo) {
-		this.setId(id);
-		this.setName(name);
-		this.setSaldo(saldo);
+		this.id = id;
+		this.name = name;
+		this.saldo = saldo;
 	}
 	
 	public String getId() {
@@ -46,5 +46,7 @@ public class Usuario {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+
 	
 }

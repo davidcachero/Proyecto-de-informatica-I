@@ -28,12 +28,16 @@ public class LocalModelConnexion implements I_Data_Access {
 	private String catalogAddress;
 	private String currencyAddress;
 	private String filesCurrecytypes;
+	private String filesIntolerancetypes;
 
 	public LocalModelConnexion() {
+		// Local BBDD 
 		usersAddress = "Files/data/Users.txt";
 		catalogAddress = "Files/data/Catalog.txt";
 		currencyAddress = "Files/data/Currency.txt";
+		// Data types
 		filesCurrecytypes = "Files/struct/CurrencyTypes.txt";
+		filesIntolerancetypes = "Files/struct/intoleranceTypes.txt";
 	}
 
 	// data files
@@ -85,15 +89,27 @@ public class LocalModelConnexion implements I_Data_Access {
 			String text = null;
 			Catalog catalog = null;
 			String clave = null;
+			String[] intolerances = null;
 
 			while ((text = reader.readLine()) != null) {
 				System.out.println("leyendo archivo.........");
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
+				try {
+					intolerances = splitData[4].split(":");
+				}
+				catch (IndexOutOfBoundsException e) {
+					intolerances = new String[0];
+				}
 				System.out.println(clave);
-				catalog = new Catalog(clave, splitData[1].toString(), Integer.parseInt(splitData[2]),
-						Integer.parseInt(splitData[3]));
+				catalog = new Catalog (
+						clave
+						, splitData[1].toString()
+						, Integer.parseInt(splitData[2])
+						, Integer.parseInt(splitData[3])
+						, intolerances
+						);
 
 				actualCatalog.put(clave, catalog);
 			}
@@ -124,7 +140,11 @@ public class LocalModelConnexion implements I_Data_Access {
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
-				users = new Usuario(clave, splitData[1], Float.parseFloat(splitData[2]));
+				users = new Usuario(
+						clave
+						, splitData[1]
+						, Float.parseFloat(splitData[2])
+						);
 
 				actualUsers.put(clave, users);
 			}
@@ -173,7 +193,12 @@ public class LocalModelConnexion implements I_Data_Access {
 
 			for (String key : catalog.keySet()) {
 				Catalog value = catalog.get(key);
-				pw.println(key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount());
+				pw.print(key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount());
+				
+				for(String idIntolerance : value.getIntolerances()) {
+					pw.print(idIntolerance);
+				}
+				pw.println();
 			}
 
 			pw.close();
@@ -237,5 +262,5 @@ public class LocalModelConnexion implements I_Data_Access {
 
 		return new String[0];
 	}
-
+	
 }
