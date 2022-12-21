@@ -81,7 +81,7 @@ public class Controller {
 		
 	}
 
-	public boolean returnCoins() {
+	public VisualMsg returnCoins() {
 		return machine.returnCoin();
 	}
 
@@ -162,6 +162,12 @@ public class Controller {
 
 	public void setUserLogged(String idcliente) {
 		machine.setUserLogged(idcliente);
+		view.updateBalance(Float.toString(machine.getAllBalance()));
+		
+	}
+
+	public void logOffUser() {
+		machine.logOffUser();
 		view.updateBalance(Float.toString(machine.getAllBalance()));
 		
 	}

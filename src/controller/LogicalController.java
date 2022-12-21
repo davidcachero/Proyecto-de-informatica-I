@@ -35,9 +35,9 @@ public class LogicalController {
 		return new VisualMsg("MSG", Float.toString(getAllBalance()));
 	}
 
-	public boolean returnCoin() {
+	public VisualMsg returnCoin() {
 		balance = 0;
-		return true;
+		return new VisualMsg("SENDED", Float.toString(getAllBalance()));
 
 	}
 	
@@ -128,6 +128,11 @@ public class LogicalController {
 
 	public void setUserLogged(String idcliente) {
 		userLogged = users.get(idcliente);
+		
+	}
+
+	public void logOffUser() {
+		userLogged = null;
 		
 	}
 

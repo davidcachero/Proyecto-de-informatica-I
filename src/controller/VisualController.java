@@ -6,21 +6,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import models.Catalog;
-import models.Usuario;
 import models.VisualMsg;
 import vista.VendingMachine;
 
@@ -34,10 +24,6 @@ public class VisualController implements ActionListener {
 	 */
 	Controller controller;
 	VendingMachine screen;
-
-	// Lista botones de productos
-	private List<JButton> btns;
-	private int index;
 
 	public VisualController(Controller controller) {
 
@@ -138,8 +124,9 @@ public class VisualController implements ActionListener {
 	}
 
 	public void returnCoins() {
-		if (controller.returnCoins()) {
-			screen.setTextFieldBalance(0);
+		VisualMsg msg = controller.returnCoins();
+		if (msg.getType() == "SENDED") {
+			screen.setTextFieldBalance(msg.getMsg().toString());
 		} else {
 			screen.setTextFieldStatus("Error al devolver las monedas, intentelo de nuevo o llame al servicio técnico");
 		}
@@ -149,6 +136,11 @@ public class VisualController implements ActionListener {
 	public void updateBalance(String newValue) {
 		screen.setTextFieldBalance(newValue); // - update balance when product its sell
 
+	}
+
+	public void logOffUser() {
+		controller.logOffUser();
+		
 	}
 
 }

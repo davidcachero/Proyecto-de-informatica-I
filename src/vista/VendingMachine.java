@@ -189,7 +189,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		JButton btnLogOff = new JButton("LOG OFF");
 		btnLogOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.actionPerformed(e);
+				controller.logOffUser();
 			}
 		});
 		btnLogOff.setBounds(516, 296, 171, 35);
