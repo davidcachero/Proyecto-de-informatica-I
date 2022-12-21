@@ -122,8 +122,12 @@ public class LogicalController {
 		return users.containsKey(idUser);
 	}
 
-	public Usuario getUserLogged(String idUser) {
+	public Usuario getUser(String idUser) {
 		return users.get(idUser);
+	}
+
+	public Usuario getUserLogged() {
+		return userLogged;
 	}
 
 	public void setUserLogged(String idcliente) {

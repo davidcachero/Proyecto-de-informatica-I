@@ -55,14 +55,8 @@ public class VisualController implements ActionListener {
 		////////// Sistema para introducir las monedas
 		if (e.getActionCommand() == "monedas") {
 
-			String optionstr = (String) JOptionPane.showInputDialog(
-					screen
-					, "Selecciona una moneda"
-					, "Monedas"
-					, JOptionPane.INFORMATION_MESSAGE
-					, null
-					, typeCurrency
-					, typeCurrency[1]);
+			String optionstr = (String) JOptionPane.showInputDialog(screen, "Selecciona una moneda", "Monedas",
+					JOptionPane.INFORMATION_MESSAGE, null, typeCurrency, typeCurrency[1]);
 
 			List<String> listTypes = new ArrayList<>(Arrays.asList(typeCurrency));
 
@@ -79,6 +73,7 @@ public class VisualController implements ActionListener {
 				JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				controller.setUserLogged(idcliente);
+				screen.setUserLoggedName(controller.getUser(idcliente).getName());
 			}
 		}
 	}
@@ -140,6 +135,11 @@ public class VisualController implements ActionListener {
 
 	public void logOffUser() {
 		controller.logOffUser();
+
+	}
+
+	public void updateUserName(String name) {
+		screen.setUserLoggedName(name);
 		
 	}
 

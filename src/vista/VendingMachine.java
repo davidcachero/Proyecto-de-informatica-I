@@ -52,6 +52,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JMenuItem monedas;
 	private JTextField txfProducto;
 	private JTextField txfSaldo;
+	private JLabel lbluserLoggedName;
 
 	VisualController controller;
 	String prodSelected;
@@ -94,7 +95,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfEstado.setText("");
 		txfEstado.setEditable(false);
 
-		txfEstado.setBounds(433, 32, 254, 47);
+		txfEstado.setBounds(403, 32, 284, 47);
 		contentPane.add(txfEstado);
 		txfEstado.setColumns(10);
 
@@ -106,7 +107,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfProducto.setEditable(false);
 		txfProducto.setColumns(10);
 		txfProducto.setBackground(new Color(115, 147, 19));
-		txfProducto.setBounds(433, 84, 254, 47);
+		txfProducto.setBounds(403, 84, 284, 47);
 		contentPane.add(txfProducto);
 
 		txfSaldo = new JTextField();
@@ -117,9 +118,9 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfSaldo.setEditable(false);
 		txfSaldo.setColumns(10);
 		txfSaldo.setBackground(new Color(115, 147, 19));
-		txfSaldo.setBounds(433, 137, 254, 47);
+		txfSaldo.setBounds(403, 137, 284, 47);
 		contentPane.add(txfSaldo);
-		
+
 		///// Menu
 		this.menu = new JMenuBar();
 		setJMenuBar(menu);
@@ -145,13 +146,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 			}
 
 		});
-		btnDevolverDinero.setBounds(516, 204, 171, 35);
+		btnDevolverDinero.setBounds(403, 204, 284, 35);
 		contentPane.add(btnDevolverDinero);
 
 		btnPagar = new JButton("PAGAR");
 		btnPagar.setBackground(new Color(8, 8, 8));
 		btnPagar.setForeground(Color.white);
-		btnPagar.setBounds(516, 250, 171, 35);
+		btnPagar.setBounds(403, 250, 284, 35);
 		contentPane.add(btnPagar);
 
 		txtGlucosa = new JTextField();
@@ -192,7 +193,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 				controller.logOffUser();
 			}
 		});
-		btnLogOff.setBounds(516, 296, 171, 35);
+		btnLogOff.setBounds(594, 296, 93, 35);
 		contentPane.add(btnLogOff);
 
 		JPanel panel = new JPanel();
@@ -235,14 +236,17 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		btnExtraer_11 = new JButton("");
 		panel.add(btnExtraer_11);
-		
-	
+
+		lbluserLoggedName = new JLabel("New label");
+		lbluserLoggedName.setBounds(413, 296, 171, 37);
+		contentPane.add(lbluserLoggedName);
+
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.sellProduct(prodSelected);
 			}
 		});
-		
+
 		btnNesquik.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -337,13 +341,14 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	public void clnTextFieldProduct() {
 		setTextFieldStatus("");
-		
+
 	}
-	
+
 	public void setTextFieldBalance(String newBalance) {
 		txfSaldo.setText("Saldo: " + newBalance + " ctms");
 
 	}
+
 	public void setTextFieldBalance(int newBalance) {
 		txfSaldo.setText("Saldo: " + Integer.toString(newBalance) + " ctms");
 
@@ -352,7 +357,16 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	public void setSelectedProd(String id) {
 		System.out.println("[DEV] SELECCIONANDO PRODUCTO " + id);
 		prodSelected = id;
-		
+
 	}
-	
+
+	public void setUserLoggedName(String name) {
+		System.out.println("[DEV] loggeando a " + name);
+		if (name == null)
+			lbluserLoggedName.setText(null);
+
+		else
+			lbluserLoggedName.setText("User logged : " + name);
+
+	}
 }
