@@ -41,7 +41,7 @@ public class LogicalController {
 
 	}
 	
-	private float getAllBalance() {
+	public float getAllBalance() {
 		if (userLogged != null) {
 			return balance + userLogged.getSaldo();
 		}
@@ -96,6 +96,11 @@ public class LogicalController {
 	public HashMap<String, Catalog> getCatalogData() {
 		return catalog;
 	}
+	
+	public HashMap<String, Usuario> getUserData() {
+		return users;
+	}
+
 
 	public Catalog getProd(String prod) {
 		return catalog.get(prod);
@@ -125,5 +130,6 @@ public class LogicalController {
 		userLogged = users.get(idcliente);
 		
 	}
+
 
 }

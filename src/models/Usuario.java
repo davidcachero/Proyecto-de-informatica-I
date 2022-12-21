@@ -3,10 +3,12 @@ package models;
 public class Usuario {
 	
 	private String id;
+	private String name;
 	private float saldo;
 	
-	public Usuario(String id, float saldo) {
+	public Usuario(String id, String name, float saldo) {
 		this.setId(id);
+		this.setName(name);
 		this.setSaldo(saldo);
 	}
 	
@@ -35,6 +37,14 @@ public class Usuario {
 		else
 			System.out.println("No hay suficiente saldo"); ///Cambiar esto??
 		
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

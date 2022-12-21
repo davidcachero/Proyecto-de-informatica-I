@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import dataAccess.LocalModelConnexion;
@@ -21,7 +20,6 @@ public class Controller {
 
 	// Inicializar conexiones
 	public void start() {
-		System.out.println("0");
 
 		HashMap<Integer, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
@@ -35,9 +33,9 @@ public class Controller {
 			if (machine != null) {
 
 				view = new VisualController(this);
+				System.out.println("BUILDING WINDOW..........");
 				view.open();
 
-				System.out.println("BUILDING WINDOW..........");
 
 			} else {
 				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
@@ -54,7 +52,7 @@ public class Controller {
 
 		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
 		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
-		boolean saveUsers = access.saveCatalog(machine.getCatalogData());
+		boolean saveUsers = access.saveUser(machine.getUserData());
 
 		if (saveCurrency && saveCatalog && saveUsers) {
 			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
@@ -164,6 +162,7 @@ public class Controller {
 
 	public void setUserLogged(String idcliente) {
 		machine.setUserLogged(idcliente);
+		view.updateBalance(Float.toString(machine.getAllBalance()));
 		
 	}
 

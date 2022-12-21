@@ -1,8 +1,8 @@
+acua;Aquarius;120;4
+cafe;Cafe;350;9
 coca;Coca-Cola;105;3
 fantal;Fanta Limon;210;10
 fantan;Fanta Naranja;190;4
+Colacao;ColaCao;90;6
 nestea;Nestea;120;0
 agua;Agua;80;0
-acua;Aquarius;120;4
-cafe;Cafe;350;9
-Colacao;ColaCao;90;6
