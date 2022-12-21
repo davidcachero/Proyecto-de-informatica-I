@@ -38,8 +38,8 @@ public class VisualController implements ActionListener {
 
 		screen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
-				System.out.println("CERRANDO PROGRAMA");
 				controller.saveData();
+				System.out.println("CERRANDO PROGRAMA");
 			}
 		});
 
@@ -140,6 +140,39 @@ public class VisualController implements ActionListener {
 
 	public void updateUserName(String name) {
 		screen.setUserLoggedName(name);
+		
+	}
+	
+	public void updateIntolerances(String[] productIntolerances) {
+		
+		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
+		
+		if (listTypes.contains("1")) {
+			System.err.println("FRUTOS SECOS");
+			screen.showIntoleranceFrutSecos();
+			
+		}
+		if (listTypes.contains("2")) {
+			screen.showIntoleranceGlucosa();
+			
+		} 
+		if (listTypes.contains("3")) {
+			screen.showIntoleranceGluten();
+			
+		} 
+		if (listTypes.contains("4")) {
+			screen.showIntoleranceSulfitos();
+			
+		}
+	}
+
+	public void resetIntolerancesVisibility() {
+		screen.hideIntolerance();
+		
+	}
+
+	public void showIntolerance() {
+		screen.showIntolerance();
 		
 	}
 

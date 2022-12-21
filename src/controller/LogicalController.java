@@ -139,6 +139,10 @@ public class LogicalController {
 		userLogged = null;
 		
 	}
+	
+	public String[] getProductIntolerances(String prod) {
+		return catalog.get(prod).getIntolerances();
+	}
 
 
 }

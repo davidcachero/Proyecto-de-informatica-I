@@ -1,12 +1,14 @@
 package vista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,7 +24,11 @@ import controller.VisualController;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 public class VendingMachine extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
@@ -64,10 +70,24 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		// set components
 		this.controller = controller;
+		
+		Image image;
+		
+		BufferedImage bufferedImage;
+		try {
+			bufferedImage = ImageIO.read(new File("Files/assets/Logo_CoffeeBreak.png"));
+	        image = bufferedImage.getScaledInstance(2000, 2000, Image.SCALE_DEFAULT);
+	        
+		} catch (IOException e) {
+			System.err.println("fallo icono");
+			image = new ImageIcon("Files/assets/Logo_CoffeeBreak.png").getImage();
+		}
+
 
 		// metadata
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setTitle("COFFEEBREAK");
+		setIconImage(image);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
 		buildView();
@@ -179,11 +199,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setBounds(637, 350, 50, 20);
 		contentPane.add(txtSulfitos);
 
-		txtFrutosSecos = new JTextField();
+		txtFrutosSecos = new JTextField("Frutos secos");
 		txtFrutosSecos.setEditable(false);
 		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFrutosSecos.setText("Frutos secos");
-		txtFrutosSecos.setColumns(10);
+		//txtFrutosSecos.setColumns(10);
 		txtFrutosSecos.setBounds(424, 350, 78, 20);
 		contentPane.add(txtFrutosSecos);
 
@@ -237,7 +256,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnExtraer_11 = new JButton("");
 		panel.add(btnExtraer_11);
 
-		lbluserLoggedName = new JLabel("New label");
+		lbluserLoggedName = new JLabel();
 		lbluserLoggedName.setBounds(413, 296, 171, 37);
 		contentPane.add(lbluserLoggedName);
 
@@ -311,24 +330,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
 
@@ -367,6 +368,60 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		else
 			lbluserLoggedName.setText("User logged : " + name);
+
+	}
+
+	public void showIntoleranceFrutSecos() {
+		txtFrutosSecos.setVisible(true);
+	}
+
+	public void showIntoleranceGlucosa() {
+		txtGlucosa.setVisible(true);
+		
+	}
+
+	public void showIntoleranceGluten() {
+		txtGluten.setVisible(true);
+		
+	}
+
+	public void showIntoleranceSulfitos() {
+		txtSulfitos.setVisible(true);
+		
+	}
+
+
+	public void hideIntolerance() {
+		txtFrutosSecos.setVisible(false);
+		txtGlucosa.setVisible(false);
+		txtGluten.setVisible(false);
+		txtSulfitos.setVisible(false);
+		
+	}
+	
+	public void showIntolerance() {
+		txtFrutosSecos.setVisible(true);
+		txtGlucosa.setVisible(true);
+		txtGluten.setVisible(true);
+		txtSulfitos.setVisible(true);
+		
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 }

@@ -13,12 +13,15 @@ public class Catalog {
 	 *  name - nombre del tipo de moneda
 	 *  price - valor del producto
 	 *  amount - cantidad de productos del mismo tipo
+	 *  intolerances - Listado de Strings que muestran las intolerancias de cada producto
+	 *  
 	 */
 	private int id;		
 	private String key;		
 	private String  name; 
 	private int price;	
 	private int amount;
+	private String[] intolerances;
 
 
 	/*
@@ -27,13 +30,15 @@ public class Catalog {
 	 * @param name - precio del producto
 	 * @param price - cantidad inicial de productos
 	 * @param initialAmount - cantidad inicial de productos
-	 * El constructor no recibe el clasificador, se asigna posteriormente
+	 * @param intolerances - Listado de Strings que muestran las intolerancias de cada producto
+	 * 
 	 */
-	public Catalog(String key, String name,  int price, int initialAmount){
+	public Catalog(String key, String name,  int price, int initialAmount, String[] intolerances){
 		this.key = key;
 		this.name = name;
 		this.amount = initialAmount;
 		this.price = price;
+		this.intolerances = intolerances;
 	}
 	
 	
@@ -111,5 +116,14 @@ public class Catalog {
 			return price;
 		}
 	
-	
+		
+		/*
+		 * Metodos de recogida y el ajuste de las intolerancias del producto
+		 * 
+		 * Solo tiene metodo get por que no es un dato que se pueda cambiar en el programa
+		 * 
+		 */
+		public String[] getIntolerances() {
+			return intolerances;
+		}
 }
