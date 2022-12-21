@@ -67,8 +67,8 @@ public class Controller {
 	
 	// Conexion con visual - usuarios
 	public boolean logIn(String idUser) {
-		if(machine.hasUser(idUser)) {
-			Usuario usr = machine.getUser(idUser);
+		if(machine.hasUserLogged(idUser)) {
+			Usuario usr = machine.getUserLogged(idUser);
 			machine.insertCoin((int) usr.getSaldo());
 			view.updateBalance(Float.toString(usr.getSaldo()));
 		}
@@ -76,7 +76,7 @@ public class Controller {
 	}
 
 	// Conexion con visual - monedas
-	public void insertarMonedas(int value) {
+	public void insertCoins(int value) {
 		VisualMsg msg = machine.insertCoin(value);
 		if(msg.getType() == "MSG")
 			view.updateBalance((String) msg.getMsg());
@@ -143,7 +143,7 @@ public class Controller {
 
 	
 	public Usuario getUser(String idUser) {
-		return machine.getUser(idUser);
+		return machine.getUserLogged(idUser);
 	}
 	// finalizar programa
 
@@ -155,11 +155,16 @@ public class Controller {
 	
 
 	public boolean hasUser(String idcliente) {
-		return machine.hasUser(idcliente);
+		return machine.hasUserLogged(idcliente);
 	}
 
 	public String[] getCurrencyTypes() {
 		return access.getCurrencyTypes();
+	}
+
+	public void setUserLogged(String idcliente) {
+		machine.setUserLogged(idcliente);
+		
 	}
 
 }

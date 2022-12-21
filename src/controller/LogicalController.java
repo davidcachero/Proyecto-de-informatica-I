@@ -13,6 +13,7 @@ public class LogicalController {
 	private HashMap<String, Catalog> catalog;
 	private HashMap<String, Usuario> users;
 	private float balance;
+	private Usuario userLogged;
 
 	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog, HashMap<String, Usuario> users) {
 
@@ -31,7 +32,7 @@ public class LogicalController {
 		
 		currency.put(value, currencyUpdated);
 
-		return new VisualMsg("MSG", Float.toString(balance));
+		return new VisualMsg("MSG", Float.toString(getAllBalance()));
 	}
 
 	public boolean returnCoin() {
@@ -39,20 +40,41 @@ public class LogicalController {
 		return true;
 
 	}
+	
+	private float getAllBalance() {
+		if (userLogged != null) {
+			return balance + userLogged.getSaldo();
+		}
+		return balance;
+	}
+	
+	private void lessBalance(float prodPrice) {
+		
+		if (userLogged != null) {
+			float userBalance = userLogged.getSaldo();
+			
+			if(userBalance > prodPrice) {
+				userLogged.setSaldo(userBalance - prodPrice);
+			}
+			else if (userLogged != null & userBalance <= prodPrice) {
+				userLogged.setSaldo(0);
+				balance = (balance + userBalance) - prodPrice;
+			}
+		}
+		else {
+			balance = balance - prodPrice;
+		}
+		
+	}
 
 	public VisualMsg takeProduct(String prodId) {
 		Catalog prod = catalog.get(prodId);
 
 		// Restar del saldo el precio del producto
-		if (this.balance > prod.getprice())
-			this.balance -= prod.getprice();
+		if (this.getAllBalance() > prod.getprice())
+			lessBalance(prod.getprice());
 		else
 			return new VisualMsg("ERR", "Saldo insuficiente para comprar " + prod.getName());
-
-		// TODO Añades monedas a la caja
-
-		// Restar de la cantidad guardada del producto
-		prod.removeAmount();
 
 		// Enviar producto
 		return new VisualMsg("SENDED", Float.toString(balance));
@@ -91,12 +113,17 @@ public class LogicalController {
 		return catalog.get(prod).getAmount() != 0;
 	}
 
-	public boolean hasUser(String idUser) {
+	public boolean hasUserLogged(String idUser) {
 		return users.containsKey(idUser);
 	}
 
-	public Usuario getUser(String idUser) {
+	public Usuario getUserLogged(String idUser) {
 		return users.get(idUser);
+	}
+
+	public void setUserLogged(String idcliente) {
+		userLogged = users.get(idcliente);
+		
 	}
 
 }
