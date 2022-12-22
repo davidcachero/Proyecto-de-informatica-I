@@ -92,7 +92,6 @@ public class LocalModelConnexion implements I_Data_Access {
 			String[] intolerances = null;
 
 			while ((text = reader.readLine()) != null) {
-				System.out.println("leyendo archivo.........");
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
@@ -110,6 +109,7 @@ public class LocalModelConnexion implements I_Data_Access {
 						, Integer.parseInt(splitData[3])
 						, intolerances
 						);
+
 
 				actualCatalog.put(clave, catalog);
 			}
@@ -193,19 +193,27 @@ public class LocalModelConnexion implements I_Data_Access {
 
 			for (String key : catalog.keySet()) {
 				Catalog value = catalog.get(key);
-				pw.print(key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount());
+
+				String valueString = key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
 				
+				String valueIntolerances = ";";
 				for(String idIntolerance : value.getIntolerances()) {
-					pw.print(idIntolerance);
+					valueIntolerances += idIntolerance +":";
 				}
-				pw.println();
+				valueIntolerances = valueIntolerances.substring(0, valueIntolerances.length()-1);
+				
+
+				pw.println(valueString + valueIntolerances);
+
 			}
 
 			pw.close();
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
+			return false;
 		} catch (Exception e) {
+			System.err.println(e.fillInStackTrace());
 			return false;
 		}
 

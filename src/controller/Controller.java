@@ -113,13 +113,19 @@ public class Controller {
 		return machine.hasProduct(idProduct);
 	}
 
-	public VisualMsg selectProduct(String prod) {
+
+	public VisualMsg selectProduct(String prodId) {
+
 		view.resetIntolerancesVisibility();
+
 		
-		if (machine.hasProduct(prod)) {
+		if (machine.hasProduct(prodId)) {
+			Catalog prod = machine.getProd(prodId);
 			System.out.println("PRODUCTO EXISTE");
-			view.updateIntolerances(machine.getProductIntolerances(prod));
-			return new VisualMsg("PROD", machine.getProd(prod));
+
+			view.updateIntolerances(prod.getIntolerances());
+			return new VisualMsg("PROD", prod);
+
 			
 		} else {
 			return new VisualMsg("ERR", "Producto agotado");
@@ -139,6 +145,7 @@ public class Controller {
 
 				if (msg.getType() == "SENDED") {
 					view.updateBalance((String) msg.getMsg());
+					view.showIntolerance();
 					
 					System.out.println("PRODUCTO VENDIDO :" + prod);
 					
@@ -150,7 +157,6 @@ public class Controller {
 				else {
 					return null;
 				}
-
 			}	
 			else {
 				return new VisualMsg("ERR", "Producto sin existencias");

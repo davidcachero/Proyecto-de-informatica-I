@@ -75,12 +75,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		
 		BufferedImage bufferedImage;
 		try {
-			bufferedImage = ImageIO.read(new File("Files/assets/icon_button/Logo_CoffeeBreak.png"));
+			bufferedImage = ImageIO.read(new File("Files/assets/Logo_CoffeeBreak.png"));
 	        image = bufferedImage.getScaledInstance(2000, 2000, Image.SCALE_DEFAULT);
 	        
 		} catch (IOException e) {
 			System.err.println("fallo icono");
-			image = new ImageIcon("Files/assets/icon_button/Logo_CoffeeBreak.png").getImage();
+			image = new ImageIcon("Files/assets/Logo_CoffeeBreak.png").getImage();
+
 		}
 
 
@@ -257,7 +258,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnExtraer_11 = new JButton("");
 		panel.add(btnExtraer_11);
 
-		lbluserLoggedName = new JLabel("New label");
+		lbluserLoggedName = new JLabel();
 		lbluserLoggedName.setBounds(413, 296, 171, 37);
 		contentPane.add(lbluserLoggedName);
 
@@ -331,24 +332,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
 
@@ -389,34 +372,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 			lbluserLoggedName.setText("User logged : " + name);
 
 	}
-	
-	public void hideIntoleranceFrutSecos() {
-		txtFrutosSecos.setVisible(false);
-	}
-	
-	public void hideIntoleranceGluten() {
-		txtGluten.setVisible(false);
-	}
-	
-	public void show() {
-		txtGlucosa.setVisible(false);
-	}
-	
-	public void hideIntoleranceSulfitos() {
-		txtSulfitos.setVisible(false);
-	}
 
-	public void hideIntolerance() {
-		txtFrutosSecos.setVisible(false);
-		txtGluten.setVisible(false);
-		txtGlucosa.setVisible(false);
-		txtSulfitos.setVisible(false);
-		
-	}
 
 	public void showIntoleranceFrutSecos() {
 		txtFrutosSecos.setVisible(true);
-		
+
 	}
 
 	public void showIntoleranceGlucosa() {
@@ -433,12 +393,39 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setVisible(true);
 		
 	}
+
+
+	public void hideIntolerance() {
+		txtFrutosSecos.setVisible(false);
+		txtGlucosa.setVisible(false);
+		txtGluten.setVisible(false);
+		txtSulfitos.setVisible(false);
+		
+	}
 	
 	public void showIntolerance() {
 		txtFrutosSecos.setVisible(true);
-		txtGluten.setVisible(true);
 		txtGlucosa.setVisible(true);
+		txtGluten.setVisible(true);
 		txtSulfitos.setVisible(true);
 		
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }

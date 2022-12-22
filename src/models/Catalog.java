@@ -13,6 +13,8 @@ public class Catalog {
 	 *  name - nombre del tipo de moneda
 	 *  price - valor del producto
 	 *  amount - cantidad de productos del mismo tipo
+	 *  intolerances - Listado de Strings que muestran las intolerancias de cada producto
+	 *  
 	 */
 	private int id;		
 	private String key;		
@@ -125,7 +127,5 @@ public class Catalog {
 		public String[] getIntolerances() {
 			return intolerances;
 		}
-		
-	
-	
+
 }
