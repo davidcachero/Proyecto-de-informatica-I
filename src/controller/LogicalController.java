@@ -15,12 +15,13 @@ public class LogicalController {
 	private float balance;
 	private Usuario userLogged;
 
-	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog, HashMap<String, Usuario> users) {
+	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog,
+			HashMap<String, Usuario> users) {
 
 		this.currency = currency;
 		this.catalog = catalog;
 		this.users = users;
-		this.balance = 0; 
+		this.balance = 0;
 
 	}
 
@@ -28,7 +29,13 @@ public class LogicalController {
 		balance += value;
 		Currency currencyUpdated = currency.get(value);
 		
-		currencyUpdated.addAmount();
+		System.out.println("MONEDA INSERTADA: " + value);
+		try {
+			currencyUpdated.addAmount();
+		}
+		catch (Exception e) {
+			return new VisualMsg("ERR", "MONEDA DEVUELTA - VALOR INVALIDO");
+		}
 		
 		currency.put(value, currencyUpdated);
 
@@ -40,44 +47,49 @@ public class LogicalController {
 		return new VisualMsg("SENDED", Float.toString(getAllBalance()));
 
 	}
-	
+
 	public float getAllBalance() {
 		if (userLogged != null) {
 			return balance + userLogged.getSaldo();
 		}
 		return balance;
 	}
-	
+
 	private void lessBalance(float prodPrice) {
-		
+
 		if (userLogged != null) {
 			float userBalance = userLogged.getSaldo();
-			
-			if(userBalance > prodPrice) {
+
+			if (userBalance > prodPrice) {
 				userLogged.setSaldo(userBalance - prodPrice);
-			}
-			else if (userLogged != null & userBalance <= prodPrice) {
+			} else if (userLogged != null & userBalance <= prodPrice) {
 				userLogged.setSaldo(0);
 				balance = (balance + userBalance) - prodPrice;
 			}
-		}
-		else {
+		} else {
 			balance = balance - prodPrice;
 		}
-		
+
 	}
 
 	public VisualMsg takeProduct(String prodId) {
 		Catalog prod = catalog.get(prodId);
 
 		// Restar del saldo el precio del producto
-		if (this.getAllBalance() > prod.getprice())
+		if (this.getAllBalance() > prod.getprice()) {
+			System.out.println(
+					"[LC 1] SALDO ANTES DE VENTA: " + getAllBalance() + " -- SE LE RESTA -- " + prod.getprice());
+
 			lessBalance(prod.getprice());
-		else
+
+			System.out.println("[LC 1] SALDO RESTANTE: " + getAllBalance());
+
+			catalog.get(prodId).removeAmount();
+		} else
 			return new VisualMsg("ERR", "Saldo insuficiente para comprar " + prod.getName());
 
 		// Enviar producto
-		return new VisualMsg("SENDED", Float.toString(balance));
+		return new VisualMsg("SENDED", Float.toString(this.getAllBalance()));
 
 	}
 
@@ -96,11 +108,10 @@ public class LogicalController {
 	public HashMap<String, Catalog> getCatalogData() {
 		return catalog;
 	}
-	
+
 	public HashMap<String, Usuario> getUserData() {
 		return users;
 	}
-
 
 	public Catalog getProd(String prod) {
 		return catalog.get(prod);
@@ -132,17 +143,16 @@ public class LogicalController {
 
 	public void setUserLogged(String idcliente) {
 		userLogged = users.get(idcliente);
-		
+
 	}
 
 	public void logOffUser() {
 		userLogged = null;
-		
+
 	}
-	
+
 	public String[] getProductIntolerances(String prod) {
 		return catalog.get(prod).getIntolerances();
 	}
-
 
 }

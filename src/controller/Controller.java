@@ -93,6 +93,8 @@ public class Controller {
 		VisualMsg msg = machine.insertCoin(value);
 		if(msg.getType() == "MSG")
 			view.updateBalance((String) msg.getMsg());
+		else if(msg.getType() == "ERR")
+			view.showError((String) msg.getMsg());
 		
 	}
 
@@ -144,6 +146,7 @@ public class Controller {
 				VisualMsg msg = machine.takeProduct(prod);
 
 				if (msg.getType() == "SENDED") {
+					System.out.println("[controller] SALDO TRAS VENTA: " + msg.getMsg());
 					view.updateBalance((String) msg.getMsg());
 					view.showIntolerance();
 					

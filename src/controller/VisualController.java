@@ -38,7 +38,7 @@ public class VisualController implements ActionListener {
 
 		screen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
-				controller.saveData();
+				// controller.saveData();
 				System.out.println("CERRANDO PROGRAMA");
 			}
 		});
@@ -68,15 +68,20 @@ public class VisualController implements ActionListener {
 		}
 		///// Sistema para recoger el número de tarjeta
 		if (e.getActionCommand() == "target") {
-			String idcliente = (String) JOptionPane.showInputDialog(screen, "Introduce el ID de tu tarjeta");
+			String idcliente = (String) JOptionPane.showInputDialog(screen, "Introduce el ID de tu tarjeta", "Tarjetas",
+					JOptionPane.INFORMATION_MESSAGE);
 
-			if (!controller.hasUser(idcliente)) {
-				JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
-			} else {
-				controller.setUserLogged(idcliente);
-				screen.setUserLoggedName(controller.getUser(idcliente).getName());
-			}
+			if (idcliente != null) {
+				System.out.println("ENTRANDO AL USUARIO POR ID: " + idcliente);
+				if (!controller.hasUser(idcliente)) {
+					JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					controller.setUserLogged(idcliente);
+					screen.setUserLoggedName(controller.getUser(idcliente).getName());
+				}
+			} 
 		}
+
 	}
 
 	public void takeProduct(String value) {
@@ -106,7 +111,7 @@ public class VisualController implements ActionListener {
 			Catalog prod = (Catalog) msg.getMsg();
 			screen.setSelectedProd(prod.getKey());
 			screen.setTextFieldProduct(prod.getName());
-			screen.setTextFieldStatus("precio: " + Integer.toString(prod.getprice()) + " ctms");
+			screen.setTextFieldStatus("Producto " + prod.getName() + " comprado");
 
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(value);
@@ -144,36 +149,41 @@ public class VisualController implements ActionListener {
 
 	}
 
+	public void showError(String err) {
+		JOptionPane.showMessageDialog(screen, err, "Error", JOptionPane.ERROR_MESSAGE);
+
+	}
+
 	public void updateIntolerances(String[] productIntolerances) {
-		
+
 		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
-		
+
 		if (listTypes.contains("1")) {
 			screen.showIntoleranceFrutSecos();
-			
+
 		}
 		if (listTypes.contains("2")) {
 			screen.showIntoleranceGlucosa();
-			
-		} 
+
+		}
 		if (listTypes.contains("3")) {
 			screen.showIntoleranceGluten();
-			
-		} 
+
+		}
 		if (listTypes.contains("4")) {
 			screen.showIntoleranceSulfitos();
-			
+
 		}
 	}
 
 	public void resetIntolerancesVisibility() {
 		screen.hideIntolerance();
-		
+
 	}
 
 	public void showIntolerance() {
 		screen.showIntolerance();
-		
+
 	}
 
 }
