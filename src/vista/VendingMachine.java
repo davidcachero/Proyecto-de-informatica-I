@@ -199,10 +199,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setBounds(637, 350, 50, 20);
 		contentPane.add(txtSulfitos);
 
-		txtFrutosSecos = new JTextField("Frutos secos");
+		txtFrutosSecos = new JTextField();
 		txtFrutosSecos.setEditable(false);
 		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
-		//txtFrutosSecos.setColumns(10);
+		txtFrutosSecos.setText("Frutos secos");
+		txtFrutosSecos.setColumns(10);
 		txtFrutosSecos.setBounds(424, 350, 78, 20);
 		contentPane.add(txtFrutosSecos);
 
