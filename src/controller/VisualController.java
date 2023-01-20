@@ -57,13 +57,13 @@ public class VisualController implements ActionListener {
 
 	}
 	
-	public Image getImage(String name) { //Logo_CoffeeBreak
+	public Image getImage(String name, String format, int x , int y) { //Logo_CoffeeBreak
 		Image image;
 		
 		BufferedImage bufferedImage;
 		try {
-			bufferedImage = ImageIO.read(new File("Files/assets/"+ name +".png"));
-	        image = bufferedImage.getScaledInstance(2000, 2000, Image.SCALE_DEFAULT);
+			bufferedImage = ImageIO.read(new File("Files/assets/"+ name + "." + format));
+	        image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 	        
 		} catch (IOException e) {
 			System.err.println("fallo icono");

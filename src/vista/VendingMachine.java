@@ -73,8 +73,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		
 		// metadata
 		setFont(new Font("Dialog", Font.PLAIN, 16));
-		setTitle("COFFEEBREAK");
-		setIconImage(controller.getImage("Logo_CoffeeBreak"));
+		setTitle("COFFEE BREAK");
+		setIconImage(controller.getImage("Logo_CoffeeBreak" ,"png", 2000, 2000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
 		buildView();
@@ -208,34 +208,54 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 
-		btnCocaCola = new JButton("CocaCola");
+		btnCocaCola = new JButton();
+		btnCocaCola.setIcon(new ImageIcon(controller.getImage("product_logo/CC" , "jpg" , 130, 110)));
+		btnCocaCola.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnCocaCola);
 
-		btnFantal = new JButton("fanta limon");
+		btnFantal = new JButton();
+		btnFantal.setIcon(new ImageIcon(controller.getImage("product_logo/FL" , "PNG" , 150, 120)));
+		btnFantal.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnFantal);
 
-		btnNestea = new JButton("Nestea");
+		btnNestea = new JButton();
+		btnNestea.setIcon(new ImageIcon(controller.getImage("product_logo/NT" , "JPG" , 120, 120)));
+		btnNestea.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnNestea);
 
-		btnAgua = new JButton("Agua");
+		btnAgua = new JButton();
+		btnAgua.setIcon(new ImageIcon(controller.getImage("product_logo/SC" , "jpg" , 120, 120)));
+		btnAgua.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnAgua);
 
-		btnPepsi = new JButton("Pepsi"); // En datos de prueba no existe
+		btnPepsi = new JButton(); // En datos de prueba no existe
+		btnPepsi.setIcon(new ImageIcon(controller.getImage("product_logo/PP" , "JPG" , 120, 120)));
+		btnPepsi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnPepsi);
 
-		btnAquarius = new JButton("Aquarius");
+		btnAquarius = new JButton();
+		btnAquarius.setIcon(new ImageIcon(controller.getImage("product_logo/AQ" , "jpg" , 120, 120)));
+		btnAquarius.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnAquarius);
 
-		btnCafe = new JButton("Cafe");
+		btnCafe = new JButton();
+		btnCafe.setIcon(new ImageIcon(controller.getImage("product_logo/NCAFE" , "jpg" , 120, 120)));
+		btnCafe.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnCafe);
 
-		btnColacao = new JButton("Colacao");
+		btnColacao = new JButton();
 		panel.add(btnColacao);
+		btnColacao.setIcon(new ImageIcon(controller.getImage("product_logo/CCao" , "jpg" , 120, 120)));
+		btnColacao.setHorizontalAlignment(SwingConstants.CENTER);
 
-		btnNesquik = new JButton("Nesquik"); // En datos de prueba no existe
+		btnNesquik = new JButton(); // En datos de prueba no existe
+		btnNesquik.setIcon(new ImageIcon(controller.getImage("product_logo/NK" , "jpg" , 120, 120)));
+		btnNesquik.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnNesquik);
 
-		btnFantaN = new JButton("fanta naranja"); // En datos de prueba excede saldo
+		btnFantaN = new JButton(); // En datos de prueba excede saldo
+		btnFantaN.setIcon(new ImageIcon(controller.getImage("product_logo/FN" , "jpg" , 120, 120)));
+		btnFantaN.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnFantaN);
 
 		btnExtraer_6 = new JButton("");
