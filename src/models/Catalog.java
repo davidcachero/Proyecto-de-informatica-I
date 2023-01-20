@@ -19,7 +19,7 @@ public class Catalog {
 	private int id;		
 	private String key;		
 	private String  name; 
-	private int price;	
+	private Float price;	
 	private int amount;
 	private String[] intolerances;
 
@@ -33,7 +33,7 @@ public class Catalog {
 	 * @param intolerances - Listado de Strings que muestran las intolerancias de cada producto
 	 * 
 	 */
-	public Catalog(String key, String name,  int price, int initialAmount, String[] intolerances){
+	public Catalog(String key, String name,  Float price, int initialAmount, String[] intolerances){
 		this.key = key;
 		this.name = name;
 		this.amount = initialAmount;
@@ -110,11 +110,11 @@ public class Catalog {
 		 * Metodos de recogida y el ajuste de la cantidad del producto
 		 * 
 		 */
-		public void setPrice(int value) {
+		public void setPrice(Float value) {
 			this.price = value;
 		}
 		
-		public int getprice() {
+		public Float getprice() {
 			return price;
 		}
 		

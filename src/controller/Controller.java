@@ -21,7 +21,7 @@ public class Controller {
 	// Inicializar conexiones
 	public void start() {
 
-		HashMap<Integer, Currency> currency = access.getCurrencyData();
+		HashMap<Float, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
 		HashMap<String, Usuario> users = access.getUsersData();
 
@@ -67,14 +67,14 @@ public class Controller {
 
 	public void setUserLogged(String idcliente) {
 		machine.setUserLogged(idcliente);
-		view.updateBalance(Float.toString(machine.getAllBalance()));
+		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
 		
 	}
 
 	public void logOffUser() {
 		machine.logOffUser();
-		view.updateBalance(Float.toString(machine.getAllBalance()));
+		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(null);
 		
 	}
@@ -89,10 +89,17 @@ public class Controller {
 
 	// Conexion con visual - monedas
 	
-	public void insertCoins(int value) {
+	public void insertCoins(Float value) {
 		VisualMsg msg = machine.insertCoin(value);
-		if(msg.getType() == "MSG")
-			view.updateBalance((String) msg.getMsg());
+		if(msg.getType() == "MSG") {
+
+			System.out.println(".....................................");
+			System.out.println(msg.getMsg());
+			System.out.println((Float) msg.getMsg());
+			System.out.println(msg.getMsg().getClass().getName());
+			System.out.println(".....................................");
+			view.updateBalance((Float) msg.getMsg());
+		}
 		else if(msg.getType() == "ERR")
 			view.showError((String) msg.getMsg());
 		
@@ -130,7 +137,7 @@ public class Controller {
 
 			
 		} else {
-			return new VisualMsg("ERR", "Producto agotado");
+			return new VisualMsg("ERR", "");
 			
 		}
 	}
@@ -145,9 +152,9 @@ public class Controller {
 
 				VisualMsg msg = machine.takeProduct(prod);
 
-				if (msg.getType() == "SENDED") {
+				if (msg.getType() == "SENT") {
 					System.out.println("[controller] SALDO TRAS VENTA: " + msg.getMsg());
-					view.updateBalance((String) msg.getMsg());
+					view.updateBalance((Float) msg.getMsg());
 					view.showIntolerance();
 					
 					System.out.println("PRODUCTO VENDIDO :" + prod);

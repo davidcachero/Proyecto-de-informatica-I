@@ -71,24 +71,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		// set components
 		this.controller = controller;
 		
-		Image image;
-		
-		BufferedImage bufferedImage;
-		try {
-			bufferedImage = ImageIO.read(new File("Files/assets/Logo_CoffeeBreak.png"));
-	        image = bufferedImage.getScaledInstance(2000, 2000, Image.SCALE_DEFAULT);
-	        
-		} catch (IOException e) {
-			System.err.println("fallo icono");
-			image = new ImageIcon("Files/assets/Logo_CoffeeBreak.png").getImage();
-
-		}
-
-
 		// metadata
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setTitle("COFFEEBREAK");
-		setIconImage(image);
+		setIconImage(controller.getImage("Logo_CoffeeBreak"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
 		buildView();
@@ -348,12 +334,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 
 	public void setTextFieldBalance(String newBalance) {
-		txfSaldo.setText("Saldo: " + newBalance + " ctms");
+		txfSaldo.setText("Saldo: " + newBalance + " euros");
 
 	}
 
-	public void setTextFieldBalance(int newBalance) {
-		txfSaldo.setText("Saldo: " + Integer.toString(newBalance) + " ctms");
+	public void setTextFieldBalance(Float newBalance) {
+		txfSaldo.setText("Saldo: " + Float.toString(newBalance) + " euros");
 
 	}
 

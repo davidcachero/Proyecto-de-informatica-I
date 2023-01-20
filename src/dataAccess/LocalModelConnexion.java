@@ -42,9 +42,9 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	// data files
 
-	public HashMap<Integer, Currency> getCurrencyData() {
+	public HashMap<Float, Currency> getCurrencyData() {
 
-		HashMap<Integer, Currency> actualCurrency = new HashMap<Integer, Currency>();
+		HashMap<Float, Currency> actualCurrency = new HashMap<Float, Currency>();
 		File FileCurrency = new File(currencyAddress);
 
 		BufferedReader reader = null;
@@ -53,12 +53,12 @@ public class LocalModelConnexion implements I_Data_Access {
 			reader = new BufferedReader(new FileReader(FileCurrency));
 			String text = null;
 			Currency currency = null;
-			int id = 0;
+			float id = 0;
 
 			while ((text = reader.readLine()) != null) {
 
 				String[] splitData = text.split(";");
-				id = Integer.parseInt(splitData[1]);
+				id = Float.parseFloat(splitData[1]);
 				currency = new Currency(splitData[0], id, Integer.parseInt(splitData[2]));
 
 				actualCurrency.put(id, currency);
@@ -105,7 +105,7 @@ public class LocalModelConnexion implements I_Data_Access {
 				catalog = new Catalog (
 						clave
 						, splitData[1].toString()
-						, Integer.parseInt(splitData[2])
+						, Float.parseFloat(splitData[2])
 						, Integer.parseInt(splitData[3])
 						, intolerances
 						);
@@ -157,7 +157,7 @@ public class LocalModelConnexion implements I_Data_Access {
 		return actualUsers;
 	}
 
-	public boolean saveCurrency(HashMap<Integer, Currency> currency) {
+	public boolean saveCurrency(HashMap<Float, Currency> currency) {
 
 		boolean todoOK = true;
 		File FileCurrency = new File(currencyAddress);
@@ -165,7 +165,7 @@ public class LocalModelConnexion implements I_Data_Access {
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
 
-			for (Integer key : currency.keySet()) {
+			for (Float key : currency.keySet()) {
 				Currency value = currency.get(key);
 				pw.println(value.getName() + ";" + key + ";" + value.getAmount());
 			}

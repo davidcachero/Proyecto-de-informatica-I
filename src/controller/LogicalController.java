@@ -9,13 +9,13 @@ import models.VisualMsg;
 
 public class LogicalController {
 
-	private HashMap<Integer, Currency> currency;
+	private HashMap<Float, Currency> currency;
 	private HashMap<String, Catalog> catalog;
 	private HashMap<String, Usuario> users;
 	private float balance;
 	private Usuario userLogged;
 
-	public LogicalController(HashMap<Integer, Currency> currency, HashMap<String, Catalog> catalog,
+	public LogicalController(HashMap<Float, Currency> currency, HashMap<String, Catalog> catalog,
 			HashMap<String, Usuario> users) {
 
 		this.currency = currency;
@@ -25,7 +25,7 @@ public class LogicalController {
 
 	}
 
-	public VisualMsg insertCoin(int value) {
+	public VisualMsg insertCoin(Float value) {
 		balance += value;
 		Currency currencyUpdated = currency.get(value);
 		
@@ -39,12 +39,13 @@ public class LogicalController {
 		
 		currency.put(value, currencyUpdated);
 
-		return new VisualMsg("MSG", Float.toString(getAllBalance()));
+
+		return new VisualMsg("MSG", getAllBalance());
 	}
 
 	public VisualMsg returnCoin() {
 		balance = 0;
-		return new VisualMsg("SENDED", Float.toString(getAllBalance()));
+		return new VisualMsg("SENT", getAllBalance());
 
 	}
 
@@ -89,7 +90,7 @@ public class LogicalController {
 			return new VisualMsg("ERR", "Saldo insuficiente para comprar " + prod.getName());
 
 		// Enviar producto
-		return new VisualMsg("SENDED", Float.toString(this.getAllBalance()));
+		return new VisualMsg("SENT", this.getAllBalance());
 
 	}
 
@@ -101,7 +102,7 @@ public class LogicalController {
 		return this.balance;
 	}
 
-	public HashMap<Integer, Currency> getCurrencyData() {
+	public HashMap<Float, Currency> getCurrencyData() {
 		return currency;
 	}
 
@@ -121,7 +122,7 @@ public class LogicalController {
 		return catalog.get(prod).getName();
 	}
 
-	public int getProdPrice(String prod) {
+	public Float getProdPrice(String prod) {
 		return catalog.get(prod).getprice();
 	}
 
