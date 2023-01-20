@@ -48,10 +48,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JButton btnExtraer_11;
 	private JButton btnDevolverDinero;
 	private JButton btnPagar;
-	private JTextField txtGlucosa;
-	private JTextField txtGluten;
-	private JTextField txtSulfitos;
-	private JTextField txtFrutosSecos;
+	private JButton btnGlucosa;
+	private JButton btnGluten;
+	private JButton btnSulfitos;
+	private JButton btnFrutosSecos;
 	private JMenuBar menu;
 	private JMenu pagos;
 	private JMenuItem tarjeta;
@@ -162,37 +162,38 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnPagar.setBounds(403, 250, 284, 35);
 		contentPane.add(btnPagar);
 
-		txtGlucosa = new JTextField();
-		txtGlucosa.setEditable(false);
-		txtGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGlucosa.setText("Glucosa");
-		txtGlucosa.setBounds(516, 350, 50, 20);
-		contentPane.add(txtGlucosa);
-		txtGlucosa.setColumns(10);
+		btnGlucosa = new JButton();
+		btnGlucosa.setLocation(525, 362);
+		btnGlucosa.setSize(33, 35);
+		btnGlucosa.setEnabled(false);
+		btnGlucosa.setIcon(new ImageIcon(controller.getImage("logo_intolerance/Glucosa" , "png" , 30, 30)));
+		btnGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(btnGlucosa);
 
-		txtGluten = new JTextField();
-		txtGluten.setEditable(false);
-		txtGluten.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGluten.setText("Gluten");
-		txtGluten.setColumns(10);
-		txtGluten.setBounds(576, 350, 50, 20);
-		contentPane.add(txtGluten);
+		btnGluten = new JButton();
+		btnGluten.setLocation(568, 362);
+		btnGluten.setSize(33, 35);
+		btnGluten.setEnabled(false);
+		btnGluten.setIcon(new ImageIcon(controller.getImage("logo_intolerance/Celiaco" , "png" , 20, 20)));
+		btnGluten.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(btnGluten);
 
-		txtSulfitos = new JTextField();
-		txtSulfitos.setEditable(false);
-		txtSulfitos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSulfitos.setText("Sulfitos");
-		txtSulfitos.setColumns(10);
-		txtSulfitos.setBounds(637, 350, 50, 20);
-		contentPane.add(txtSulfitos);
+		btnSulfitos = new JButton();
+		btnSulfitos.setLocation(611, 362);
+		btnSulfitos.setSize(33, 35);
+		btnSulfitos.setEnabled(false);
+		btnSulfitos.setIcon(new ImageIcon(controller.getImage("logo_intolerance/Sulfitos" , "png" , 20, 20)));
+		btnSulfitos.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(btnSulfitos);
 
-		txtFrutosSecos = new JTextField();
-		txtFrutosSecos.setEditable(false);
-		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFrutosSecos.setText("Frutos secos");
-		txtFrutosSecos.setColumns(10);
-		txtFrutosSecos.setBounds(424, 350, 78, 20);
-		contentPane.add(txtFrutosSecos);
+		btnFrutosSecos = new JButton();
+		btnFrutosSecos.setBackground(Color.WHITE);
+		btnFrutosSecos.setLocation(654, 362);
+		btnFrutosSecos.setSize(33, 35);
+		btnFrutosSecos.setEnabled(false);
+		btnFrutosSecos.setIcon(new ImageIcon(controller.getImage("logo_intolerance/FrutosSecos" , "png" , 20, 20)));
+		btnFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(btnFrutosSecos);
 
 		JButton btnLogOff = new JButton("LOG OFF");
 		btnLogOff.addActionListener(new ActionListener() {
@@ -381,39 +382,39 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 
 	public void showIntoleranceFrutSecos() {
-		txtFrutosSecos.setVisible(true);
+		btnFrutosSecos.setVisible(true);
 
 	}
 
 	public void showIntoleranceGlucosa() {
-		txtGlucosa.setVisible(true);
+		btnGlucosa.setVisible(true);
 		
 	}
 
 	public void showIntoleranceGluten() {
-		txtGluten.setVisible(true);
+		btnGluten.setVisible(true);
 		
 	}
 
 	public void showIntoleranceSulfitos() {
-		txtSulfitos.setVisible(true);
+		btnSulfitos.setVisible(true);
 		
 	}
 
 
 	public void hideIntolerance() {
-		txtFrutosSecos.setVisible(false);
-		txtGlucosa.setVisible(false);
-		txtGluten.setVisible(false);
-		txtSulfitos.setVisible(false);
+		btnFrutosSecos.setVisible(false);
+		btnGlucosa.setVisible(false);
+		btnGluten.setVisible(false);
+		btnSulfitos.setVisible(false);
 		
 	}
 	
 	public void showIntolerance() {
-		txtFrutosSecos.setVisible(true);
-		txtGlucosa.setVisible(true);
-		txtGluten.setVisible(true);
-		txtSulfitos.setVisible(true);
+		btnFrutosSecos.setVisible(true);
+		btnGlucosa.setVisible(true);
+		btnGluten.setVisible(true);
+		btnSulfitos.setVisible(true);
 		
 	}
 
