@@ -1,12 +1,19 @@
 package controller;
 
 import java.util.HashMap;
-
 import dataAccess.LocalModelConnexion;
 import models.Catalog;
 import models.Currency;
 import models.Usuario;
 import models.VisualMsg;
+
+/**
+ * 
+ * @author equipoCoffeeBreak
+ *
+ *         El controlador principal es el que se encarga de dirigir la logica
+ *         del programa y conectar el resto de controladores.
+ */
 
 public class Controller {
 
@@ -19,6 +26,7 @@ public class Controller {
 	}
 
 	// Inicializar conexiones
+
 	public void start() {
 
 		HashMap<Float, Currency> currency = access.getCurrencyData();
@@ -36,7 +44,6 @@ public class Controller {
 				System.out.println("BUILDING WINDOW..........");
 				view.open();
 
-
 			} else {
 				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
@@ -47,37 +54,23 @@ public class Controller {
 		}
 	}
 
-	// Conexion con accesos - monedas
-	public void saveData() {
-
-		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
-		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
-		boolean saveUsers = access.saveUser(machine.getUserData());
-
-		if (saveCurrency && saveCatalog && saveUsers) {
-			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
-
-		} else {
-			System.err.println("[DEV][ERROR] BBDD no se ha podido actualizar");
-		}
-
-	}
-	
 	// Conexion con visual - usuarios
 
 	public void setUserLogged(String idcliente) {
 		machine.setUserLogged(idcliente);
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
-		
+
 	}
 
 	public void logOffUser() {
 		machine.logOffUser();
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(null);
-		
+
 	}
+
+	// Conexion con logica - usuarios
 
 	public Usuario getUser(String idUser) {
 		return machine.getUserLogged();
@@ -88,10 +81,10 @@ public class Controller {
 	}
 
 	// Conexion con visual - monedas
-	
+
 	public void insertCoins(Float value) {
 		VisualMsg msg = machine.insertCoin(value);
-		if(msg.getType() == "MSG") {
+		if (msg.getType() == "MSG") {
 
 			System.out.println(".....................................");
 			System.out.println(msg.getMsg());
@@ -99,10 +92,9 @@ public class Controller {
 			System.out.println(msg.getMsg().getClass().getName());
 			System.out.println(".....................................");
 			view.updateBalance((Float) msg.getMsg());
-		}
-		else if(msg.getType() == "ERR")
+		} else if (msg.getType() == "ERR")
 			view.showError((String) msg.getMsg());
-		
+
 	}
 
 	public VisualMsg returnCoins() {
@@ -117,17 +109,33 @@ public class Controller {
 		return access.getCurrencyTypes();
 	}
 
+	// Conexion con accesos - monedas
+
+	public void saveData() {
+
+		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
+		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
+		boolean saveUsers = access.saveUser(machine.getUserData());
+
+		if (saveCurrency && saveCatalog && saveUsers) {
+			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
+
+		} else {
+			System.err.println("[DEV][ERROR] BBDD no se ha podido actualizar");
+		}
+
+	}
+
 	// Conexion con accesos - productos
+
 	public boolean comprobarExistencias(String idProduct) {
 		return machine.hasProduct(idProduct);
 	}
-
 
 	public VisualMsg selectProduct(String prodId) {
 
 		view.resetIntolerancesVisibility();
 
-		
 		if (machine.hasProduct(prodId)) {
 			Catalog prod = machine.getProd(prodId);
 			System.out.println("PRODUCTO EXISTE");
@@ -135,18 +143,17 @@ public class Controller {
 			view.updateIntolerances(prod.getIntolerances());
 			return new VisualMsg("PROD", prod);
 
-			
 		} else {
 			return new VisualMsg("ERR", "");
-			
+
 		}
 	}
 
 	public VisualMsg sellProduct(String prod) {
-		
+
 		view.resetIntolerancesVisibility();
 		System.out.println("COMPRANDO........ " + prod);
-		
+
 		if (machine.hasProduct(prod)) {
 			if (machine.productNoEmpty(prod)) {
 
@@ -156,36 +163,29 @@ public class Controller {
 					System.out.println("[controller] SALDO TRAS VENTA: " + msg.getMsg());
 					view.updateBalance((Float) msg.getMsg());
 					view.showIntolerance();
-					
+
 					System.out.println("PRODUCTO VENDIDO :" + prod);
-					
+
 					return new VisualMsg("PROD", machine.getProd(prod));
-				}
-				else if (msg.getType() == "ERR") {
+				} else if (msg.getType() == "ERR") {
 					return msg;
-				}
-				else {
+				} else {
 					return null;
 				}
-			}	
-			else {
+			} else {
 				return new VisualMsg("ERR", "Producto sin existencias");
 			}
 		} else {
 			return new VisualMsg("ERR", "Producto no seleccionado");
-			
+
 		}
 	}
 
-	
-
-	// finalizar programa
+	// Finaliza el programa
 
 	public void endProgram() {
-		
+
 		System.exit(0);
 	}
-	
-	
-	
+
 }

@@ -7,6 +7,15 @@ import models.Currency;
 import models.Usuario;
 import models.VisualMsg;
 
+/**
+ * 
+ * @author equipoCoffeeBreak
+ * 
+ *         La logica de todo el programa, toda la logica se almacenado en esta
+ *         misma clase, esta clase trabaja de manera directa con el modelo
+ *
+ */
+
 public class LogicalController {
 
 	private HashMap<Float, Currency> currency;
@@ -25,20 +34,19 @@ public class LogicalController {
 
 	}
 
+	// Insertar moneda y guardarla en la misma sesion
 	public VisualMsg insertCoin(Float value) {
 		balance += value;
 		Currency currencyUpdated = currency.get(value);
-		
+
 		System.out.println("MONEDA INSERTADA: " + value);
 		try {
 			currencyUpdated.addAmount();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return new VisualMsg("ERR", "MONEDA DEVUELTA - VALOR INVALIDO");
 		}
-		
-		currency.put(value, currencyUpdated);
 
+		currency.put(value, currencyUpdated);
 
 		return new VisualMsg("MSG", getAllBalance());
 	}
@@ -49,6 +57,7 @@ public class LogicalController {
 
 	}
 
+// Consultar el saldo total contemplando monedas y el dinero del usuario
 	public float getAllBalance() {
 		if (userLogged != null) {
 			return balance + userLogged.getSaldo();
@@ -73,6 +82,7 @@ public class LogicalController {
 
 	}
 
+	// Comprobacion de la existencia del producto y la capacidad de compra
 	public VisualMsg takeProduct(String prodId) {
 		Catalog prod = catalog.get(prodId);
 
@@ -97,6 +107,8 @@ public class LogicalController {
 	public boolean hasProduct(String idProduct) {
 		return catalog.containsKey(idProduct);
 	}
+
+	// Conjunto GETTERS & SETTERS
 
 	public float getTotalCurrency() {
 		return this.balance;

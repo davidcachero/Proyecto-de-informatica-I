@@ -22,12 +22,12 @@ import models.VisualMsg;
 import vista.VendingMachine;
 
 public class VisualController implements ActionListener {
-
-	/*
-	 * TODO GENERATE ATRIBUTES
+	/**
 	 * 
-	 * local user data local screen data
-	 * 
+	 * @author equipoCoffeeBreak
+	 *
+	 *         Es el controlador de la parte visual del programa y interactua con la
+	 *         vista
 	 */
 	Controller controller;
 	VendingMachine screen;
@@ -40,6 +40,8 @@ public class VisualController implements ActionListener {
 		this.screen = new VendingMachine(this);
 		df = new DecimalFormat("0.00");
 	}
+
+	// Abre la ventana al iniciar la aplicacion
 
 	public void open() {
 
@@ -56,30 +58,33 @@ public class VisualController implements ActionListener {
 		screen.hideIntolerance();
 
 	}
-	
-	public Image getImage(String name, String format, int x , int y) { //Logo_CoffeeBreak
+
+	// Inserccion de las imagenes guardadas en archivos
+
+	public Image getImage(String name, String format, int x, int y) { // Utilizacion del Logo_CoffeeBreak
 		Image image;
-		
+
 		BufferedImage bufferedImage;
 		try {
-			bufferedImage = ImageIO.read(new File("Files/assets/"+ name + "." + format));
-	        image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
-	        
+			bufferedImage = ImageIO.read(new File("Files/assets/" + name + "." + format));
+			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
+
 		} catch (IOException e) {
 			System.err.println("fallo icono");
-			image = new ImageIcon("Files/assets/"+ name +".png").getImage();
+			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
 
 		}
-		
+
 		return image;
 	}
 
+	// Acciones para interactuar con la vista con los datos
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		String[] typeCurrency = controller.getCurrencyTypes();
 
-		////////// Sistema para introducir las monedas
+		// Sistema para introducir las monedas
 		if (e.getActionCommand() == "monedas") {
 
 			String optionstr = (String) JOptionPane.showInputDialog(screen, "Selecciona una moneda", "Monedas",
@@ -92,7 +97,7 @@ public class VisualController implements ActionListener {
 			}
 
 		}
-		///// Sistema para recoger el número de tarjeta
+		// Sistema para recoger el número de tarjeta
 		if (e.getActionCommand() == "target") {
 			String idcliente = (String) JOptionPane.showInputDialog(screen, "Introduce el ID de tu tarjeta", "Tarjetas",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -106,11 +111,12 @@ public class VisualController implements ActionListener {
 					controller.setUserLogged(idcliente);
 					screen.setUserLoggedName(controller.getUser(idcliente).getName());
 				}
-			} 
+			}
 		}
 
 	}
 
+// Interaccion con datos de los productos
 	public void takeProduct(String value) {
 		VisualMsg msg = controller.selectProduct(value);
 
@@ -152,6 +158,7 @@ public class VisualController implements ActionListener {
 
 	}
 
+// Interaccion con datos del saldo introducido
 	public void returnCoins() {
 		VisualMsg msg = controller.returnCoins();
 		if (msg.getType() == "SENT") {
@@ -167,6 +174,7 @@ public class VisualController implements ActionListener {
 
 	}
 
+// Interaccion con los datos de los usuarios
 	public void logOffUser() {
 		controller.logOffUser();
 
@@ -177,11 +185,13 @@ public class VisualController implements ActionListener {
 
 	}
 
+// Mostrar los errores por una pantalla distinta
 	public void showError(String err) {
 		JOptionPane.showMessageDialog(screen, err, "Error", JOptionPane.ERROR_MESSAGE);
 
 	}
 
+// Interaccion con los datos de las intolerancias
 	public void updateIntolerances(String[] productIntolerances) {
 
 		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
