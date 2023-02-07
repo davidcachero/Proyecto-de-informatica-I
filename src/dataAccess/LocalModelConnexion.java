@@ -4,14 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import auxiliar.I_Data_Access;
 import models.Catalog;
@@ -67,6 +62,8 @@ public class LocalModelConnexion implements I_Data_Access {
 				actualCurrency.put(id, currency);
 
 			}
+			
+		System.out.println("[PROCESS FILES] datos de Currency descargados");
 
 		} catch (FileNotFoundException e) {
 			System.err.println("[ERROR FILES] CONNECTIONS");
@@ -103,12 +100,13 @@ public class LocalModelConnexion implements I_Data_Access {
 				} catch (IndexOutOfBoundsException e) {
 					intolerances = new String[0];
 				}
-				System.out.println(clave);
 				catalog = new Catalog(clave, splitData[1].toString(), Float.parseFloat(splitData[2]),
 						Integer.parseInt(splitData[3]), intolerances);
 
 				actualCatalog.put(clave, catalog);
 			}
+
+			System.out.println("[PROCESS FILES] datos de Catalog descargados");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -132,7 +130,6 @@ public class LocalModelConnexion implements I_Data_Access {
 			String clave = null;
 
 			while ((text = reader.readLine()) != null) {
-				System.out.println("leyendo archivo.........");
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
@@ -141,6 +138,8 @@ public class LocalModelConnexion implements I_Data_Access {
 				actualUsers.put(clave, users);
 			}
 
+			System.out.println("[PROCESS FILES] datos de Users descargados");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -164,6 +163,8 @@ public class LocalModelConnexion implements I_Data_Access {
 			}
 
 			pw.close();
+
+			System.out.println("[PROCESS FILES] datos de Currency guardados");
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -202,6 +203,8 @@ public class LocalModelConnexion implements I_Data_Access {
 
 			pw.close();
 
+			System.out.println("[PROCESS FILES] datos de Catalog guardados");
+
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 			return false;
@@ -228,6 +231,9 @@ public class LocalModelConnexion implements I_Data_Access {
 			}
 
 			pw.close();
+
+			System.out.println("[PROCESS FILES] datos de Users guardados");
+			
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (Exception e) {
@@ -253,6 +259,8 @@ public class LocalModelConnexion implements I_Data_Access {
 
 			reader.close();
 
+			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");
+			
 			return types;
 
 		} catch (FileNotFoundException e) {

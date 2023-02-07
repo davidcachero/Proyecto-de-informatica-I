@@ -41,15 +41,14 @@ public class Controller {
 			if (machine != null) {
 
 				view = new VisualController(this);
-				System.out.println("BUILDING WINDOW..........");
 				view.open();
 
 			} else {
-				System.err.println("LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
+				System.err.println("[ERROR PC] LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
 			}
 		} else {
-			System.err.println("ACCESS DATA NO\nEND PROGRAM");
+			System.err.println("[ERROR PC] ACCESS DATA NO\nEND PROGRAM");
 			System.exit(1);
 		}
 	}
@@ -82,19 +81,9 @@ public class Controller {
 
 	// Conexion con visual - monedas
 
-	public void insertCoins(Float value) {
-		VisualMsg msg = machine.insertCoin(value);
-		if (msg.getType() == "MSG") {
-
-			System.out.println(".....................................");
-			System.out.println(msg.getMsg());
-			System.out.println((Float) msg.getMsg());
-			System.out.println(msg.getMsg().getClass().getName());
-			System.out.println(".....................................");
-			view.updateBalance((Float) msg.getMsg());
-		} else if (msg.getType() == "ERR")
-			view.showError((String) msg.getMsg());
-
+	public VisualMsg insertCoins(Float value) {
+		return machine.insertCoin(value);
+		
 	}
 
 	public VisualMsg returnCoins() {
@@ -118,10 +107,10 @@ public class Controller {
 		boolean saveUsers = access.saveUser(machine.getUserData());
 
 		if (saveCurrency && saveCatalog && saveUsers) {
-			System.out.println("[DEV][PROCESS] BBDD ACTUALIZADA");
+			System.out.println("[PROCESS PC] BBDD ACTUALIZADA");
 
 		} else {
-			System.err.println("[DEV][ERROR] BBDD no se ha podido actualizar");
+			System.err.println("[ERROR PC] BBDD no se ha podido actualizar");
 		}
 
 	}
@@ -138,7 +127,7 @@ public class Controller {
 
 		if (machine.hasProduct(prodId)) {
 			Catalog prod = machine.getProd(prodId);
-			System.out.println("PRODUCTO EXISTE");
+			System.out.println("[PROCESS PC] PRODUCTO EXISTE");
 
 			view.updateIntolerances(prod.getIntolerances());
 			return new VisualMsg("PROD", prod);
@@ -160,17 +149,17 @@ public class Controller {
 				VisualMsg msg = machine.takeProduct(prod);
 
 				if (msg.getType() == "SENT") {
-					System.out.println("[controller] SALDO TRAS VENTA: " + msg.getMsg());
+					System.out.println("[PROCESS PC] SALDO TRAS VENTA: " + msg.getMsg());
 					view.updateBalance((Float) msg.getMsg());
 					view.showIntolerance();
 
-					System.out.println("PRODUCTO VENDIDO :" + prod);
+					System.out.println("[PROCESS PC] PRODUCTO VENDIDO :" + prod);
 
 					return new VisualMsg("PROD", machine.getProd(prod));
 				} else if (msg.getType() == "ERR") {
 					return msg;
 				} else {
-					return null;
+					return new VisualMsg("ERR", "internal error");
 				}
 			} else {
 				return new VisualMsg("ERR", "Producto sin existencias");

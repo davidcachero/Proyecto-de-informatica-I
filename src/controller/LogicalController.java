@@ -85,11 +85,12 @@ public class LogicalController {
 	// Comprobacion de la existencia del producto y la capacidad de compra
 	public VisualMsg takeProduct(String prodId) {
 		Catalog prod = catalog.get(prodId);
+		
+		System.out.println("[DEV] saldo actual: " + this.getAllBalance() + " | precio producto: " + prod.getprice());
 
 		// Restar del saldo el precio del producto
-		if (this.getAllBalance() > prod.getprice()) {
-			System.out.println(
-					"[LC 1] SALDO ANTES DE VENTA: " + getAllBalance() + " -- SE LE RESTA -- " + prod.getprice());
+		if (this.getAllBalance() >= prod.getprice()) {
+			System.out.println("[LC 1] SALDO ANTES DE VENTA: " + getAllBalance() + " -- SE LE RESTA -- " + prod.getprice());
 
 			lessBalance(prod.getprice());
 

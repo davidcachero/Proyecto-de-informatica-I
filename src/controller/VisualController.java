@@ -45,12 +45,13 @@ public class VisualController implements ActionListener {
 
 	public void open() {
 
+		System.out.println("[PROCESS VISUAL] INICIANDO LA APLICACION");
 		screen.setVisible(true);
 
 		screen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				controller.saveData();
-				System.out.println("CERRANDO PROGRAMA");
+				System.out.println("[PROCESS VISUAL] CERRANDO PROGRAMA");
 			}
 		});
 
@@ -70,7 +71,7 @@ public class VisualController implements ActionListener {
 			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 
 		} catch (IOException e) {
-			System.err.println("fallo icono");
+			System.err.println("[ERROR VISUAL] fallo icono");
 			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
 
 		}
@@ -93,7 +94,14 @@ public class VisualController implements ActionListener {
 			List<String> listTypes = new ArrayList<>(Arrays.asList(typeCurrency));
 
 			if (listTypes.contains(optionstr)) {
-				controller.insertCoins(Float.parseFloat(optionstr));
+				VisualMsg msg = controller.insertCoins(Float.parseFloat(optionstr));
+				
+				if (msg.getType() == "MSG") 
+					screen.setTextFieldBalance((Float) msg.getMsg());
+				
+				else if (msg.getType() == "ERR")
+					showError((String) msg.getMsg());
+				
 			}
 
 		}
@@ -103,7 +111,7 @@ public class VisualController implements ActionListener {
 					JOptionPane.INFORMATION_MESSAGE);
 
 			if (idcliente != null) {
-				System.out.println("ENTRANDO AL USUARIO POR ID: " + idcliente);
+				System.out.println("[PROCESS VISUAL] ENTRANDO AL USUARIO POR ID: " + idcliente);
 				if (!controller.hasUser(idcliente)) {
 					showError("Tarjeta incorrecta");
 					JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -149,7 +157,7 @@ public class VisualController implements ActionListener {
 
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(idProd);
-			showError("Producto agotado");
+			showError((String) msg.getMsg());
 
 		} else {
 			screen.clnTextFieldProduct();
