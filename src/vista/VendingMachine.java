@@ -378,7 +378,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 
 	public void setUserLoggedName(String name) {
-		System.out.println("[DEV] loggeando a " + name);
+		System.out.println(name != null? "[DEV] loggeando a " + name : "Usuario Deslogeado");
 		if (name == null)
 			lbluserLoggedName.setText(null);
 
