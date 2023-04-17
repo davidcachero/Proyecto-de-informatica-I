@@ -155,6 +155,8 @@ public class VisualController implements ActionListener {
 			screen.setTextFieldProduct(prod.getName());
 			screen.setTextFieldStatus("Producto " + prod.getName() + " comprado");
 
+			logOffUser();
+
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(idProd);
 			showError((String) msg.getMsg());
