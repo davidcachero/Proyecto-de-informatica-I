@@ -234,4 +234,12 @@ public class VisualController implements ActionListener {
 
 	}
 
+	
+	
+	
+	
+	
+	public void countMinum(int time) {
+		System.out.println("count: " + time);
+	}
 }

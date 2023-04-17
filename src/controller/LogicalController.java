@@ -1,7 +1,13 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import auxiliar.Timer;
 import models.Catalog;
 import models.Currency;
 import models.Usuario;
@@ -155,7 +161,16 @@ public class LogicalController {
 		return userLogged;
 	}
 
+	public Thread startTimeOut() {
+
+		Thread threadUserLogged = new Thread(new Timer());
+		threadUserLogged.start();
+		return threadUserLogged;
+		
+	}
+	
 	public void setUserLogged(String idcliente) {
+
 		userLogged = users.get(idcliente);
 
 	}

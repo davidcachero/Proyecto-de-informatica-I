@@ -1,6 +1,6 @@
 acua;Aquarius;1.2;4;2:4
 cafe;Cafe;3.5;12;2:3
-coca;Coca-Cola;1.05;3;2:4
+coca;Coca-Cola;1.05;2;2:4
 fantal;Fanta Limon;2.1;10;2:4
 fantan;Fanta Naranja;1.9;4;2:4
 Colacao;ColaCao;0.9;6;1:2:4
