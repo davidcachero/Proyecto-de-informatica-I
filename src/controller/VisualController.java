@@ -12,6 +12,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -236,11 +238,17 @@ public class VisualController implements ActionListener {
 	}
 
 	
+	// interaccion con cronometro
+	public void startTimeOut(int startTime) {
+        screen.createTimeOut(startTime);
+		
+	}
 	
 	
-	
-	
+	// TODO ver si se puede quitar
 	public void countMinum(int time) {
 		System.out.println("count: " + time);
 	}
+
+
 }

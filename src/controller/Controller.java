@@ -61,6 +61,8 @@ public class Controller {
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
 		
+		view.startTimeOut(4); // start with 15 s
+		
 	}
 
 	public void logOffUser() {

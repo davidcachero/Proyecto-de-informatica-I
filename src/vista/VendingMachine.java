@@ -64,10 +64,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txfProducto;
 	private JTextField txfSaldo;
 	private JLabel lbluserLoggedName;
+	private JTextField tf_timer;
 
 	VisualController controller;
 	String prodSelected;
-	private JTextField tf_timer;
 
 	/**
 	 * Create the frame.
@@ -85,36 +85,16 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setBounds(300, 100, 739, 519);
 		
 		
-
 		buildView();
-		
-		
-		
-		
-        Timer timer = new Timer();
+		setFuncionalities();
 
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int i = 20;
-
-            public void run() {
-
-            	tf_timer.setText("Time left: " + i);
-                i--;
-
-                if (i < 0) {
-                    timer.cancel();
-                    tf_timer.setText("Time Over");
-                }
-            }
-        }, 0, 1000);
-        
         
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public void buildView() {
+	private void buildView() {
 
 		// principal panel
 		contentPane = new JPanel();
@@ -178,12 +158,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnDevolverDinero = new JButton("DEVOLVER DINERO");
 		btnDevolverDinero.setBackground(new Color(8, 8, 8));
 		btnDevolverDinero.setForeground(Color.white);
-		btnDevolverDinero.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.returnCoins();
-			}
-
-		});
 		btnDevolverDinero.setBounds(403, 204, 284, 35);
 		contentPane.add(btnDevolverDinero);
 
@@ -304,6 +278,20 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		tf_timer.setColumns(10);
 		contentPane.add(tf_timer);
 
+	}
+	
+	/**
+	 *  Set de funcionalities of the frame
+	 */
+	private void setFuncionalities() {
+		
+		btnDevolverDinero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.returnCoins();
+			}
+
+		});
+
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.sellProduct(prodSelected);
@@ -371,8 +359,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 			}
 		});
 		btnCocaCola.addActionListener(this);
-
 	}
+	
 
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
@@ -450,6 +438,18 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setVisible(true);
 
 	}
+	
+	
+	// timeout - set number in frame
+	
+	public void setTimeout(String numMsg) {
+    	tf_timer.setText(numMsg);
+	}
+	
+	public void setEndTimeout() {
+    	tf_timer.setText("");
+    	controller.logOffUser();
+	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
@@ -467,5 +467,25 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void createTimeOut(int startTime) {
+		Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int timeOut = startTime;
+
+            public void run() {
+
+            	setTimeout("Time left: " + timeOut);
+            	timeOut--;
+
+                if (timeOut < 0) {
+                    timer.cancel();
+                    setEndTimeout();
+                }
+            }
+        }, 0, 1000);
+		
 	}
 }
