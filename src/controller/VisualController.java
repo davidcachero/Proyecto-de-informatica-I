@@ -54,6 +54,7 @@ public class VisualController implements ActionListener {
 				System.out.println("[PROCESS VISUAL] CERRANDO PROGRAMA");
 			}
 		});
+		
 
 		screen.setTextFieldBalance(df.format(controller.showCurrency()));
 		screen.hideIntolerance();

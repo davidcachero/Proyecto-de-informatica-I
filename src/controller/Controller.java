@@ -56,13 +56,10 @@ public class Controller {
 	// Conexion con visual - usuarios
 
 	public void setUserLogged(String idcliente) {
-		machine.startTimeOut();
 		machine.setUserLogged(idcliente);
 		
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
-
-		Thread.currentThread().isInterrupted()? logOffUser() : view.countMinum();
 		
 	}
 

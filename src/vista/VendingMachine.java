@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,11 +23,9 @@ import controller.VisualController;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.GridLayout;
-import java.awt.Image;
 
 /**
  * 
@@ -70,6 +67,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	VisualController controller;
 	String prodSelected;
+	private JTextField tf_timer;
 
 	/**
 	 * Create the frame.
@@ -85,7 +83,32 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setIconImage(controller.getImage("Logo_CoffeeBreak", "png", 2000, 2000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
+		
+		
+
 		buildView();
+		
+		
+		
+		
+        Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int i = 20;
+
+            public void run() {
+
+            	tf_timer.setText("Time left: " + i);
+                i--;
+
+                if (i < 0) {
+                    timer.cancel();
+                    tf_timer.setText("Time Over");
+                }
+            }
+        }, 0, 1000);
+        
+        
 	}
 
 	/**
@@ -275,6 +298,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		lbluserLoggedName = new JLabel();
 		lbluserLoggedName.setBounds(413, 296, 171, 37);
 		contentPane.add(lbluserLoggedName);
+		
+		tf_timer = new JTextField();
+		tf_timer.setBounds(527, 402, 160, 35);
+		tf_timer.setColumns(10);
+		contentPane.add(tf_timer);
 
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
