@@ -190,6 +190,7 @@ public class VisualController implements ActionListener {
 // Interaccion con los datos de los usuarios
 	public void logOffUser() {
 		controller.logOffUser();
+		JOptionPane.showMessageDialog(screen, "Sesion ended", "Information", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 
