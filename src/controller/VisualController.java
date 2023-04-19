@@ -34,6 +34,7 @@ public class VisualController implements ActionListener {
 	Controller controller;
 	VendingMachine screen;
 	DecimalFormat df;
+	Timer timer;
 
 	public VisualController(Controller controller) {
 
@@ -158,7 +159,7 @@ public class VisualController implements ActionListener {
 			screen.setTextFieldProduct(prod.getName());
 			screen.setTextFieldStatus("Producto " + prod.getName() + " comprado");
 
-			logOffUser();
+			logOffUser(true);
 
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(idProd);
@@ -188,7 +189,13 @@ public class VisualController implements ActionListener {
 	}
 
 // Interaccion con los datos de los usuarios
-	public void logOffUser() {
+	public void logOffUser(boolean timerOn) {
+		if (timerOn) {
+			
+			timer.cancel();
+			screen.setEndTimeout();
+		}
+		
 		controller.logOffUser();
 		JOptionPane.showMessageDialog(screen, "Sesion ended", "Information", JOptionPane.INFORMATION_MESSAGE);
 
@@ -241,7 +248,8 @@ public class VisualController implements ActionListener {
 	
 	// interaccion con cronometro
 	public void startTimeOut(int startTime) {
-        screen.createTimeOut(startTime);
+		this.timer = new Timer();
+        screen.createTimeOut(startTime, timer);
 		
 	}
 	

@@ -202,7 +202,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		JButton btnLogOff = new JButton("LOG OFF");
 		btnLogOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.logOffUser();
+				controller.logOffUser(true);
 			}
 		});
 		btnLogOff.setBounds(594, 296, 93, 35);
@@ -447,8 +447,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 	
 	public void setEndTimeout() {
-    	tf_timer.setText("");
-    	controller.logOffUser();
+    	tf_timer.setText(null);
 	}
 
 	@Override
@@ -469,8 +468,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	public void createTimeOut(int startTime) {
-		Timer timer = new Timer();
+	public void createTimeOut(int startTime, Timer timer) {
 
         timer.scheduleAtFixedRate(new TimerTask() {
             int timeOut = startTime;
@@ -483,6 +481,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
                 if (timeOut < 0) {
                     timer.cancel();
                     setEndTimeout();
+                	controller.logOffUser(false);
                 }
             }
         }, 0, 1000);
