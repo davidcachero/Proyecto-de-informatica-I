@@ -64,7 +64,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txfProducto;
 	private JTextField txfSaldo;
 	private JLabel lbluserLoggedName;
-	private JTextField tf_timer;
+	private JLabel tf_timer;
 
 	VisualController controller;
 	String prodSelected;
@@ -273,9 +273,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		lbluserLoggedName.setBounds(413, 296, 171, 37);
 		contentPane.add(lbluserLoggedName);
 		
-		tf_timer = new JTextField();
+		tf_timer = new JLabel();
 		tf_timer.setBounds(527, 402, 160, 35);
-		tf_timer.setColumns(10);
 		contentPane.add(tf_timer);
 
 	}
