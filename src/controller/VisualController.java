@@ -136,7 +136,7 @@ public class VisualController implements ActionListener {
 			Catalog prod = (Catalog) msg.getMsg();
 			screen.setSelectedProd(prod.getKey());
 			screen.setTextFieldProduct(prod.getName());
-			screen.setTextFieldStatus("precio: " + Float.toString(prod.getprice()) + " euro");
+			screen.setTextFieldStatus("PRECIO: " + Float.toString(prod.getprice()) + " euro");
 
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(value);
@@ -197,7 +197,7 @@ public class VisualController implements ActionListener {
 		}
 		
 		controller.logOffUser();
-		JOptionPane.showMessageDialog(screen, "Sesion ended", "Information", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 

@@ -61,7 +61,7 @@ public class Controller {
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
 		
-		view.startTimeOut(25); // start with 25 s
+		view.startTimeOut(60); // start with 60 s
 		
 	}
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.GridLayout;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
 
 /**
  * 
@@ -45,12 +48,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JButton btnCafe;
 	private JButton btnPepsi;
 	private JButton btnNesquik;
-	private JButton btnExtraer_6;
 	private JButton btnFantaN;
 	private JButton btnColacao;
 	private JButton btnNestea;
 	private JButton btnAquarius;
-	private JButton btnExtraer_11;
 	private JButton btnDevolverDinero;
 	private JButton btnPagar;
 	private JTextField txtGlucosa;
@@ -83,12 +84,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setIconImage(controller.getImage("Logo_CoffeeBreak", "png", 2000, 2000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 739, 519);
-		
-		
+
 		buildView();
 		setFuncionalities();
 
-        
 	}
 
 	/**
@@ -103,44 +102,56 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		//contentPane.add(txfProducto);
 
-		// Componentes de la pantalla
-		txfEstado = new JTextField();
-		txfEstado.setBackground(new Color(115, 147, 19));
-		txfEstado.setForeground(new Color(0, 0, 0));
-		txfEstado.setHorizontalAlignment(SwingConstants.CENTER);
-		txfEstado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txfEstado.setText("");
-		txfEstado.setEditable(false);
-
-		txfEstado.setBounds(403, 32, 284, 47);
-		contentPane.add(txfEstado);
-		txfEstado.setColumns(10);
-
-		txfProducto = new JTextField();
-		txfProducto.setText("");
-		txfProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		txfProducto.setForeground(Color.BLACK);
-		txfProducto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txfProducto.setEditable(false);
-		txfProducto.setColumns(10);
-		txfProducto.setBackground(new Color(115, 147, 19));
-		txfProducto.setBounds(403, 84, 284, 47);
-		contentPane.add(txfProducto);
+		
 
 		txfSaldo = new JTextField();
 		txfSaldo.setText("");
 		txfSaldo.setHorizontalAlignment(SwingConstants.CENTER);
 		txfSaldo.setForeground(Color.BLACK);
+		txfSaldo.setBorder(new EmptyBorder(15, 15, 15, 15));
 		txfSaldo.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txfSaldo.setEditable(false);
 		txfSaldo.setColumns(10);
-		txfSaldo.setBackground(new Color(115, 147, 19));
-		txfSaldo.setBounds(403, 137, 284, 47);
-		contentPane.add(txfSaldo);
+		txfSaldo.setBackground(SystemColor.window);
+		//contentPane.add(txfSaldo);
+		
 
 		///// Menu
 		this.menu = new JMenuBar();
+		JPanel terminalPanel = new JPanel();
+		terminalPanel.setBorder(new LineBorder(new Color(106, 108, 255), 2));
+		terminalPanel.setBounds(398, 56, 289, 160);
+		//contentPane.add(txfEstado);
+
+		
+
+		txfProducto = new JTextField();
+		txfProducto.setText("");
+		txfProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		txfProducto.setForeground(Color.BLACK);
+		txfProducto.setBorder(new EmptyBorder(15, 15, 15, 15));
+		txfProducto.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txfProducto.setEditable(false);
+		txfProducto.setColumns(10);
+		txfProducto.setBackground(SystemColor.window);
+		terminalPanel.add(txfProducto);
+		
+				// Componentes de la pantalla
+				txfEstado = new JTextField();
+				txfEstado.setBackground(SystemColor.window);//115, 147, 19));
+				txfEstado.setForeground(new Color(0, 0, 0));
+				txfEstado.setBorder(new EmptyBorder(15, 15, 15, 15));
+				txfEstado.setHorizontalAlignment(SwingConstants.CENTER);
+				txfEstado.setFont(new Font("Tahoma", Font.BOLD, 15));
+				txfEstado.setText("");
+				txfEstado.setEditable(false);
+				txfEstado.setColumns(10);
+				terminalPanel.add(txfEstado);
+		terminalPanel.add(txfSaldo);
+		terminalPanel.setLayout(new BoxLayout(terminalPanel, BoxLayout.Y_AXIS));
+		contentPane.add(terminalPanel);
 		setJMenuBar(menu);
 
 		this.pagos = new JMenu("Metodo pago");
@@ -156,60 +167,78 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		this.menu.add(pagos);
 
 		btnDevolverDinero = new JButton("DEVOLVER DINERO");
-		btnDevolverDinero.setBackground(new Color(8, 8, 8));
-		btnDevolverDinero.setForeground(Color.white);
-		btnDevolverDinero.setBounds(403, 204, 284, 35);
+		btnDevolverDinero.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDevolverDinero.setBackground(new Color(106, 108, 255));
+		btnDevolverDinero.setForeground(Color.WHITE);
+		btnDevolverDinero.setBounds(398, 227, 289, 60);
 		contentPane.add(btnDevolverDinero);
 
 		btnPagar = new JButton("PAGAR");
-		btnPagar.setBackground(new Color(8, 8, 8));
-		btnPagar.setForeground(Color.white);
-		btnPagar.setBounds(403, 250, 284, 35);
+		btnPagar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPagar.setBackground(new Color(106, 108, 255));
+		btnPagar.setForeground(Color.WHITE);
+		btnPagar.setBounds(398, 291, 289, 60);
 		contentPane.add(btnPagar);
 
 		txtGlucosa = new JTextField();
+		txtGlucosa.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtGlucosa.setBackground(SystemColor.textHighlightText);
 		txtGlucosa.setEditable(false);
 		txtGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGlucosa.setText("Glucosa");
-		txtGlucosa.setBounds(516, 350, 50, 20);
+		txtGlucosa.setBorder(null);
+		txtGlucosa.setBounds(112, 25, 78, 20);
 		contentPane.add(txtGlucosa);
 		txtGlucosa.setColumns(10);
 
 		txtGluten = new JTextField();
+		txtGluten.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtGluten.setBackground(SystemColor.textHighlightText);
 		txtGluten.setEditable(false);
 		txtGluten.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGluten.setText("Gluten");
+		txtGluten.setBorder(null);
 		txtGluten.setColumns(10);
-		txtGluten.setBounds(576, 350, 50, 20);
+		txtGluten.setBounds(200, 25, 78, 20);
 		contentPane.add(txtGluten);
 
 		txtSulfitos = new JTextField();
+		txtSulfitos.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtSulfitos.setEditable(false);
+		txtSulfitos.setBackground(SystemColor.textHighlightText);
 		txtSulfitos.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSulfitos.setText("Sulfitos");
+		txtSulfitos.setBorder(null);
 		txtSulfitos.setColumns(10);
-		txtSulfitos.setBounds(637, 350, 50, 20);
+		txtSulfitos.setBounds(24, 25, 78, 20);
 		contentPane.add(txtSulfitos);
 
 		txtFrutosSecos = new JTextField();
+		txtFrutosSecos.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtFrutosSecos.setBackground(SystemColor.textHighlightText);
 		txtFrutosSecos.setEditable(false);
 		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFrutosSecos.setText("Frutos secos");
+		txtFrutosSecos.setBorder(null);
 		txtFrutosSecos.setColumns(10);
-		txtFrutosSecos.setBounds(424, 350, 78, 20);
+		txtFrutosSecos.setBounds(288, 25, 78, 20);
 		contentPane.add(txtFrutosSecos);
 
-		JButton btnLogOff = new JButton("LOG OFF");
+		JButton btnLogOff = new JButton("CERRAR SESIÓN");
+		btnLogOff.setBackground(new Color(255, 66, 66));
+		btnLogOff.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOff.setForeground(Color.WHITE);
 		btnLogOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.logOffUser(true);
 			}
 		});
-		btnLogOff.setBounds(594, 296, 93, 35);
+		btnLogOff.setBounds(398, 367, 289, 35);
 		contentPane.add(btnLogOff);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(24, 26, 329, 425);
+		panel.setBackground(SystemColor.window);
+		panel.setBounds(24, 56, 342, 395);
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 
@@ -263,27 +292,22 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnFantaN.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnFantaN);
 
-		btnExtraer_6 = new JButton("");
-		panel.add(btnExtraer_6);
-
-		btnExtraer_11 = new JButton("");
-		panel.add(btnExtraer_11);
-
 		lbluserLoggedName = new JLabel();
-		lbluserLoggedName.setBounds(413, 296, 171, 37);
+		lbluserLoggedName.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lbluserLoggedName.setBounds(494, 0, 171, 37);
 		contentPane.add(lbluserLoggedName);
 		
 		tf_timer = new JLabel();
-		tf_timer.setBounds(527, 402, 160, 35);
+		tf_timer.setBounds(515, 25, 160, 35);
 		contentPane.add(tf_timer);
 
 	}
-	
+
 	/**
-	 *  Set de funcionalities of the frame
+	 * Set de funcionalities of the frame
 	 */
 	private void setFuncionalities() {
-		
+
 		btnDevolverDinero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.returnCoins();
@@ -359,7 +383,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		});
 		btnCocaCola.addActionListener(this);
 	}
-	
 
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
@@ -393,12 +416,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 
 	public void setUserLoggedName(String name) {
-		System.out.println(name != null? "[DEV] loggeando a " + name : "Usuario Deslogeado");
+		System.out.println(name != null ? "[DEV] loggeando a " + name : "Usuario Deslogeado");
 		if (name == null)
 			lbluserLoggedName.setText(null);
 
 		else
-			lbluserLoggedName.setText("User logged : " + name);
+			lbluserLoggedName.setText("BIENVENIDO: " + name);
 
 	}
 
@@ -437,16 +460,15 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setVisible(true);
 
 	}
-	
-	
+
 	// timeout - set number in frame
-	
+
 	public void setTimeout(String numMsg) {
-    	tf_timer.setText(numMsg);
+		tf_timer.setText(numMsg);
 	}
-	
+
 	public void setEndTimeout() {
-    	tf_timer.setText(null);
+		tf_timer.setText(null);
 	}
 
 	@Override
@@ -469,21 +491,21 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	public void createTimeOut(int startTime, Timer timer) {
 
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int timeOut = startTime;
+		timer.scheduleAtFixedRate(new TimerTask() {
+			int timeOut = startTime;
 
-            public void run() {
+			public void run() {
 
-            	setTimeout("Time left: " + timeOut);
-            	timeOut--;
+				setTimeout("Time left: " + timeOut);
+				timeOut--;
 
-                if (timeOut < 0) {
-                    timer.cancel();
-                    setEndTimeout();
-                	controller.logOffUser(false);
-                }
-            }
-        }, 0, 1000);
-		
+				if (timeOut < 0) {
+					timer.cancel();
+					setEndTimeout();
+					controller.logOffUser(false);
+				}
+			}
+		}, 0, 1000);
+
 	}
 }
