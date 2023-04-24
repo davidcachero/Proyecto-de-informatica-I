@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -29,6 +30,12 @@ import java.util.TimerTask;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
+import java.awt.FlowLayout;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.event.MouseMotionAdapter;
 
 /**
  * 
@@ -66,6 +73,10 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JTextField txfSaldo;
 	private JLabel lbluserLoggedName;
 	private JLabel tf_timer;
+	private JButton btnLogOff;
+	private JLabel label;
+	
+	private MouseAdapter btnProductStyle;
 
 	VisualController controller;
 	String prodSelected;
@@ -102,8 +113,20 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		//contentPane.add(txfProducto);
 
+
+		///// Menu
+		this.menu = new JMenuBar();
+
+		txfEstado = new JTextField();
+		txfEstado.setBackground(SystemColor.window);//115, 147, 19));
+		txfEstado.setForeground(new Color(0, 0, 0));
+		txfEstado.setBorder(new EmptyBorder(15, 15, 15, 15));
+		txfEstado.setHorizontalAlignment(SwingConstants.CENTER);
+		txfEstado.setFont(new Font("Tahoma", Font.BOLD, 15));
+		txfEstado.setText("");
+		txfEstado.setEditable(false);
+		txfEstado.setColumns(10);
 		
 
 		txfSaldo = new JTextField();
@@ -115,18 +138,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfSaldo.setEditable(false);
 		txfSaldo.setColumns(10);
 		txfSaldo.setBackground(SystemColor.window);
-		//contentPane.add(txfSaldo);
 		
-
-		///// Menu
-		this.menu = new JMenuBar();
 		JPanel terminalPanel = new JPanel();
 		terminalPanel.setBorder(new LineBorder(new Color(106, 108, 255), 2));
 		terminalPanel.setBounds(398, 56, 289, 160);
-		//contentPane.add(txfEstado);
-
 		
-
+		
+		// Componentes de la pantalla
 		txfProducto = new JTextField();
 		txfProducto.setText("");
 		txfProducto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -137,27 +155,18 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfProducto.setColumns(10);
 		txfProducto.setBackground(SystemColor.window);
 		terminalPanel.add(txfProducto);
-		
-				// Componentes de la pantalla
-				txfEstado = new JTextField();
-				txfEstado.setBackground(SystemColor.window);//115, 147, 19));
-				txfEstado.setForeground(new Color(0, 0, 0));
-				txfEstado.setBorder(new EmptyBorder(15, 15, 15, 15));
-				txfEstado.setHorizontalAlignment(SwingConstants.CENTER);
-				txfEstado.setFont(new Font("Tahoma", Font.BOLD, 15));
-				txfEstado.setText("");
-				txfEstado.setEditable(false);
-				txfEstado.setColumns(10);
-				terminalPanel.add(txfEstado);
+		terminalPanel.add(txfEstado);
 		terminalPanel.add(txfSaldo);
 		terminalPanel.setLayout(new BoxLayout(terminalPanel, BoxLayout.Y_AXIS));
 		contentPane.add(terminalPanel);
-		setJMenuBar(menu);
+		
 
+		setJMenuBar(menu);
 		this.pagos = new JMenu("Metodo pago");
 		this.tarjeta = new JMenuItem("Tarjeta");
 		tarjeta.addActionListener(controller);
 		tarjeta.setActionCommand("target");
+		
 		this.monedas = new JMenuItem("Monedas");
 		monedas.addActionListener(controller);
 		monedas.setActionCommand("monedas");
@@ -187,7 +196,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGlucosa.setText("Glucosa");
 		txtGlucosa.setBorder(null);
-		txtGlucosa.setBounds(112, 25, 78, 20);
+		txtGlucosa.setBounds(158, 25, 78, 20);
 		contentPane.add(txtGlucosa);
 		txtGlucosa.setColumns(10);
 
@@ -199,7 +208,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtGluten.setText("Gluten");
 		txtGluten.setBorder(null);
 		txtGluten.setColumns(10);
-		txtGluten.setBounds(200, 25, 78, 20);
+		txtGluten.setBounds(216, 25, 78, 20);
 		contentPane.add(txtGluten);
 
 		txtSulfitos = new JTextField();
@@ -210,7 +219,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtSulfitos.setText("Sulfitos");
 		txtSulfitos.setBorder(null);
 		txtSulfitos.setColumns(10);
-		txtSulfitos.setBounds(24, 25, 78, 20);
+		txtSulfitos.setBounds(96, 25, 78, 20);
 		contentPane.add(txtSulfitos);
 
 		txtFrutosSecos = new JTextField();
@@ -224,16 +233,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txtFrutosSecos.setBounds(288, 25, 78, 20);
 		contentPane.add(txtFrutosSecos);
 
-		JButton btnLogOff = new JButton("CERRAR SESIÓN");
+		btnLogOff = new JButton("CERRAR SESIÓN");
 		btnLogOff.setBackground(new Color(255, 66, 66));
 		btnLogOff.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOff.setVisible(false);
 		btnLogOff.setForeground(Color.WHITE);
-		btnLogOff.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.logOffUser(true);
-			}
-		});
 		btnLogOff.setBounds(398, 367, 289, 35);
+
 		contentPane.add(btnLogOff);
 
 		JPanel panel = new JPanel();
@@ -243,63 +249,89 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 
 		btnCocaCola = new JButton();
+		btnCocaCola.setName("coca");
+		btnCocaCola.setBorder(null);
 		btnCocaCola.setIcon(new ImageIcon(controller.getImage("product_logo/CC", "jpg", 130, 110)));
 		btnCocaCola.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnCocaCola);
 
 		btnFantal = new JButton();
+		btnFantal.setName("fantal");
+		btnFantal.setBorder(null);
 		btnFantal.setIcon(new ImageIcon(controller.getImage("product_logo/FL", "PNG", 150, 120)));
 		btnFantal.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnFantal);
 
 		btnNestea = new JButton();
+		btnNestea.setName("nestea");
+		btnNestea.setBorder(null);
 		btnNestea.setIcon(new ImageIcon(controller.getImage("product_logo/NT", "JPG", 120, 120)));
 		btnNestea.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnNestea);
 
 		btnAgua = new JButton();
+		btnAgua.setName("agua");
+		btnAgua.setBorder(null);
 		btnAgua.setIcon(new ImageIcon(controller.getImage("product_logo/SC", "jpg", 120, 120)));
 		btnAgua.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnAgua);
 
 		btnPepsi = new JButton(); // En datos de prueba no existe
+		btnPepsi.setName("Pepsi");
+		btnPepsi.setBorder(null);
 		btnPepsi.setIcon(new ImageIcon(controller.getImage("product_logo/PP", "JPG", 120, 120)));
 		btnPepsi.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnPepsi);
 
 		btnAquarius = new JButton();
+		btnAquarius.setName("acua");
+		btnAquarius.setBorder(null);
 		btnAquarius.setIcon(new ImageIcon(controller.getImage("product_logo/AQ", "jpg", 120, 120)));
 		btnAquarius.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnAquarius);
 
 		btnCafe = new JButton();
+		btnCafe.setName("cafe");
+		btnCafe.setBorder(null);
 		btnCafe.setIcon(new ImageIcon(controller.getImage("product_logo/NCAFE", "jpg", 120, 120)));
 		btnCafe.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnCafe);
 
 		btnColacao = new JButton();
-		panel.add(btnColacao);
+		btnColacao.setName("Colacao");
+		btnColacao.setBorder(null);
 		btnColacao.setIcon(new ImageIcon(controller.getImage("product_logo/CCao", "jpg", 120, 120)));
 		btnColacao.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(btnColacao);
 
 		btnNesquik = new JButton(); // En datos de prueba no existe
+		btnNesquik.setName("Nesquik");
+		btnNesquik.setBorder(null);
 		btnNesquik.setIcon(new ImageIcon(controller.getImage("product_logo/NK", "jpg", 120, 120)));
 		btnNesquik.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(btnNesquik);
 
 		btnFantaN = new JButton(); // En datos de prueba excede saldo
+		btnFantaN.setName("fantan");
+		btnFantaN.setBorder(null);
 		btnFantaN.setIcon(new ImageIcon(controller.getImage("product_logo/FN", "jpg", 120, 120)));
 		btnFantaN.setHorizontalAlignment(SwingConstants.CENTER);
+		btnFantaN.setBorder(new EmptyBorder(15, 15, 15, 15));
 		panel.add(btnFantaN);
 
 		lbluserLoggedName = new JLabel();
 		lbluserLoggedName.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbluserLoggedName.setBounds(494, 0, 171, 37);
+		lbluserLoggedName.setBounds(398, 25, 171, 37);
 		contentPane.add(lbluserLoggedName);
 		
 		tf_timer = new JLabel();
-		tf_timer.setBounds(515, 25, 160, 35);
+		tf_timer.setBounds(579, 0, 124, 35);
+		tf_timer.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(tf_timer);
+		
+		JLabel lblNewLabel = new JLabel("Alergenos");
+		lblNewLabel.setBounds(24, 25, 65, 20);
+		contentPane.add(lblNewLabel);
 
 	}
 
@@ -320,70 +352,61 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 				controller.sellProduct(prodSelected);
 			}
 		});
+		
+		
+		btnLogOff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.logOffUser(true);
+			}
+		});
+		
+		
+		
+		
+		btnProductStyle = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String nameProd = ((JButton) e.getSource()).getName();
+				System.out.println(nameProd);
+				controller.takeProduct(nameProd);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				JButton btnSelected = ((JButton) e.getSource());
+				btnSelected.setBorder(new LineBorder(new Color(0, 0, 0)));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				JButton btnSelected = ((JButton) e.getSource());
+				btnSelected.setBorder(null);
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				JButton btnSelected = ((JButton) e.getSource());
+				btnSelected.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				JButton btnSelected = ((JButton) e.getSource());
+				btnSelected.setBorder(null);
+			}
+		};
+		
+		btnCocaCola.addMouseListener(btnProductStyle);
+		btnNesquik.addMouseListener(btnProductStyle);
+		btnColacao.addMouseListener(btnProductStyle);
+		btnCafe.addMouseListener(btnProductStyle);
+		btnAquarius.addMouseListener(btnProductStyle);
+		btnPepsi.addMouseListener(btnProductStyle);
+		btnAgua.addMouseListener(btnProductStyle);
+		btnNestea.addMouseListener(btnProductStyle);
+		btnFantal.addMouseListener(btnProductStyle);
+		btnFantaN.addMouseListener(btnProductStyle);
 
-		btnNesquik.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Nesquik");
-			}
-		});
-		btnColacao.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Colacao");
-			}
-		});
-		btnCafe.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("cafe");
-			}
-		});
-		btnAquarius.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("acua");
-			}
-		});
-		btnPepsi.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("Pepsi");
-			}
-		});
-		btnAgua.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("agua");
-			}
-		});
-		btnNestea.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("nestea");
-			}
-		});
-		btnFantal.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("fantal");
-			}
-		});
-		btnFantaN.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("fantan");
-			}
-		});
-		btnCocaCola.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.takeProduct("coca");
-			}
-		});
-		btnCocaCola.addActionListener(this);
 	}
 
+
+	
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
 
@@ -468,26 +491,14 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 
 	public void setEndTimeout() {
-		tf_timer.setText(null);
+		btnLogOff.setVisible(false);
+    	tf_timer.setText(null);
+	}
+	
+	public void showLogOffBtn() {
+		btnLogOff.setVisible(true);
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void createTimeOut(int startTime, Timer timer) {
 
@@ -506,6 +517,27 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 				}
 			}
 		}, 0, 1000);
+
+	}
+	
+	
+	
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 }

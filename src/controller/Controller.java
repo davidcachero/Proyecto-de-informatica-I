@@ -60,6 +60,7 @@ public class Controller {
 		
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
+		view.showLogOffBtn();
 		
 		view.startTimeOut(60); // start with 60 s
 		
