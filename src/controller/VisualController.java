@@ -206,6 +206,10 @@ public class VisualController implements ActionListener {
 
 	}
 
+	public void showLogOffBtn() {
+		screen.showLogOffBtn();
+	}
+
 // Mostrar los errores por una pantalla distinta
 	public void showError(String err) {
 		JOptionPane.showMessageDialog(screen, err, "Error", JOptionPane.ERROR_MESSAGE);
@@ -258,6 +262,10 @@ public class VisualController implements ActionListener {
 	public void countMinum(int time) {
 		System.out.println("count: " + time);
 	}
+
+
+
+
 
 
 }
