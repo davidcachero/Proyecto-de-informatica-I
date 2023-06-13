@@ -19,6 +19,7 @@ import auxiliar.ApiRequests;
 import auxiliar.UsageProperties;
 import models.Catalog;
 import models.Intolerance;
+import models.Purchase;
 
 public class APIConnexion {
 
@@ -145,12 +146,10 @@ public class APIConnexion {
 	public boolean end(String data) {
 		JSONObject configList = new JSONObject();
 
-
 		try {
 
 			// Crear objetos con datos de configuracion
 			return toJSONConfig();
-
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -168,11 +167,42 @@ public class APIConnexion {
 
 		switch (Integer.parseInt(rawResponse.get("code"))) {
 
+		case 200:
+		case 201:
+		case 204:
+			// Manejar respuesta exitosa
+			System.out.println("configuracion");
+			return true;
+		case 400: // Manejar error de solicitud incorrecta
+		case 401: // Error acceso denegado
+		case 403: // Error sin acceso al servidor
+		case 404: // Error de recurso no encontrado
+		case 500: // Error interno del servidor
+		default: {
+			System.out.println("ERROR CONEXION API: " + rawResponse.get("msg"));
+			return false;
+		}
+
+		}
+
+	}
+
+	// events
+
+	public boolean buy(Purchase buyData) {
+		HashMap<String, Object> initData = new HashMap<String, Object>();
+		String response = "";
+
+		try {
+			HashMap<String, String> rawResponse = con.postRequestWithParams(prop.buyURL(), buyData.generateJSON());
+
+			switch (Integer.parseInt(rawResponse.get("code"))) {
+
 			case 200:
 			case 201:
 			case 204:
 				// Manejar respuesta exitosa
-				System.out.println("configuracion");
+				response = rawResponse.get("msg");
 				return true;
 			case 400: // Manejar error de solicitud incorrecta
 			case 401: // Error acceso denegado
@@ -180,18 +210,22 @@ public class APIConnexion {
 			case 404: // Error de recurso no encontrado
 			case 500: // Error interno del servidor
 			default: {
-				System.out.println("ERROR CONEXION API: " + rawResponse.get("msg"));
+				response = "ERROR CONEXION API: " + rawResponse.get("msg");
+				System.out.println(response);
 				return false;
 			}
-	
+
+			}
+
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-	}
 
-	// events
-
-	public void buy() {
-
+		return false;
 	}
 
 	public void login() {
