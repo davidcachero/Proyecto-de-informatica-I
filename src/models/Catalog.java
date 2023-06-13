@@ -18,8 +18,9 @@ public class Catalog {
 	private int id;
 	private String key;
 	private String name;
-	private Float price;
+	private float price;
 	private int amount;
+	private String image;
 	private String[] intolerances;
 
 	/*
@@ -27,9 +28,9 @@ public class Catalog {
 	 * 
 	 * @param key - nombre del producto
 	 * 
-	 * @param name - precio del producto
+	 * @param name - nombre del producto
 	 * 
-	 * @param price - cantidad inicial de productos
+	 * @param price - precio inicial de productos
 	 * 
 	 * @param initialAmount - cantidad inicial de productos
 	 * 
@@ -42,6 +43,15 @@ public class Catalog {
 		this.name = name;
 		this.amount = initialAmount;
 		this.price = price;
+		this.intolerances = intolerances;
+	}
+
+	public Catalog(String key, String name, float price, int initialAmount, String image, String[] intolerances) {
+		this.key = key;
+		this.name = name;
+		this.amount = initialAmount;
+		this.price = price;
+		this.image = image;
 		this.intolerances = intolerances;
 	}
 
