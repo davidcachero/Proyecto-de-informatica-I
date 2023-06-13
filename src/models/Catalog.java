@@ -38,7 +38,7 @@ public class Catalog {
 	 * cada producto
 	 * 
 	 */
-	public Catalog(String key, String name, Float price, int initialAmount, String[] intolerances) {
+	public Catalog(String key, String name, float price, int initialAmount, String[] intolerances) {
 		this.key = key;
 		this.name = name;
 		this.amount = initialAmount;
