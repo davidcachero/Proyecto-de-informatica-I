@@ -6,6 +6,7 @@ import dataAccess.APIConnexion;
 import dataAccess.LocalModelConnexion;
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 import models.VisualMsg;
 
@@ -30,27 +31,10 @@ public class Controller {
 
 	// Inicializar conexiones
 
-	@SuppressWarnings("unchecked")
 	public void start() {
-		
-		HashMap<String, Object> apiData = apiAccess.init();
-		
-		if (apiData.get("CONF") instanceof HashMap) 
-			localAccess.setConfig((HashMap<String, String>) apiData.get("CONF"));
-		else
-		    System.err.println("OBJECT TYPE ERROR - config data error");
-		
-		if (apiData.get("PROD") instanceof HashMap) 
-			localAccess.saveCatalog((HashMap<String, Catalog>) apiData.get("PROD"));
-		else
-		    System.err.println("OBJECT TYPE ERROR - products data error");
-		
-		if (apiData.get("INTO") instanceof HashMap) 
-			localAccess.setConfig((HashMap<String, String>) apiData.get("CONF"));
-		else
-		    System.err.println("OBJECT TYPE ERROR - config data error");
 
-		
+		updateApiData();
+
 		HashMap<Float, Currency> currency = localAccess.getCurrencyData();
 		HashMap<String, Catalog> catalog = localAccess.getCatalogData();
 		HashMap<String, Usuario> users = localAccess.getUsersData();
@@ -66,28 +50,54 @@ public class Controller {
 				view.open();
 
 			} else {
-				
+
 				System.err.println("[ERROR PC] LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
 			}
-			
+
 		} else {
 			System.err.println("[ERROR PC] ACCESS DATA NO\nEND PROGRAM");
 			System.exit(1);
 		}
 	}
 
+	/**
+	 * Llama a las funciones de la api que descargan los datos actualizados al
+	 * iniciar la aplicacion de la maquina y guardarlos en los datos persistidos de
+	 * forma local. En este paso comprobamos si los datos se descargan con el tipo
+	 * correcto para que no guarde datos erroneos sobre los ya guardados
+	 */
+	@SuppressWarnings("unchecked")
+	public void updateApiData() {
+		HashMap<String, Object> apiData = apiAccess.init();
+
+		if (apiData.get("CONF") instanceof HashMap)
+			localAccess.setConfig((HashMap<String, String>) apiData.get("CONF"));
+		else
+			System.err.println("OBJECT TYPE ERROR - config data error");
+
+		if (apiData.get("PROD") instanceof HashMap)
+			localAccess.saveCatalog((HashMap<String, Catalog>) apiData.get("PROD"));
+		else
+			System.err.println("OBJECT TYPE ERROR - products data error");
+
+		if (apiData.get("INTO") instanceof HashMap)
+			localAccess.saveIntolerances((HashMap<String, Intolerance>) apiData.get("INTO"));
+		else
+			System.err.println("OBJECT TYPE ERROR - config data error");
+	}
+
 	// Conexion con visual - usuarios
 
 	public void setUserLogged(String idcliente) {
 		machine.setUserLogged(idcliente);
-		
+
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
 		view.showLogOffBtn();
-		
+
 		view.startTimeOut(60); // start with 60 s
-		
+
 	}
 
 	public void logOffUser() {
@@ -111,7 +121,7 @@ public class Controller {
 
 	public VisualMsg insertCoins(Float value) {
 		return machine.insertCoin(value);
-		
+
 	}
 
 	public VisualMsg returnCoins() {

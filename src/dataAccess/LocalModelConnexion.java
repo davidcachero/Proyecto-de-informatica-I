@@ -269,7 +269,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	}
 
 	// Guardar las monedas
-	public boolean saveIntolerances(HashMap<Float, Intolerance> intolerances) {
+	public boolean saveIntolerances(HashMap<String, Intolerance> intolerances) {
 
 		boolean todoOK = true;
 		File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
@@ -277,7 +277,7 @@ public class LocalModelConnexion implements I_Data_Access {
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
 
-			for (Float key : intolerances.keySet()) {
+			for (String key : intolerances.keySet()) {
 				Intolerance value = intolerances.get(key);
 				pw.println(value.getId() + ";" + value.getNombre() + ";" + value.getImage());
 			}

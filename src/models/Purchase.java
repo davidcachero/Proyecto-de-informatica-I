@@ -4,13 +4,9 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
-enum BuyStatus {
-	aceptada, noDebit
-}
+import auxiliar.BuyStatus;
+import auxiliar.BuyType;
 
-enum BuyType {
-	card, currency, both
-}
 
 public class Purchase {
 	
