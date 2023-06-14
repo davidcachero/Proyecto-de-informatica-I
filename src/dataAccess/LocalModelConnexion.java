@@ -9,8 +9,10 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 import auxiliar.I_Data_Access;
+import auxiliar.UsageProperties;
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 
 /**
@@ -23,16 +25,21 @@ import models.Usuario;
 
 public class LocalModelConnexion implements I_Data_Access {
 
+	private UsageProperties prop;
+
 	private String usersAddress;
 	private String catalogAddress;
 	private String currencyAddress;
+	private String intoleranceAddress;
 	private String filesCurrecytypes;
 
 	public LocalModelConnexion() {
+		prop = new UsageProperties();
 		// Local BBDD
 		usersAddress = "Files/data/Users.txt";
 		catalogAddress = "Files/data/Catalog.txt";
 		currencyAddress = "Files/data/Currency.txt";
+		intoleranceAddress = "Files/data/intolerances.txt";
 		// Data types
 		filesCurrecytypes = "Files/struct/CurrencyTypes.txt";
 
@@ -62,8 +69,8 @@ public class LocalModelConnexion implements I_Data_Access {
 				actualCurrency.put(id, currency);
 
 			}
-			
-		System.out.println("[PROCESS FILES] datos de Currency descargados");
+
+			System.out.println("[PROCESS FILES] datos de Currency descargados");
 
 		} catch (FileNotFoundException e) {
 			System.err.println("[ERROR FILES] CONNECTIONS");
@@ -139,7 +146,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			}
 
 			System.out.println("[PROCESS FILES] datos de Users descargados");
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -148,6 +155,37 @@ public class LocalModelConnexion implements I_Data_Access {
 		return actualUsers;
 	}
 
+	public HashMap<String, Intolerance> getIntoleranceData() {
+		HashMap<String, Intolerance> actualUsers = new HashMap<String, Intolerance>();
+		File FileUsers = new File(intoleranceAddress);
+
+		BufferedReader reader = null;
+
+		try {
+			reader = new BufferedReader(new FileReader(FileUsers));
+			String text = null;
+			
+			String id;
+
+			while ((text = reader.readLine()) != null) {
+
+				String[] splitData = text.split(";");
+				id = splitData[0].toString();
+				Intolerance intolerance = new Intolerance(Integer.parseInt(id), splitData[1].toString(), splitData[2].toString());
+
+				actualUsers.put(id, intolerance);
+			}
+
+			System.out.println("[PROCESS FILES] datos de Intolerances descargados");
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return actualUsers;
+	}
+	
 // Guardar las monedas
 	public boolean saveCurrency(HashMap<Float, Currency> currency) {
 
@@ -233,7 +271,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			pw.close();
 
 			System.out.println("[PROCESS FILES] datos de Users guardados");
-			
+
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (Exception e) {
@@ -241,6 +279,35 @@ public class LocalModelConnexion implements I_Data_Access {
 		}
 
 		return todoOK;
+	}
+
+	// Guardar las monedas
+	public boolean saveIntolerances(HashMap<Float, Intolerance> intolerances) {
+
+		boolean todoOK = true;
+		File FileCurrency = new File(currencyAddress);
+
+		try {
+			PrintWriter pw = new PrintWriter(FileCurrency);
+
+			for (Float key : intolerances.keySet()) {
+				Intolerance value = intolerances.get(key);
+				pw.println(value.getId() + ";" + value.getNombre() + ";" + value.getImage());
+			}
+
+			pw.close();
+
+			System.out.println("[PROCESS FILES] datos de Intolerances guardados");
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return todoOK;
+
 	}
 
 	// struct files
@@ -260,7 +327,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			reader.close();
 
 			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");
-			
+
 			return types;
 
 		} catch (FileNotFoundException e) {
@@ -272,4 +339,9 @@ public class LocalModelConnexion implements I_Data_Access {
 		return new String[0];
 	}
 
+	// Config functions
+
+	public void setConfig(HashMap<String, String> config) {
+		prop.setTimeOut(config.get("TIMEOUT"));
+	}
 }
