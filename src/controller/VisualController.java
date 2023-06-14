@@ -35,6 +35,7 @@ public class VisualController implements ActionListener {
 	VendingMachine screen;
 	DecimalFormat df;
 	Timer timer;
+	int timeOut;
 
 	public VisualController(Controller controller) {
 
@@ -189,6 +190,23 @@ public class VisualController implements ActionListener {
 	}
 
 // Interaccion con los datos de los usuarios
+	public void logOffUser(boolean timerOn, int restTime) {
+		if (timerOn) {
+			
+			timer.cancel();
+			screen.setEndTimeout();
+		}
+		
+		controller.logOffUser(restTime);
+		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+	
+	
+	public void updateTimeOut(int restTime) {
+		timeOut = restTime;
+	}
+	
 	public void logOffUser(boolean timerOn) {
 		if (timerOn) {
 			
@@ -196,7 +214,7 @@ public class VisualController implements ActionListener {
 			screen.setEndTimeout();
 		}
 		
-		controller.logOffUser();
+		controller.logOffUser(timeOut);
 		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
 	}

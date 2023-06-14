@@ -148,6 +148,19 @@ public class UsageProperties {
 		return url;
 	}
 
+	public int getTimeOut() {
+		try {
+			configInput = new FileInputStream("propiedades.properties");
+			configUrl.load(configInput);
+
+			url = config.getProperty("TIMEOUT");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 	
 }
 

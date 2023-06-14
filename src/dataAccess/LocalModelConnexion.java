@@ -331,4 +331,9 @@ public class LocalModelConnexion implements I_Data_Access {
 	public void setConfig(HashMap<String, String> config) {
 		prop.setTimeOut(config.get("TIMEOUT"));
 	}
+
+	public int getTimeOut() {
+		// TODO Auto-generated method stub
+		return prop.getTimeOut();
+	}
 }

@@ -96,11 +96,12 @@ public class Controller {
 		view.updateUserName(machine.getUserLogged().getName());
 		view.showLogOffBtn();
 
-		view.startTimeOut(60); // start with 60 s
+		view.startTimeOut(localAccess.getTimeOut()); // start with 60 s
 
 	}
 
-	public void logOffUser() {
+	public void logOffUser(int restTime) {
+		// TODO CREAR EVENTO LOG OFF - INICIARLO EN ESTA LINEA
 		machine.logOffUser();
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(null);

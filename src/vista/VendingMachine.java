@@ -17,7 +17,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,12 +29,6 @@ import java.util.TimerTask;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
-import java.awt.FlowLayout;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.event.MouseMotionAdapter;
 
 /**
  * 
@@ -74,7 +67,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JLabel lbluserLoggedName;
 	private JLabel tf_timer;
 	private JButton btnLogOff;
-	private JLabel label;
 	
 	private MouseAdapter btnProductStyle;
 
@@ -502,25 +494,27 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	public void createTimeOut(int startTime, Timer timer) {
 
+		controller.updateTimeOut(startTime);
+
 		timer.scheduleAtFixedRate(new TimerTask() {
 			int timeOut = startTime;
 
 			public void run() {
 
-				setTimeout("Time left: " + timeOut);
-				timeOut--;
 
 				if (timeOut < 0) {
 					timer.cancel();
 					setEndTimeout();
-					controller.logOffUser(false);
+					controller.logOffUser(false, timeOut);
+				} else {
+					controller.updateTimeOut(timeOut);
+					setTimeout("Time left: " + timeOut);
+					timeOut--;
 				}
 			}
 		}, 0, 1000);
 
 	}
-	
-	
 	
 
 	@Override
