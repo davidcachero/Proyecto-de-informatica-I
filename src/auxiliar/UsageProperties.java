@@ -1,7 +1,9 @@
 package auxiliar;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -11,6 +13,7 @@ public class UsageProperties {
 	Properties configUrl;
 
 	InputStream configInput;
+	OutputStream configOutput;
 
 	HashMap<String, String> propList;
 	String url;
@@ -109,4 +112,23 @@ public class UsageProperties {
 		}
 		return url;
 	}
+
+	// setValues
+	
+	public boolean setTimeOut(String num) {
+		try {
+			
+			configOutput = new FileOutputStream("propiedades.properties");
+			config.put("TIMEOUT", num);
+			config.store(configOutput, "This is a sample properties file");
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+
 }

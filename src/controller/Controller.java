@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.HashMap;
+
+import dataAccess.APIConnexion;
 import dataAccess.LocalModelConnexion;
 import models.Catalog;
 import models.Currency;
@@ -17,21 +19,41 @@ import models.VisualMsg;
 
 public class Controller {
 
-	private LocalModelConnexion access;
+	private LocalModelConnexion localAccess;
+	private APIConnexion apiAccess;
 	private LogicalController machine;
 	private VisualController view;
 
 	public Controller() {
-		access = new LocalModelConnexion();
+		localAccess = new LocalModelConnexion();
 	}
 
 	// Inicializar conexiones
 
+	@SuppressWarnings("unchecked")
 	public void start() {
+		
+		HashMap<String, Object> apiData = apiAccess.init();
+		
+		if (apiData.get("CONF") instanceof HashMap) 
+			localAccess.setConfig((HashMap<String, String>) apiData.get("CONF"));
+		else
+		    System.err.println("OBJECT TYPE ERROR - config data error");
+		
+		if (apiData.get("PROD") instanceof HashMap) 
+			localAccess.saveCatalog((HashMap<String, Catalog>) apiData.get("PROD"));
+		else
+		    System.err.println("OBJECT TYPE ERROR - products data error");
+		
+		if (apiData.get("INTO") instanceof HashMap) 
+			localAccess.setConfig((HashMap<String, String>) apiData.get("CONF"));
+		else
+		    System.err.println("OBJECT TYPE ERROR - config data error");
 
-		HashMap<Float, Currency> currency = access.getCurrencyData();
-		HashMap<String, Catalog> catalog = access.getCatalogData();
-		HashMap<String, Usuario> users = access.getUsersData();
+		
+		HashMap<Float, Currency> currency = localAccess.getCurrencyData();
+		HashMap<String, Catalog> catalog = localAccess.getCatalogData();
+		HashMap<String, Usuario> users = localAccess.getUsersData();
 
 		if ((catalog != null) && (currency != null) && (users != null)) {
 			System.out.println("[DEV] finded data");
@@ -44,9 +66,11 @@ public class Controller {
 				view.open();
 
 			} else {
+				
 				System.err.println("[ERROR PC] LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
 				System.exit(1);
 			}
+			
 		} else {
 			System.err.println("[ERROR PC] ACCESS DATA NO\nEND PROGRAM");
 			System.exit(1);
@@ -99,16 +123,16 @@ public class Controller {
 	}
 
 	public String[] getCurrencyTypes() {
-		return access.getCurrencyTypes();
+		return localAccess.getCurrencyTypes();
 	}
 
 	// Conexion con accesos - monedas
 
 	public void saveData() {
 
-		boolean saveCurrency = access.saveCurrency(machine.getCurrencyData());
-		boolean saveCatalog = access.saveCatalog(machine.getCatalogData());
-		boolean saveUsers = access.saveUser(machine.getUserData());
+		boolean saveCurrency = localAccess.saveCurrency(machine.getCurrencyData());
+		boolean saveCatalog = localAccess.saveCatalog(machine.getCatalogData());
+		boolean saveUsers = localAccess.saveUser(machine.getUserData());
 
 		if (saveCurrency && saveCatalog && saveUsers) {
 			System.out.println("[PROCESS PC] BBDD ACTUALIZADA");

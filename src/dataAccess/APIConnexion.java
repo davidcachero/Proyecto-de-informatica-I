@@ -1,15 +1,9 @@
 package dataAccess;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -53,9 +47,7 @@ public class APIConnexion {
 			default: {
 				response = "ERROR CONEXION API: " + rawResponse.get("msg");
 				System.out.println(response);
-			}
-
-			}
+			}}
 
 			System.out.println(response); // Traza para pruebas
 
@@ -83,6 +75,20 @@ public class APIConnexion {
 		}
 
 		return initData;
+	}
+
+	private HashMap<String, String> formatConfig(JSONObject respuesta) {
+		HashMap<String, String> configList = new HashMap<String, String>();
+
+		JSONArray configData = (JSONArray) respuesta.get("config");
+
+		for (Object data : configData) {
+			JSONObject aux = (JSONObject) data;
+
+			configList.put("TIMEOUT", aux.get("timeout").toString());
+		}
+
+		return configList;
 	}
 
 	private HashMap<Integer, Catalog> formatProducts(JSONObject respuesta) {
@@ -128,21 +134,8 @@ public class APIConnexion {
 		return intoleranceList;
 	}
 
-	private HashMap<String, String> formatConfig(JSONObject respuesta) {
-		HashMap<String, String> configList = new HashMap<String, String>();
-
-		JSONArray configData = (JSONArray) respuesta.get("config");
-
-		for (Object data : configData) {
-			JSONObject aux = (JSONObject) data;
-
-			configList.put("TIMEOUT", aux.get("timeout").toString());
-		}
-
-		return configList;
-	}
-
 	// Funciones que se llaman al terminar
+	
 	public boolean end(String data) {
 		JSONObject configList = new JSONObject();
 
