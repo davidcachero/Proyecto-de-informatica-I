@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
+import auxiliar.ConnectionFiles;
 import auxiliar.I_Data_Access;
 import auxiliar.UsageProperties;
 import models.Catalog;
@@ -27,22 +28,8 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	private UsageProperties prop;
 
-	private String usersAddress;
-	private String catalogAddress;
-	private String currencyAddress;
-	private String intoleranceAddress;
-	private String filesCurrecytypes;
-
 	public LocalModelConnexion() {
 		prop = new UsageProperties();
-		// Local BBDD
-		usersAddress = "Files/data/Users.txt";
-		catalogAddress = "Files/data/Catalog.txt";
-		currencyAddress = "Files/data/Currency.txt";
-		intoleranceAddress = "Files/data/intolerances.txt";
-		// Data types
-		filesCurrecytypes = "Files/struct/CurrencyTypes.txt";
-
 	}
 
 	// data files
@@ -50,7 +37,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public HashMap<Float, Currency> getCurrencyData() {
 
 		HashMap<Float, Currency> actualCurrency = new HashMap<Float, Currency>();
-		File FileCurrency = new File(currencyAddress);
+		File FileCurrency = new File( prop.conexionFiles(ConnectionFiles.CURRENCY) );
 
 		BufferedReader reader = null;
 
@@ -87,7 +74,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public HashMap<String, Catalog> getCatalogData() {
 
 		HashMap<String, Catalog> actualCatalog = new HashMap<String, Catalog>();
-		File FileCatalog = new File(catalogAddress);
+		File FileCatalog = new File(prop.conexionFiles(ConnectionFiles.CATALOG));
 
 		BufferedReader reader = null;
 
@@ -126,7 +113,7 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	public HashMap<String, Usuario> getUsersData() {
 		HashMap<String, Usuario> actualUsers = new HashMap<String, Usuario>();
-		File FileUsers = new File(usersAddress);
+		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
 
 		BufferedReader reader = null;
 
@@ -157,7 +144,7 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	public HashMap<String, Intolerance> getIntoleranceData() {
 		HashMap<String, Intolerance> actualUsers = new HashMap<String, Intolerance>();
-		File FileUsers = new File(intoleranceAddress);
+		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
 
 		BufferedReader reader = null;
 
@@ -190,7 +177,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveCurrency(HashMap<Float, Currency> currency) {
 
 		boolean todoOK = true;
-		File FileCurrency = new File(currencyAddress);
+		File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.CURRENCY));
 
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
@@ -219,7 +206,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveCatalog(HashMap<String, Catalog> catalog) {
 
 		boolean todoOK = true;
-		File FileCatalog = new File(catalogAddress);
+		File FileCatalog = new File(prop.conexionFiles(ConnectionFiles.CATALOG));
 
 		try {
 			PrintWriter pw = new PrintWriter(FileCatalog);
@@ -258,7 +245,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveUser(HashMap<String, Usuario> users) {
 
 		boolean todoOK = true;
-		File FileUsers = new File(usersAddress);
+		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
 
 		try {
 			PrintWriter pw = new PrintWriter(FileUsers);
@@ -285,7 +272,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveIntolerances(HashMap<Float, Intolerance> intolerances) {
 
 		boolean todoOK = true;
-		File FileCurrency = new File(currencyAddress);
+		File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
 
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
@@ -315,7 +302,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public String[] getCurrencyTypes() {
 
 		String[] types;
-		File FileCurrecyTypes = new File(filesCurrecytypes);
+		File FileCurrecyTypes = new File(prop.conexionFiles(ConnectionFiles.CURRENCY_TYPE));
 
 		BufferedReader reader = null;
 

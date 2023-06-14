@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
+
 public class UsageProperties {
 
 	Properties config;
@@ -24,7 +25,7 @@ public class UsageProperties {
 
 	}
 
-	// Config
+	// Config  - get values
 	public String inicialURL() {
 		try {
 			configInput = new FileInputStream("propiedades.properties");
@@ -113,7 +114,7 @@ public class UsageProperties {
 		return url;
 	}
 
-	// setValues
+	// config - setValues
 	
 	public boolean setTimeOut(String num) {
 		try {
@@ -131,4 +132,24 @@ public class UsageProperties {
 		
 	}
 
+	// files - get values
+
+	public String conexionFiles(ConnectionFiles type) {
+
+		try {
+			configInput = new FileInputStream("conexionFiles.properties");
+			configUrl.load(configInput);
+
+			url = config.getProperty(type.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return url;
+	}
+
+	
 }
+
+
+
