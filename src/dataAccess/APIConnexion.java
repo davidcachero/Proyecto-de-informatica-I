@@ -190,7 +190,6 @@ public class APIConnexion {
 	// events
 
 	public boolean buy(Purchase buyData) {
-		HashMap<String, Object> initData = new HashMap<String, Object>();
 		String response = "";
 
 		try {
@@ -228,11 +227,92 @@ public class APIConnexion {
 		return false;
 	}
 
-	public void login() {
+	public HashMap<String, String> login(String id) {
+		HashMap<String, String> returnData = new HashMap<String, String>();
+		String response = "";
 
+		try {
+			returnData = con.postRequest(prop.cardOnURL(), id);
+
+			switch (Integer.parseInt(returnData.get("code"))) {
+
+			case 200:
+			case 201:
+			case 204:
+				// Manejar respuesta exitosa
+				break;
+			case 400: // Manejar error de solicitud incorrecta
+			case 401: // Error acceso denegado
+			case 403: // Error sin acceso al servidor
+			case 404: // Error de recurso no encontrado
+			case 500: // Error interno del servidor
+			default:
+				System.out.println(response);
+
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+		}
+
+		return returnData;
 	}
 
-	public void logout() {
+	public HashMap<String, String> logout(HashMap<String, String> sesionData) {
+		HashMap<String, String> returnData = new HashMap<String, String>();
+		String response = "";
+		
+		JSONObject sesionJSON = (JSONObject) sesionData;
+
+		try {
+			returnData = con.postRequest(prop.cardOutURL(), sesionJSON.toJSONString());
+
+			switch (Integer.parseInt(returnData.get("code"))) {
+
+			case 200:
+			case 201:
+			case 204:
+				// Manejar respuesta exitosa
+				break;
+			case 400: // Manejar error de solicitud incorrecta
+			case 401: // Error acceso denegado
+			case 403: // Error sin acceso al servidor
+			case 404: // Error de recurso no encontrado
+			case 500: // Error interno del servidor
+			default:
+				System.out.println(response);
+
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			returnData.put("code", "ERROR");
+			returnData.put("msg", e.getMessage());
+		}
+
+		return returnData;
 
 	}
 
