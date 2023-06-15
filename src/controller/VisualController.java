@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,6 +77,27 @@ public class VisualController implements ActionListener {
 			bufferedImage = ImageIO.read(new File("Files/assets/" + name + "." + format));
 			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 
+		} catch (IOException e) {
+			System.err.println("[ERROR VISUAL] fallo icono");
+			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
+
+		}
+
+		return image;
+	}
+	
+	public Image getImageURL(String name, String path, int x, int y) { // Utilizacion del Logo_CoffeeBreak
+		
+		Image image;
+
+		BufferedImage bufferedImage;
+		
+		try {
+			path = "https://www.consumidorglobal.com/uploads/s1/80/61/3/coca-cola-diseno.jpeg";
+            URL url = new URL(path);
+
+            bufferedImage = ImageIO.read(url);
+			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			System.err.println("[ERROR VISUAL] fallo icono");
 			image = new ImageIcon("Files/assets/" + name + ".png").getImage();

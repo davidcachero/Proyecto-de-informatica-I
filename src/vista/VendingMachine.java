@@ -56,16 +56,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	private JPanel contentPane;
 	private JTextField txfEstado;
-//	private JButton btnCocaCola;
-//	private JButton btnAgua;
-//	private JButton btnFantal;
-//	private JButton btnCafe;
-//	private JButton btnPepsi;
-//	private JButton btnNesquik;
-//	private JButton btnFantaN;
-//	private JButton btnColacao;
-//	private JButton btnNestea;
-//	private JButton btnAquarius;
 	
 	private JButton btnDevolverDinero;
 	private JButton btnPagar;
@@ -82,7 +72,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JLabel lbluserLoggedName;
 	private JLabel tf_timer;
 	private JButton btnLogOff;
-	private JLabel label;
 	private JPanel pProducts;
 	
 	private MouseAdapter btnProductStyle;
@@ -369,7 +358,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
     		newBtn.setName(prod.getKey());
     		newBtn.setBorder(null);
     		newBtn.setLayout(new GridLayout(100, 50));
-    		newBtn.setIcon(new ImageIcon(controller.getImage("product_logo/CC", "jpg", 130, 110)));
+    		newBtn.setIcon(new ImageIcon(controller.getImageURL("product_logo/CC", "jpg", 130, 110)));
     		newBtn.setHorizontalAlignment(SwingConstants.CENTER);
     		pProducts.add(newBtn);
     		
