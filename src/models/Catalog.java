@@ -21,6 +21,8 @@ public class Catalog {
 	private float price;
 	private int amount;
 	private String image;
+
+
 	private String[] intolerances;
 
 	/*
@@ -119,6 +121,18 @@ public class Catalog {
 
 	public Float getprice() {
 		return price;
+	}
+
+	/*
+	 * Metodos de recogida y el ajuste de la imagen del producto que se mostrará
+	 * 
+	 */
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	/*

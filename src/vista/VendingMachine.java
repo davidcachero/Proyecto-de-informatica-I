@@ -358,7 +358,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
     		newBtn.setName(prod.getKey());
     		newBtn.setBorder(null);
     		newBtn.setLayout(new GridLayout(100, 50));
-    		newBtn.setIcon(new ImageIcon(controller.getImageURL("product_logo/CC", "jpg", 130, 110)));
+    		newBtn.setIcon(new ImageIcon(controller.getImageURL("product_logo/CC", prod.getImage(), 130, 110)));
     		newBtn.setHorizontalAlignment(SwingConstants.CENTER);
     		pProducts.add(newBtn);
     		

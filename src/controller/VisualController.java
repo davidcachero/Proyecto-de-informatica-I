@@ -70,8 +70,8 @@ public class VisualController implements ActionListener {
 	// Inserccion de las imagenes guardadas en archivos
 
 	public Image getImage(String name, String format, int x, int y) { // Utilizacion del Logo_CoffeeBreak
-		Image image;
 
+		Image image;
 		BufferedImage bufferedImage;
 		try {
 			bufferedImage = ImageIO.read(new File("Files/assets/" + name + "." + format));
@@ -79,7 +79,7 @@ public class VisualController implements ActionListener {
 
 		} catch (IOException e) {
 			System.err.println("[ERROR VISUAL] fallo icono");
-			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
+			image = new ImageIcon("Files/assets/product_logo/not_found.png").getImage();
 
 		}
 
@@ -88,19 +88,20 @@ public class VisualController implements ActionListener {
 	
 	public Image getImageURL(String name, String path, int x, int y) { // Utilizacion del Logo_CoffeeBreak
 		
-		Image image;
+		if(path == null)
+			return new ImageIcon("Files/assets/product_logo/not_found.png").getImage().getScaledInstance(y, x, 0);
 
+		Image image;
 		BufferedImage bufferedImage;
 		
 		try {
-			path = "https://www.consumidorglobal.com/uploads/s1/80/61/3/coca-cola-diseno.jpeg";
             URL url = new URL(path);
 
             bufferedImage = ImageIO.read(url);
 			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			System.err.println("[ERROR VISUAL] fallo icono");
-			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
+			image = new ImageIcon("Files/assets/product_logo/not_found.png").getImage();
 
 		}
 
