@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,10 +47,11 @@ public class VisualController implements ActionListener {
 
 	// Abre la ventana al iniciar la aplicacion
 
-	public void open() {
+	public void open(HashMap<String, Catalog> prod) {
 
 		System.out.println("[PROCESS VISUAL] INICIANDO LA APLICACION");
 		screen.setVisible(true);
+		screen.setProductList(prod);
 
 		screen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -262,10 +264,6 @@ public class VisualController implements ActionListener {
 	public void countMinum(int time) {
 		System.out.println("count: " + time);
 	}
-
-
-
-
 
 
 }

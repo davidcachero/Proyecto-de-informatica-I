@@ -41,7 +41,7 @@ public class Controller {
 			if (machine != null) {
 
 				view = new VisualController(this);
-				view.open();
+				view.open(catalog);
 
 			} else {
 				System.err.println("[ERROR PC] LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");
