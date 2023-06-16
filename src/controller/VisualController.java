@@ -86,7 +86,7 @@ public class VisualController implements ActionListener {
 		return image;
 	}
 	
-	public Image getImageURL(String name, String path, int x, int y) { // Utilizacion del Logo_CoffeeBreak
+	public Image getImageURL(String path, int x, int y) {
 		
 		if(path == null)
 			return new ImageIcon("Files/assets/product_logo/not_found.png").getImage().getScaledInstance(y, x, 0);

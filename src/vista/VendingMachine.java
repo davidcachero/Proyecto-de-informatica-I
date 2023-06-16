@@ -349,7 +349,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	
 	public void setProductList(HashMap<String, Catalog> rawProd) {
 		
-
         for (Entry<String, Catalog> prods : rawProd.entrySet()) {
 
         	Catalog prod = prods.getValue();
@@ -358,20 +357,18 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
     		newBtn.setName(prod.getKey());
     		newBtn.setBorder(null);
     		newBtn.setLayout(new GridLayout(100, 50));
-    		newBtn.setIcon(new ImageIcon(controller.getImageURL("product_logo/CC", prod.getImage(), 130, 110)));
+    		newBtn.setIcon(new ImageIcon(controller.getImageURL(prod.getImage(), 130, 110)));
     		newBtn.setHorizontalAlignment(SwingConstants.CENTER);
     		pProducts.add(newBtn);
     		
     		newBtn.addMouseListener(btnProductStyle);
 
-        	
 		}
 
         pProducts.revalidate();
         pProducts.repaint();
 		pProducts.setLayout(new GridLayout(3, Math.abs(rawProd.size()/3)));
 
-        
         contentPane.revalidate();
         contentPane.repaint();
 		
