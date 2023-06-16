@@ -160,14 +160,19 @@ public class LocalModelConnexion implements I_Data_Access {
 
 		try {
 			reader = new BufferedReader(new FileReader(FileCurrecyTypes));
+			String text = null;
 
-			String[] data = reader.readLine().split(";");
 
-			String id = data[0];
-			Intolerance intolerance = new Intolerance(Integer.parseInt(id), data[1], data[2]);
+			while ((text = reader.readLine()) != null) {
 
-			intolerances.put(id, intolerance);
+				String[] data = text.split(";");
 
+				String id = data[0];
+				Intolerance intolerance = new Intolerance(Integer.parseInt(id), data[1], data[2]);
+
+				intolerances.put(id, intolerance);
+			}
+			
 			reader.close();
 
 			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");

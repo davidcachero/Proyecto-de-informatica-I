@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import controller.VisualController;
 import models.Catalog;
+import models.Intolerance;
 
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
@@ -56,13 +57,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	private JPanel contentPane;
 	private JTextField txfEstado;
-	
+
 	private JButton btnDevolverDinero;
 	private JButton btnPagar;
-	private JTextField txtGlucosa;
-	private JTextField txtGluten;
-	private JTextField txtSulfitos;
-	private JTextField txtFrutosSecos;
+//	private JTextField txtGlucosa;
+//	private JTextField txtGluten;
+//	private JTextField txtSulfitos;
+//	private JTextField txtFrutosSecos;
 	private JMenuBar menu;
 	private JMenu pagos;
 	private JMenuItem tarjeta;
@@ -73,7 +74,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	private JLabel tf_timer;
 	private JButton btnLogOff;
 	private JPanel pProducts;
-	
+	private JPanel pIntolerance;
+
 	private MouseAdapter btnProductStyle;
 
 	VisualController controller;
@@ -112,12 +114,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
 		///// Menu
 		this.menu = new JMenuBar();
 
 		txfEstado = new JTextField();
-		txfEstado.setBackground(SystemColor.window);//115, 147, 19));
+		txfEstado.setBackground(SystemColor.window);// 115, 147, 19));
 		txfEstado.setForeground(new Color(0, 0, 0));
 		txfEstado.setBorder(new EmptyBorder(15, 15, 15, 15));
 		txfEstado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,7 +126,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfEstado.setText("");
 		txfEstado.setEditable(false);
 		txfEstado.setColumns(10);
-		
 
 		txfSaldo = new JTextField();
 		txfSaldo.setText("");
@@ -136,12 +136,11 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfSaldo.setEditable(false);
 		txfSaldo.setColumns(10);
 		txfSaldo.setBackground(SystemColor.window);
-		
+
 		JPanel terminalPanel = new JPanel();
 		terminalPanel.setBorder(new LineBorder(new Color(106, 108, 255), 2));
 		terminalPanel.setBounds(398, 56, 289, 160);
-		
-		
+
 		// Componentes de la pantalla
 		txfProducto = new JTextField();
 		txfProducto.setText("");
@@ -157,14 +156,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		terminalPanel.add(txfSaldo);
 		terminalPanel.setLayout(new BoxLayout(terminalPanel, BoxLayout.Y_AXIS));
 		contentPane.add(terminalPanel);
-		
 
 		setJMenuBar(menu);
 		this.pagos = new JMenu("Metodo pago");
 		this.tarjeta = new JMenuItem("Tarjeta");
 		tarjeta.addActionListener(controller);
 		tarjeta.setActionCommand("target");
-		
+
 		this.monedas = new JMenuItem("Monedas");
 		monedas.addActionListener(controller);
 		monedas.setActionCommand("monedas");
@@ -187,49 +185,49 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnPagar.setBounds(398, 291, 289, 60);
 		contentPane.add(btnPagar);
 
-		txtGlucosa = new JTextField();
-		txtGlucosa.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtGlucosa.setBackground(SystemColor.textHighlightText);
-		txtGlucosa.setEditable(false);
-		txtGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGlucosa.setText("Glucosa");
-		txtGlucosa.setBorder(null);
-		txtGlucosa.setBounds(158, 25, 78, 20);
-		contentPane.add(txtGlucosa);
-		txtGlucosa.setColumns(10);
-
-		txtGluten = new JTextField();
-		txtGluten.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtGluten.setBackground(SystemColor.textHighlightText);
-		txtGluten.setEditable(false);
-		txtGluten.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGluten.setText("Gluten");
-		txtGluten.setBorder(null);
-		txtGluten.setColumns(10);
-		txtGluten.setBounds(216, 25, 78, 20);
-		contentPane.add(txtGluten);
-
-		txtSulfitos = new JTextField();
-		txtSulfitos.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtSulfitos.setEditable(false);
-		txtSulfitos.setBackground(SystemColor.textHighlightText);
-		txtSulfitos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSulfitos.setText("Sulfitos");
-		txtSulfitos.setBorder(null);
-		txtSulfitos.setColumns(10);
-		txtSulfitos.setBounds(96, 25, 78, 20);
-		contentPane.add(txtSulfitos);
-
-		txtFrutosSecos = new JTextField();
-		txtFrutosSecos.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtFrutosSecos.setBackground(SystemColor.textHighlightText);
-		txtFrutosSecos.setEditable(false);
-		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFrutosSecos.setText("Frutos secos");
-		txtFrutosSecos.setBorder(null);
-		txtFrutosSecos.setColumns(10);
-		txtFrutosSecos.setBounds(288, 25, 78, 20);
-		contentPane.add(txtFrutosSecos);
+//		txtGlucosa = new JTextField();
+//		txtGlucosa.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		txtGlucosa.setBackground(SystemColor.textHighlightText);
+//		txtGlucosa.setEditable(false);
+//		txtGlucosa.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtGlucosa.setText("Glucosa");
+//		txtGlucosa.setBorder(null);
+//		txtGlucosa.setBounds(158, 25, 78, 20);
+//		contentPane.add(txtGlucosa);
+//		txtGlucosa.setColumns(10);
+//
+//		txtGluten = new JTextField();
+//		txtGluten.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		txtGluten.setBackground(SystemColor.textHighlightText);
+//		txtGluten.setEditable(false);
+//		txtGluten.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtGluten.setText("Gluten");
+//		txtGluten.setBorder(null);
+//		txtGluten.setColumns(10);
+//		txtGluten.setBounds(216, 25, 78, 20);
+//		contentPane.add(txtGluten);
+//
+//		txtSulfitos = new JTextField();
+//		txtSulfitos.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		txtSulfitos.setEditable(false);
+//		txtSulfitos.setBackground(SystemColor.textHighlightText);
+//		txtSulfitos.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtSulfitos.setText("Sulfitos");
+//		txtSulfitos.setBorder(null);
+//		txtSulfitos.setColumns(10);
+//		txtSulfitos.setBounds(96, 25, 78, 20);
+//		contentPane.add(txtSulfitos);
+//
+//		txtFrutosSecos = new JTextField();
+//		txtFrutosSecos.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		txtFrutosSecos.setBackground(SystemColor.textHighlightText);
+//		txtFrutosSecos.setEditable(false);
+//		txtFrutosSecos.setHorizontalAlignment(SwingConstants.CENTER);
+//		txtFrutosSecos.setText("Frutos secos");
+//		txtFrutosSecos.setBorder(null);
+//		txtFrutosSecos.setColumns(10);
+//		txtFrutosSecos.setBounds(288, 25, 78, 20);
+//		contentPane.add(txtFrutosSecos);
 
 		btnLogOff = new JButton("CERRAR SESIÓN");
 		btnLogOff.setBackground(new Color(255, 66, 66));
@@ -249,15 +247,20 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		lbluserLoggedName.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lbluserLoggedName.setBounds(398, 25, 171, 37);
 		contentPane.add(lbluserLoggedName);
-		
+
 		tf_timer = new JLabel();
 		tf_timer.setBounds(579, 0, 124, 35);
 		tf_timer.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(tf_timer);
-		
+
 		JLabel lblNewLabel = new JLabel("Alergenos");
 		lblNewLabel.setBounds(24, 25, 65, 20);
 		contentPane.add(lblNewLabel);
+
+		pIntolerance = new JPanel();
+		pIntolerance.setBounds(104, 25, 262, 20);
+		pProducts.setLayout(new GridLayout(1, 3));
+		contentPane.add(pIntolerance);
 
 	}
 
@@ -278,17 +281,13 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 				controller.sellProduct(prodSelected);
 			}
 		});
-		
-		
+
 		btnLogOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.logOffUser(true);
 			}
 		});
-		
-		
-		
-		
+
 		btnProductStyle = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -296,32 +295,34 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 				System.out.println(nameProd);
 				controller.takeProduct(nameProd);
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				JButton btnSelected = ((JButton) e.getSource());
 				btnSelected.setBorder(new LineBorder(new Color(0, 0, 0)));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				JButton btnSelected = ((JButton) e.getSource());
 				btnSelected.setBorder(null);
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				JButton btnSelected = ((JButton) e.getSource());
 				btnSelected.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				JButton btnSelected = ((JButton) e.getSource());
 				btnSelected.setBorder(null);
 			}
 		};
-		
+
 	}
 
-
-	
 	public void setTextFieldStatus(String newTxt) {
 		txfEstado.setText(newTxt);
 
@@ -346,32 +347,32 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		txfSaldo.setText("Saldo: " + Float.toString(newBalance) + " euros");
 
 	}
-	
-	public void setProductList(HashMap<String, Catalog> rawProd) {
-		
-        for (Entry<String, Catalog> prods : rawProd.entrySet()) {
 
-        	Catalog prod = prods.getValue();
-        	
-    		JButton newBtn = new JButton();
-    		newBtn.setName(prod.getKey());
-    		newBtn.setBorder(null);
-    		newBtn.setLayout(new GridLayout(100, 50));
-    		newBtn.setIcon(new ImageIcon(controller.getImageURL(prod.getImage(), 130, 110)));
-    		newBtn.setHorizontalAlignment(SwingConstants.CENTER);
-    		pProducts.add(newBtn);
-    		
-    		newBtn.addMouseListener(btnProductStyle);
+	public void setProductList(HashMap<String, Catalog> rawProd) {
+
+		for (Entry<String, Catalog> prod : rawProd.entrySet()) {
+
+			Catalog prodData = prod.getValue();
+
+			JButton newBtn = new JButton();
+			newBtn.setName(prodData.getKey());
+			newBtn.setBorder(null);
+			newBtn.setLayout(new GridLayout(100, 50));
+			newBtn.setIcon(new ImageIcon(controller.getImageURL(prodData.getImage(), 130, 110)));
+			newBtn.setHorizontalAlignment(SwingConstants.CENTER);
+			pProducts.add(newBtn);
+
+			newBtn.addMouseListener(btnProductStyle);
 
 		}
 
-        pProducts.revalidate();
-        pProducts.repaint();
-		pProducts.setLayout(new GridLayout(3, Math.abs(rawProd.size()/3)));
+		pProducts.revalidate();
+		pProducts.repaint();
+		pProducts.setLayout(new GridLayout(3, Math.abs(rawProd.size() / 3)));
 
-        contentPane.revalidate();
-        contentPane.repaint();
-		
+		contentPane.revalidate();
+		contentPane.repaint();
+
 	}
 
 	public void setSelectedProd(String id) {
@@ -379,6 +380,75 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		prodSelected = id;
 
 	}
+
+	public void setIntoleranceList(HashMap<String, Intolerance> rawData) {
+
+		for (Entry<String, Intolerance> into : rawData.entrySet()) {
+
+			Intolerance intoData = into.getValue();
+
+			JButton newBtn = new JButton();
+			
+//			newBtn = new JButton();
+			newBtn.setFont(new Font("Tahoma", Font.BOLD, 11));
+			newBtn.setBackground(SystemColor.textHighlightText);
+			newBtn.setHorizontalAlignment(SwingConstants.CENTER);
+			newBtn.setText(intoData.getName());
+			newBtn.setBorder(null);
+//			newBtn.setEditable(false);
+//			newBtn.setColumns(10);
+			newBtn.setBounds(28, 25, 78, 20);
+
+			pIntolerance.add(newBtn);
+
+		}
+
+		pIntolerance.revalidate();
+		pIntolerance.repaint();
+		pIntolerance.setLayout(new GridLayout(1, rawData.size() ));
+		
+		contentPane.revalidate();
+		contentPane.repaint();
+
+	}
+
+	// TODO actualizar para que tambien sean dinamicos
+//
+//	public void showIntoleranceFrutSecos() {
+//		txtFrutosSecos.setVisible(true);
+//
+//	}
+//
+//	public void showIntoleranceGlucosa() {
+//		txtGlucosa.setVisible(true);
+//
+//	}
+//
+//	public void showIntoleranceGluten() {
+//		txtGluten.setVisible(true);
+//
+//	}
+//
+//	public void showIntoleranceSulfitos() {
+//		txtSulfitos.setVisible(true);
+//
+//	}
+//
+//	public void hideIntolerance() {
+//		txtFrutosSecos.setVisible(false);
+//		txtGlucosa.setVisible(false);
+//		txtGluten.setVisible(false);
+//		txtSulfitos.setVisible(false);
+//
+//	}
+//
+//	public void showIntolerance() {
+//		txtFrutosSecos.setVisible(true);
+//		txtGlucosa.setVisible(true);
+//		txtGluten.setVisible(true);
+//		txtSulfitos.setVisible(true);
+//
+//	}
 
 	public void setUserLoggedName(String name) {
 		System.out.println(name != null ? "[DEV] loggeando a " + name : "Usuario Deslogeado");
@@ -390,42 +460,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 
-	public void showIntoleranceFrutSecos() {
-		txtFrutosSecos.setVisible(true);
-
-	}
-
-	public void showIntoleranceGlucosa() {
-		txtGlucosa.setVisible(true);
-
-	}
-
-	public void showIntoleranceGluten() {
-		txtGluten.setVisible(true);
-
-	}
-
-	public void showIntoleranceSulfitos() {
-		txtSulfitos.setVisible(true);
-
-	}
-
-	public void hideIntolerance() {
-		txtFrutosSecos.setVisible(false);
-		txtGlucosa.setVisible(false);
-		txtGluten.setVisible(false);
-		txtSulfitos.setVisible(false);
-
-	}
-
-	public void showIntolerance() {
-		txtFrutosSecos.setVisible(true);
-		txtGlucosa.setVisible(true);
-		txtGluten.setVisible(true);
-		txtSulfitos.setVisible(true);
-
-	}
-
 	// timeout - set number in frame
 
 	public void setTimeout(String numMsg) {
@@ -434,13 +468,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	public void setEndTimeout() {
 		btnLogOff.setVisible(false);
-    	tf_timer.setText(null);
+		tf_timer.setText(null);
 	}
-	
+
 	public void showLogOffBtn() {
 		btnLogOff.setVisible(true);
 	}
-
 
 	public void createTimeOut(int startTime, Timer timer) {
 
@@ -461,9 +494,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		}, 0, 1000);
 
 	}
-	
-	
-	
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
@@ -482,5 +512,4 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		// TODO Auto-generated method stub
 
 	}
-
 }

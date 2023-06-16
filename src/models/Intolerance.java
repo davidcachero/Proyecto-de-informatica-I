@@ -5,12 +5,14 @@ public class Intolerance {
 	private int id;
 	private String name;
 	private String image;
+	private boolean visibility;
 	
 	public Intolerance(int id, String nombre, String image) {
 		super();
 		this.id = id;
 		this.name = nombre;
 		this.image = image;
+		this.visibility = true; 
 	}
 
 	public int getId() {
@@ -37,4 +39,11 @@ public class Intolerance {
 		this.image = image;
 	}	
 
+	public boolean isVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
+	}
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import dataAccess.LocalModelConnexion;
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 import models.VisualMsg;
 
@@ -33,6 +34,8 @@ public class Controller {
 		HashMap<String, Catalog> catalog = access.getCatalogData();
 		HashMap<String, Usuario> users = access.getUsersData();
 
+		HashMap<String, Intolerance> intolerances = access.getIntoleranceData();
+
 		if ((catalog != null) && (currency != null) && (users != null)) {
 			System.out.println("[DEV] finded data");
 
@@ -41,7 +44,7 @@ public class Controller {
 			if (machine != null) {
 
 				view = new VisualController(this);
-				view.open(catalog);
+				view.open(catalog, intolerances);
 
 			} else {
 				System.err.println("[ERROR PC] LOGICAL CONTROLLER NOT CONECTED\nEND PROGRAM");

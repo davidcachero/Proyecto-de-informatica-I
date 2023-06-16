@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import models.Catalog;
+import models.Intolerance;
 import models.VisualMsg;
 import vista.VendingMachine;
 
@@ -48,11 +49,10 @@ public class VisualController implements ActionListener {
 
 	// Abre la ventana al iniciar la aplicacion
 
-	public void open(HashMap<String, Catalog> prod) {
+	public void open(HashMap<String, Catalog> prod, HashMap<String, Intolerance> intolerances) {
 
 		System.out.println("[PROCESS VISUAL] INICIANDO LA APLICACION");
 		screen.setVisible(true);
-		screen.setProductList(prod);
 
 		screen.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -60,10 +60,12 @@ public class VisualController implements ActionListener {
 				System.out.println("[PROCESS VISUAL] CERRANDO PROGRAMA");
 			}
 		});
-		
+
+		screen.setProductList(prod);
+		screen.setIntoleranceList(intolerances);
 
 		screen.setTextFieldBalance(df.format(controller.showCurrency()));
-		screen.hideIntolerance();
+		// TODO screen.hideIntolerance();
 
 	}
 
@@ -244,33 +246,33 @@ public class VisualController implements ActionListener {
 // Interaccion con los datos de las intolerancias
 	public void updateIntolerances(String[] productIntolerances) {
 
-		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
-
-		if (listTypes.contains("1")) {
-			screen.showIntoleranceFrutSecos();
-
-		}
-		if (listTypes.contains("2")) {
-			screen.showIntoleranceGlucosa();
-
-		}
-		if (listTypes.contains("3")) {
-			screen.showIntoleranceGluten();
-
-		}
-		if (listTypes.contains("4")) {
-			screen.showIntoleranceSulfitos();
-
-		}
+//		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
+//
+//		if (listTypes.contains("1")) {
+//			screen.showIntoleranceFrutSecos();
+//
+//		}
+//		if (listTypes.contains("2")) {
+//			screen.showIntoleranceGlucosa();
+//
+//		}
+//		if (listTypes.contains("3")) {
+//			screen.showIntoleranceGluten();
+//
+//		}
+//		if (listTypes.contains("4")) {
+//			screen.showIntoleranceSulfitos();
+//
+//		}
 	}
 
 	public void resetIntolerancesVisibility() {
-		screen.hideIntolerance();
+//		screen.hideIntolerance();
 
 	}
 
 	public void showIntolerance() {
-		screen.showIntolerance();
+//		screen.showIntolerance();
 
 	}
 
