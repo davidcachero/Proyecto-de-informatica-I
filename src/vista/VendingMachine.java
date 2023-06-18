@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,7 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -411,6 +413,16 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.repaint();
 
 	}
+	
+	public void showIntolerance(String[] names) {
+		 List<String> list = Arrays.asList(names);
+		for (Component btnIntolerance : pIntolerance.getComponents()) {
+			if (btnIntolerance instanceof JButton && list.contains( btnIntolerance.getName())) {
+				btnIntolerance.setVisible(true);
+			}
+		}
+
+	}
 
 	// TODO actualizar para que tambien sean dinamicos
 //
@@ -449,6 +461,8 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 //		txtSulfitos.setVisible(true);
 //
 //	}
+	
+
 
 	public void setUserLoggedName(String name) {
 		System.out.println(name != null ? "[DEV] loggeando a " + name : "Usuario Deslogeado");

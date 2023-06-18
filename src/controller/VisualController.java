@@ -87,19 +87,19 @@ public class VisualController implements ActionListener {
 
 		return image;
 	}
-	
+
 	public Image getImageURL(String path, int x, int y) {
-		
-		if(path == null)
+
+		if (path == null)
 			return new ImageIcon("Files/assets/product_logo/not_found.png").getImage().getScaledInstance(y, x, 0);
 
 		Image image;
 		BufferedImage bufferedImage;
-		
-		try {
-            URL url = new URL(path);
 
-            bufferedImage = ImageIO.read(url);
+		try {
+			URL url = new URL(path);
+
+			bufferedImage = ImageIO.read(url);
 			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			System.err.println("[ERROR VISUAL] fallo icono");
@@ -126,13 +126,13 @@ public class VisualController implements ActionListener {
 
 			if (listTypes.contains(optionstr)) {
 				VisualMsg msg = controller.insertCoins(Float.parseFloat(optionstr));
-				
-				if (msg.getType() == "MSG") 
+
+				if (msg.getType() == "MSG")
 					screen.setTextFieldBalance((Float) msg.getMsg());
-				
+
 				else if (msg.getType() == "ERR")
 					showError((String) msg.getMsg());
-				
+
 			}
 
 		}
@@ -218,11 +218,11 @@ public class VisualController implements ActionListener {
 // Interaccion con los datos de los usuarios
 	public void logOffUser(boolean timerOn) {
 		if (timerOn) {
-			
+
 			timer.cancel();
 			screen.setEndTimeout();
 		}
-		
+
 		controller.logOffUser();
 		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
@@ -246,24 +246,10 @@ public class VisualController implements ActionListener {
 // Interaccion con los datos de las intolerancias
 	public void updateIntolerances(String[] productIntolerances) {
 
-//		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
-//
-//		if (listTypes.contains("1")) {
-//			screen.showIntoleranceFrutSecos();
-//
-//		}
-//		if (listTypes.contains("2")) {
-//			screen.showIntoleranceGlucosa();
-//
-//		}
-//		if (listTypes.contains("3")) {
-//			screen.showIntoleranceGluten();
-//
-//		}
-//		if (listTypes.contains("4")) {
-//			screen.showIntoleranceSulfitos();
-//
-//		}
+		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
+
+		screen.showIntolerance(productIntolerances);
+
 	}
 
 	public void resetIntolerancesVisibility() {
@@ -276,19 +262,16 @@ public class VisualController implements ActionListener {
 
 	}
 
-	
 	// interaccion con cronometro
 	public void startTimeOut(int startTime) {
 		this.timer = new Timer();
-        screen.createTimeOut(startTime, timer);
-		
+		screen.createTimeOut(startTime, timer);
+
 	}
-	
-	
+
 	// TODO ver si se puede quitar
 	public void countMinum(int time) {
 		System.out.println("count: " + time);
 	}
-
 
 }
