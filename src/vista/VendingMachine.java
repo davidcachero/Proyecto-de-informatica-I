@@ -421,10 +421,6 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		for (Component btnIntolerance : pIntolerance.getComponents()) {
 			btnIntolerance.setVisible(false);
 			
-			boolean DEBUG = btnIntolerance instanceof JButton;
-			String DEBUG_2_1 = btnIntolerance.getName();
-			boolean DEBUG_2 = list.contains( btnIntolerance.getName());
-			
 			if (btnIntolerance instanceof JButton && list.contains( btnIntolerance.getName())) {
 				btnIntolerance.setVisible(true);
 			}
