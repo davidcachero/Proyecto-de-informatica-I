@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -245,20 +244,7 @@ public class VisualController implements ActionListener {
 
 // Interaccion con los datos de las intolerancias
 	public void updateIntolerances(String[] productIntolerances) {
-
-		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
-
 		screen.showIntolerance(productIntolerances);
-
-	}
-
-	public void resetIntolerancesVisibility() {
-//		screen.hideIntolerance();
-
-	}
-
-	public void showIntolerance() {
-//		screen.showIntolerance();
 
 	}
 

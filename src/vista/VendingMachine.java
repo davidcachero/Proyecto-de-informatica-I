@@ -392,11 +392,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 			JButton newBtn = new JButton();
 			
 //			newBtn = new JButton();
-			newBtn.setFont(new Font("Tahoma", Font.BOLD, 11));
+			newBtn.setFont(new Font("Tahoma", Font.BOLD, 9));
 			newBtn.setBackground(SystemColor.textHighlightText);
 			newBtn.setHorizontalAlignment(SwingConstants.CENTER);
 			newBtn.setText(intoData.getName());
 			newBtn.setBorder(null);
+			newBtn.setName(Integer.toString(intoData.getId()));
 //			newBtn.setEditable(false);
 //			newBtn.setColumns(10);
 			newBtn.setBounds(28, 25, 78, 20);
@@ -414,11 +415,26 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	}
 	
-	public void showIntolerance(String[] names) {
-		 List<String> list = Arrays.asList(names);
+	public void showIntolerance(String[] ids) {
+		 List<String> list = Arrays.asList(ids);
+		 
 		for (Component btnIntolerance : pIntolerance.getComponents()) {
+			btnIntolerance.setVisible(false);
+			
+			boolean DEBUG = btnIntolerance instanceof JButton;
+			String DEBUG_2_1 = btnIntolerance.getName();
+			boolean DEBUG_2 = list.contains( btnIntolerance.getName());
+			
 			if (btnIntolerance instanceof JButton && list.contains( btnIntolerance.getName())) {
 				btnIntolerance.setVisible(true);
+			}
+		}
+	}
+	
+	public void hideIntolerances() {
+		for (Component btnIntolerance : pIntolerance.getComponents()) {
+			if (btnIntolerance instanceof JButton) {
+				btnIntolerance.setVisible(false);
 			}
 		}
 

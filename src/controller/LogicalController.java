@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 import models.VisualMsg;
 
@@ -21,15 +22,17 @@ public class LogicalController {
 	private HashMap<Float, Currency> currency;
 	private HashMap<String, Catalog> catalog;
 	private HashMap<String, Usuario> users;
+	private HashMap<String, Intolerance> intolerances;
 	private float balance;
 	private Usuario userLogged;
 
 	public LogicalController(HashMap<Float, Currency> currency, HashMap<String, Catalog> catalog,
-			HashMap<String, Usuario> users) {
+			HashMap<String, Usuario> users, HashMap<String, Intolerance> intolerances) {
 
 		this.currency = currency;
 		this.catalog = catalog;
 		this.users = users;
+		this.intolerances = intolerances;
 		this.balance = 0;
 
 	}
@@ -167,8 +170,18 @@ public class LogicalController {
 
 	}
 
-	public String[] getProductIntolerances(String prod) {
-		return catalog.get(prod).getIntolerances();
+	public String[] getProductIntolerancesId(String prod) {
+		return catalog.get(prod).getIntoleranceId();
 	}
+
+//	public String[] getIntoleranceNames(String[] intoleranceId) {
+//		String[] names = new String[intoleranceId.length];
+//		for (int i = 0; i< intoleranceId.length; i++) {
+//			
+//			if(intolerances.get(intoleranceId[i]) != null) 
+//				names[i] = intolerances.get(intoleranceId[i]).getName();
+//		}
+//		return names;
+//	}
 
 }

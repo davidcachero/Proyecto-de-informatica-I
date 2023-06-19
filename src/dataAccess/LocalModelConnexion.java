@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import auxiliar.I_Data_Access;
@@ -92,19 +93,21 @@ public class LocalModelConnexion implements I_Data_Access {
 			String text = null;
 			Catalog catalog = null;
 			String clave = null;
-			String[] intolerances = null;
+			String[] intolerancesID = null;
 
 			while ((text = reader.readLine()) != null) {
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
 				try {
-					intolerances = splitData[4].split(":");
+					intolerancesID = splitData[4].split(":");
+					
+					
 				} catch (IndexOutOfBoundsException e) {
-					intolerances = new String[0];
+					intolerancesID = new String[0];
 				}
 				catalog = new Catalog(clave, splitData[1].toString(), Float.parseFloat(splitData[2]),
-						Integer.parseInt(splitData[3]), intolerances);
+						Integer.parseInt(splitData[3]), intolerancesID);
 
 				actualCatalog.put(clave, catalog);
 			}
@@ -151,6 +154,46 @@ public class LocalModelConnexion implements I_Data_Access {
 		return actualUsers;
 	}
 
+	public HashMap<String, Intolerance> getIntoleranceData(String[] searchID) {
+
+		HashMap<String, Intolerance> intolerances = new HashMap<String, Intolerance>();
+		File FileCurrecyTypes = new File(filesIntolerances);
+
+		BufferedReader reader = null;
+
+		try {
+			reader = new BufferedReader(new FileReader(FileCurrecyTypes));
+			String text = null;
+
+
+			while ((text = reader.readLine()) != null) {
+
+				String[] data = text.split(";");
+
+				String id = data[0];
+
+				if (Arrays.asList(searchID).contains(id)) {
+					
+					Intolerance intolerance = new Intolerance(Integer.parseInt(id), data[1], data[2]);
+
+					intolerances.put(id, intolerance);
+				}
+			}
+			
+			reader.close();
+
+			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return intolerances;
+	}
+
+
 	public HashMap<String, Intolerance> getIntoleranceData() {
 
 		HashMap<String, Intolerance> intolerances = new HashMap<String, Intolerance>();
@@ -186,6 +229,7 @@ public class LocalModelConnexion implements I_Data_Access {
 		return intolerances;
 	}
 
+	
 // Guardar las monedas
 	public boolean saveCurrency(HashMap<Float, Currency> currency) {
 
@@ -230,7 +274,7 @@ public class LocalModelConnexion implements I_Data_Access {
 				String valueString = key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
 
 				String valueIntolerances = ";";
-				for (String idIntolerance : value.getIntolerances()) {
+				for (String idIntolerance : value.getIntoleranceId()) {
 					valueIntolerances += idIntolerance + ":";
 				}
 				valueIntolerances = valueIntolerances.substring(0, valueIntolerances.length() - 1);

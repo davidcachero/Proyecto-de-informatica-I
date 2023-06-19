@@ -33,13 +33,12 @@ public class Controller {
 		HashMap<Float, Currency> currency = access.getCurrencyData();
 		HashMap<String, Catalog> catalog = access.getCatalogData();
 		HashMap<String, Usuario> users = access.getUsersData();
-
 		HashMap<String, Intolerance> intolerances = access.getIntoleranceData();
 
 		if ((catalog != null) && (currency != null) && (users != null)) {
 			System.out.println("[DEV] finded data");
 
-			machine = new LogicalController(currency, catalog, users);
+			machine = new LogicalController(currency, catalog, users, intolerances);
 
 			if (machine != null) {
 
@@ -130,13 +129,11 @@ public class Controller {
 
 	public VisualMsg selectProduct(String prodId) {
 
-		view.resetIntolerancesVisibility();
-
 		if (machine.hasProduct(prodId)) {
 			Catalog prod = machine.getProd(prodId);
 			System.out.println("[PROCESS PC] PRODUCTO EXISTE");
 
-			view.updateIntolerances(prod.getIntolerances());
+			view.updateIntolerances(prod.getIntoleranceId());
 			return new VisualMsg("PROD", prod);
 
 		} else {
@@ -147,7 +144,6 @@ public class Controller {
 
 	public VisualMsg sellProduct(String prod) {
 
-		view.resetIntolerancesVisibility();
 		System.out.println("COMPRANDO........ " + prod);
 
 		if (machine.hasProduct(prod)) {
@@ -158,7 +154,7 @@ public class Controller {
 				if (msg.getType() == "SENT") {
 					System.out.println("[PROCESS PC] SALDO TRAS VENTA: " + msg.getMsg());
 					view.updateBalance((Float) msg.getMsg());
-					view.showIntolerance();
+					view.updateIntolerances(new String[0]);
 
 					System.out.println("[PROCESS PC] PRODUCTO VENDIDO :" + prod);
 

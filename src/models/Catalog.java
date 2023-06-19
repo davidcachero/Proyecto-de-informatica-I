@@ -142,7 +142,7 @@ public class Catalog {
 	 * programa
 	 * 
 	 */
-	public String[] getIntolerances() {
+	public String[] getIntoleranceId() {
 		return intolerances;
 	}
 
