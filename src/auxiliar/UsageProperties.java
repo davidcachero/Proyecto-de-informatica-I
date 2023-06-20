@@ -1,5 +1,6 @@
 package auxiliar;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -21,92 +22,35 @@ public class UsageProperties {
 
 	public UsageProperties() {
 		config = new Properties();
+		configUrl = new Properties();
 		propList = new HashMap<String, String>();
 
 	}
 
 	// Config  - get values
-	public String inicialURL() {
+	public String getPath() {
 		try {
-			configInput = new FileInputStream("propiedades.properties");
+			configInput = new FileInputStream(new File("Files/config/propiedades.properties"));
 			config.load(configInput);
 
-			configInput = new FileInputStream("conexionApi.properties");
+			configInput = new FileInputStream(new File("Files/config/conexionApi.properties"));
 			configUrl.load(configInput);
 
-			url = config.getProperty("host")
-					+ configUrl.getProperty("start").replace("{id_maquina}", config.getProperty("config"));
+			url = config.getProperty("SERVER_PATH")
+					+ configUrl.getProperty("PATH").replace("{version}", config.getProperty("API_VERSION"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return url;
 	}
-
-	public String endURL() {
+	
+	public String getId() {
 		try {
-			configInput = new FileInputStream("propiedades.properties");
+			configInput = new FileInputStream(new File("Files/config/propiedades.properties"));
 			config.load(configInput);
 
-			configInput = new FileInputStream("conexionApi.properties");
-			configUrl.load(configInput);
-
-			url = config.getProperty("host")
-					+ configUrl.getProperty("turnoff").replace("{id_maquina}", config.getProperty("config"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return url;
-	}
-
-	public String buyURL() {
-
-		try {
-			configInput = new FileInputStream("propiedades.properties");
-			config.load(configInput);
-
-			configInput = new FileInputStream("conexionApi.properties");
-			configUrl.load(configInput);
-
-			url = config.getProperty("host")
-					+ configUrl.getProperty("buy").replace("{id_maquina}", config.getProperty("config"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return url;
-	}
-
-	public String cardOnURL() {
-
-		try {
-			configInput = new FileInputStream("propiedades.properties");
-			config.load(configInput);
-
-			configInput = new FileInputStream("conexionApi.properties");
-			configUrl.load(configInput);
-
-			url = config.getProperty("host")
-					+ configUrl.getProperty("cardon").replace("{id_maquina}", config.getProperty("config"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return url;
-	}
-
-	public String cardOutURL() {
-
-		try {
-			configInput = new FileInputStream("propiedades.properties");
-			config.load(configInput);
-
-			configInput = new FileInputStream("conexionApi.properties");
-			configUrl.load(configInput);
-
-			url = config.getProperty("host")
-					+ configUrl.getProperty("cardoff").replace("{id_maquina}", config.getProperty("config"));
+			url = config.getProperty("ID");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,7 +63,7 @@ public class UsageProperties {
 	public boolean setTimeOut(String num) {
 		try {
 			
-			configOutput = new FileOutputStream("propiedades.properties");
+			configOutput = new FileOutputStream(new File("Files/config/propiedades.properties"));
 			config.put("TIMEOUT", num);
 			config.store(configOutput, "This is a sample properties file");
 			
@@ -137,10 +81,12 @@ public class UsageProperties {
 	public String conexionFiles(ConnectionFiles type) {
 
 		try {
-			configInput = new FileInputStream("conexionFiles.properties");
-			configUrl.load(configInput);
+			configInput = new FileInputStream(new File("Files/config/conexionFiles.properties"));
+			config.load(configInput);
 
+			System.out.println(type.toString());
 			url = config.getProperty(type.toString());
+			System.out.println(url);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +96,7 @@ public class UsageProperties {
 
 	public int getTimeOut() {
 		try {
-			configInput = new FileInputStream("propiedades.properties");
+			configInput = new FileInputStream(new File("Files/config/propiedades.properties"));
 			configUrl.load(configInput);
 
 			url = config.getProperty("TIMEOUT");

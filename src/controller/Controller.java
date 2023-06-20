@@ -27,6 +27,7 @@ public class Controller {
 
 	public Controller() {
 		localAccess = new LocalModelConnexion();
+		apiAccess = new APIConnexion();
 	}
 
 	// Inicializar conexiones

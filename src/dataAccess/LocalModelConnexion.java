@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import auxiliar.ConnectionFiles;
 import auxiliar.I_Data_Access;
@@ -206,15 +207,15 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveCatalog(HashMap<String, Catalog> catalog) {
 
 		boolean todoOK = true;
-		File FileCatalog = new File(prop.conexionFiles(ConnectionFiles.CATALOG));
+		String FileCatalog = prop.conexionFiles(ConnectionFiles.CATALOG);
 
 		try {
-			PrintWriter pw = new PrintWriter(FileCatalog);
+			PrintWriter pw = new PrintWriter(new File(FileCatalog));
+			
+			for (Entry<String, Catalog> entry : catalog.entrySet()) {
+				Catalog value = entry.getValue();
 
-			for (String key : catalog.keySet()) {
-				Catalog value = catalog.get(key);
-
-				String valueString = key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
+				String valueString = value.getKey() + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
 
 				String valueIntolerances = ";";
 				for (String idIntolerance : value.getIntolerances()) {
@@ -234,7 +235,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			e1.printStackTrace();
 			return false;
 		} catch (Exception e) {
-			System.err.println(e.fillInStackTrace());
+			System.err.println(e.getMessage());
 			return false;
 		}
 
