@@ -91,12 +91,12 @@ public class LocalModelConnexion implements I_Data_Access {
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
 				try {
-					intolerances = splitData[4].split(":");
+					intolerances = splitData[5].split(":");
 				} catch (IndexOutOfBoundsException e) {
 					intolerances = new String[0];
 				}
 				catalog = new Catalog(clave, splitData[1].toString(), Float.parseFloat(splitData[2]),
-						Integer.parseInt(splitData[3]), intolerances);
+						Integer.parseInt(splitData[3]), splitData[4], intolerances);
 
 				actualCatalog.put(clave, catalog);
 			}
@@ -215,7 +215,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			for (Entry<String, Catalog> entry : catalog.entrySet()) {
 				Catalog value = entry.getValue();
 
-				String valueString = value.getKey() + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
+				String valueString = value.getKey() + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount() + ";" + value.getImage();
 
 				String valueIntolerances = ";";
 				for (String idIntolerance : value.getIntolerances()) {
