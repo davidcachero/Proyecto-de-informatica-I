@@ -1,15 +1,14 @@
 package models;
 
 public class Intolerance {
-	
+
 	private int id;
-	private String nombre;
+	private String name;
 	private String image;
-	
-	public Intolerance(int id, String nombre, String image) {
-		super();
+
+	public Intolerance(int id, String name, String image) {
 		this.id = id;
-		this.nombre = nombre;
+		this.name = name;
 		this.image = image;
 	}
 
@@ -21,12 +20,12 @@ public class Intolerance {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getImage() {
@@ -36,8 +35,4 @@ public class Intolerance {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-	
-	
-
 }

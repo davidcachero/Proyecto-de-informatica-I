@@ -19,6 +19,8 @@ public class Catalog {
 	private float price;
 	private int amount;
 	private String image;
+
+
 	private String[] intolerances;
 
 	/*
@@ -139,7 +141,7 @@ public class Catalog {
 	 * programa
 	 * 
 	 */
-	public String[] getIntolerances() {
+	public String[] getIntoleranceId() {
 		return intolerances;
 	}
 

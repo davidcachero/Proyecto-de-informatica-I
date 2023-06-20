@@ -1,5 +1,5 @@
-1;Coca cola;1.9;15;7
-3;Fanta limón;2.2;11;7
-4;Coca cola zero;1.3;9;6
-5;Ex;1.8;15;4:null:null
-10;Aliquid;2.4;1;3
+1;Coca cola;1.9;15;http://coffeebreak.davidnaviaweb.com/storage/products/DzufqrNW8pj1Cu6rw0AkOyutYVaaGEDHx9FNaIvi.png;7
+3;Fanta limón;2.2;11;http://coffeebreak.davidnaviaweb.com/storage/products/I2WeEa8iX7IKAYb55BuR4YpN4rLuocKd6ZyNgZp4.png;7
+4;Coca cola zero;1.3;9;http://coffeebreak.davidnaviaweb.com/storage/products/7g0iUHErt2qsix6miYmEAaS8VNe9a9ASU3AOYon5.png;6
+5;Ex;1.8;15;https://via.placeholder.com/400x400.png/0099ee?text=et;4:null:null
+10;Aliquid;2.4;1;https://via.placeholder.com/400x400.png/00ee44?text=nam;3
