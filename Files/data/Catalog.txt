@@ -1,5 +1,5 @@
-1;Coca cola;1.9;15;http://coffeebreak.davidnaviaweb.com/storage/products/DzufqrNW8pj1Cu6rw0AkOyutYVaaGEDHx9FNaIvi.png;7
-3;Fanta limón;2.2;11;http://coffeebreak.davidnaviaweb.com/storage/products/I2WeEa8iX7IKAYb55BuR4YpN4rLuocKd6ZyNgZp4.png;7
-4;Coca cola zero;1.3;9;http://coffeebreak.davidnaviaweb.com/storage/products/7g0iUHErt2qsix6miYmEAaS8VNe9a9ASU3AOYon5.png;6
-5;Ex;1.8;15;https://via.placeholder.com/400x400.png/0099ee?text=et;4:null:null
-10;Aliquid;2.4;1;https://via.placeholder.com/400x400.png/00ee44?text=nam;3
+1;Coca Cola;3.0;4;http://coffeebreak.davidnaviaweb.com/storage/products/jrxzuTBGarDwXkxX7yW6c9zYLS6eo9Tik7QXvYxj.png;7
+2;Coca Cola Zero;3.0;7;http://coffeebreak.davidnaviaweb.com/storage/products/4SFOgV9f30HnNtdPWsCWL45Lij7EC9v5IsPjQES7.png
+3;Fanta Limón;3.0;10;http://coffeebreak.davidnaviaweb.com/storage/products/wLDKVfk4ggyNHQkQaGWwzmxxiWYa8FU7bCU387kj.png;7
+4;Fanta Naranja;3.0;12;http://coffeebreak.davidnaviaweb.com/storage/products/kqqnnCc5LGNogI3575y9hoZS87uSaEeUPdZoPNaJ.png;7
+7;Cerveza Alhambra 33CL;5.0;8;http://coffeebreak.davidnaviaweb.com/storage/products/r41iAQ3m51yj08i391FmY2AcX4LWqk20gEi3t2lU.png;20:null

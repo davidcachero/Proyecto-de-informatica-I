@@ -279,4 +279,10 @@ public class VisualController implements ActionListener {
 		System.out.println("count: " + time);
 	}
 
+	public void setIntoleranceList(HashMap<String, Intolerance> intolerances) {
+		screen.hideIntolerances();
+		screen.setIntoleranceList(intolerances);
+		
+	}
+
 }

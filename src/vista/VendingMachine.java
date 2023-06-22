@@ -39,6 +39,8 @@ import java.util.TimerTask;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
+import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
 
 /**
  * 
@@ -85,7 +87,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		setTitle("COFFEE BREAK");
 		setIconImage(controller.getImage("Logo_CoffeeBreak", "png", 2000, 2000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 100, 739, 519);
+		setBounds(300, 100, 877, 564);
 
 		buildView();
 		setFuncionalities();
@@ -130,7 +132,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 		JPanel terminalPanel = new JPanel();
 		terminalPanel.setBorder(new LineBorder(new Color(106, 108, 255), 2));
-		terminalPanel.setBounds(398, 56, 289, 160);
+		terminalPanel.setBounds(495, 56, 330, 160);
 
 		// Componentes de la pantalla
 		txfProducto = new JTextField();
@@ -166,14 +168,14 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnDevolverDinero.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDevolverDinero.setBackground(new Color(106, 108, 255));
 		btnDevolverDinero.setForeground(Color.WHITE);
-		btnDevolverDinero.setBounds(398, 227, 289, 60);
+		btnDevolverDinero.setBounds(495, 227, 325, 60);
 		contentPane.add(btnDevolverDinero);
 
 		btnPagar = new JButton("PAGAR");
 		btnPagar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnPagar.setBackground(new Color(106, 108, 255));
 		btnPagar.setForeground(Color.WHITE);
-		btnPagar.setBounds(398, 291, 289, 60);
+		btnPagar.setBounds(495, 291, 325, 60);
 		contentPane.add(btnPagar);
 
 		btnLogOff = new JButton("CERRAR SESIÓN");
@@ -181,22 +183,22 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		btnLogOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogOff.setVisible(false);
 		btnLogOff.setForeground(Color.WHITE);
-		btnLogOff.setBounds(398, 367, 289, 35);
+		btnLogOff.setBounds(495, 367, 325, 35);
 
 		contentPane.add(btnLogOff);
 
 		pProducts = new JPanel();
-		pProducts.setBounds(24, 56, 344, 395);
+		pProducts.setBounds(24, 56, 439, 395);
 		pProducts.setLayout(new GridLayout(3, 3));
 		contentPane.add(pProducts);
 
 		lbluserLoggedName = new JLabel();
 		lbluserLoggedName.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbluserLoggedName.setBounds(398, 25, 171, 37);
+		lbluserLoggedName.setBounds(550, 25, 171, 37);
 		contentPane.add(lbluserLoggedName);
 
 		tf_timer = new JLabel();
-		tf_timer.setBounds(579, 0, 124, 35);
+		tf_timer.setBounds(731, 0, 124, 35);
 		tf_timer.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(tf_timer);
 
@@ -205,10 +207,12 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 		contentPane.add(lblNewLabel);
 
 		pIntolerance = new JPanel();
-		pIntolerance.setBounds(104, 25, 262, 20);
+		FlowLayout flowLayout = (FlowLayout) pIntolerance.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		pIntolerance.setBounds(104, 25, 359, 20);
 		pProducts.setLayout(new GridLayout(1, 3));
 		contentPane.add(pIntolerance);
-
+		
 	}
 
 	/**
@@ -330,21 +334,30 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 
 	public void setIntoleranceList(HashMap<String, Intolerance> rawData) {
 
+		System.out.println("RAW DATA");
+		System.out.println(rawData.get(11));
+		if (rawData.isEmpty()) return;
+		
+		int top6 = 6;
 		for (Entry<String, Intolerance> into : rawData.entrySet()) {
 
-			Intolerance intoData = into.getValue();
+			if (top6 >= 0) {
+				Intolerance intoData = into.getValue();
 
-			JButton newBtn = new JButton();
+				JButton newBtn = new JButton();
+				
+				newBtn.setFont(new Font("Tahoma", Font.BOLD, 9));
+				newBtn.setBackground(SystemColor.textHighlightText);
+				newBtn.setHorizontalAlignment(SwingConstants.CENTER);
+				newBtn.setText(intoData.getName());
+				newBtn.setBorder(null);
+				newBtn.setName(Integer.toString(intoData.getId()));
+				newBtn.setBounds(28, 25, 78, 20);
+
+				pIntolerance.add(newBtn);
+			}
 			
-			newBtn.setFont(new Font("Tahoma", Font.BOLD, 9));
-			newBtn.setBackground(SystemColor.textHighlightText);
-			newBtn.setHorizontalAlignment(SwingConstants.CENTER);
-			newBtn.setText(intoData.getName());
-			newBtn.setBorder(null);
-			newBtn.setName(Integer.toString(intoData.getId()));
-			newBtn.setBounds(28, 25, 78, 20);
-
-			pIntolerance.add(newBtn);
+			top6--;
 
 		}
 
@@ -370,11 +383,7 @@ public class VendingMachine extends JFrame implements ActionListener, ItemListen
 	}
 	
 	public void hideIntolerances() {
-		for (Component btnIntolerance : pIntolerance.getComponents()) {
-			if (btnIntolerance instanceof JButton) {
-				btnIntolerance.setVisible(false);
-			}
-		}
+		pIntolerance.removeAll();
 
 	}
 

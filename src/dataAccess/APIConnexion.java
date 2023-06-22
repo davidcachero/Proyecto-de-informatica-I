@@ -129,44 +129,44 @@ public class APIConnexion {
 		return prodList;
 	}
 
-//	private HashMap<Integer, Intolerance> formatIntolerances(JSONObject respuesta) {
-//		HashMap<Integer, Intolerance> intoleranceList = new HashMap<Integer, Intolerance>();
-//		JSONArray rawIntolerancias = (JSONArray) respuesta.get("intolerancias");
-//
-//		for (Object data : rawIntolerancias) {
-//			JSONObject aux = (JSONObject) data;
-//
-//			int id = Integer.parseInt(aux.get("id_intolerancia").toString());
-//
-//			intoleranceList.put(id, new Intolerance(id, aux.get("nombre").toString(), aux.get("imagen").toString()));
-//		}
-//
-//		return intoleranceList;
-//	}
-	
 	private HashMap<Integer, Intolerance> formatIntolerances(JSONObject respuesta) {
 		HashMap<Integer, Intolerance> intoleranceList = new HashMap<Integer, Intolerance>();
-		//JSONArray rawIntolerancias = (JSONArray) respuesta.get("intolerancias");
-		JSONArray rawProducts = (JSONArray) respuesta.get("products");
+		JSONArray rawIntolerancias = (JSONArray) respuesta.get("allergies");
 
-		for (Object data : rawProducts) {
+		for (Object data : rawIntolerancias) {
 			JSONObject aux = (JSONObject) data;
 
-			JSONArray rawIntolerances = (JSONArray) aux.get("allergies");
+			int id = Integer.parseInt(aux.get("id").toString());
 
-
-			int count = 0;
-			for (Object into : rawIntolerances) {
-				JSONObject objIntolerance = (JSONObject) into;
-
-				int id = Integer.parseInt(objIntolerance.get("id").toString());
-				intoleranceList.put(id, new Intolerance(id, objIntolerance.get("name").toString(), objIntolerance.get("image").toString()));
-				
-			}
+			intoleranceList.put(id, new Intolerance(id, aux.get("name").toString(), aux.get("image").toString()));
 		}
 
 		return intoleranceList;
 	}
+	
+//	private HashMap<Integer, Intolerance> formatIntolerances(JSONObject respuesta) {
+//		HashMap<Integer, Intolerance> intoleranceList = new HashMap<Integer, Intolerance>();
+//		//JSONArray rawIntolerancias = (JSONArray) respuesta.get("intolerancias");
+//		JSONArray rawProducts = (JSONArray) respuesta.get("products");
+//
+//		for (Object data : rawProducts) {
+//			JSONObject aux = (JSONObject) data;
+//
+//			JSONArray rawIntolerances = (JSONArray) aux.get("allergies");
+//
+//
+//			int count = 0;
+//			for (Object into : rawIntolerances) {
+//				JSONObject objIntolerance = (JSONObject) into;
+//
+//				int id = Integer.parseInt(objIntolerance.get("id").toString());
+//				intoleranceList.put(id, new Intolerance(id, objIntolerance.get("name").toString(), objIntolerance.get("image").toString()));
+//				
+//			}
+//		}
+//
+//		return intoleranceList;
+//	}
 
 	// Funciones que se llaman al terminar
 //	

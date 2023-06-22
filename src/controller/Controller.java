@@ -86,7 +86,7 @@ public class Controller {
 			System.err.println("OBJECT TYPE ERROR - products data error");
 
 		if (apiData.get("INTO") instanceof HashMap)
-			localAccess.saveIntolerances((HashMap<String, Intolerance>) apiData.get("INTO"));
+			localAccess.saveIntolerance((HashMap<Integer, Intolerance>) apiData.get("INTO"));
 		else
 			System.err.println("OBJECT TYPE ERROR - config data error");
 	}
@@ -169,8 +169,7 @@ public class Controller {
 		if (machine.hasProduct(prodId)) {
 			Catalog prod = machine.getProd(prodId);
 			System.out.println("[PROCESS PC] PRODUCTO EXISTE");
-
-			view.updateIntolerances(prod.getIntoleranceId());
+			view.setIntoleranceList(localAccess.getIntoleranceNames(prod.getIntoleranceId()));
 			return new VisualMsg("PROD", prod);
 
 		} else {

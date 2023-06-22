@@ -148,11 +148,11 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	public HashMap<String, Intolerance> getIntoleranceData() {
 		HashMap<String, Intolerance> actualUsers = new HashMap<String, Intolerance>();
-		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
 
 		BufferedReader reader = null;
 
 		try {
+			File FileUsers = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
 			reader = new BufferedReader(new FileReader(FileUsers));
 			String text = null;
 			
@@ -177,10 +177,10 @@ public class LocalModelConnexion implements I_Data_Access {
 		return actualUsers;
 	}
 
-	public HashMap<String, Intolerance> getIntoleranceData(String[] searchID) {
+	public HashMap<String, Intolerance>  getIntoleranceNames(String[] searchID) {
 
 		HashMap<String, Intolerance> intolerances = new HashMap<String, Intolerance>();
-		File fileIntolerances = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
+		File fileIntolerances = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
 
 		BufferedReader reader = null;
 
@@ -315,17 +315,17 @@ public class LocalModelConnexion implements I_Data_Access {
 	}
 
 // Guardar las intolerancias registrados
-	public boolean saveIntolerance(HashMap<String, Intolerance> intolerances) {
+	public boolean saveIntolerance(HashMap<Integer, Intolerance> intolerances) {
 
 		boolean todoOK = true;
-		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
+		File fileIntolerances = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
 
 		try {
-			PrintWriter pw = new PrintWriter(FileUsers);
+			PrintWriter pw = new PrintWriter(fileIntolerances);
 
-			for (String key : intolerances.keySet()) {
+			for (Integer key : intolerances.keySet()) {
 				Intolerance value = intolerances.get(key);
-				pw.println(key + ";" + value.getName() + ";" + value.getImage());
+				pw.println(Integer.toString(key) + ";" + value.getName() + ";" + value.getImage());
 			}
 
 			pw.close();
@@ -341,34 +341,34 @@ public class LocalModelConnexion implements I_Data_Access {
 		return todoOK;
 	}
 
-	// Guardar las monedas
-	public boolean saveIntolerances(HashMap<String, Intolerance> intolerances) {
-
-		boolean todoOK = true;
-		File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCES));
-
-		try {
-			PrintWriter pw = new PrintWriter(FileCurrency);
-
-			for (String key : intolerances.keySet()) {
-				Intolerance value = intolerances.get(key);
-				pw.println(value.getId() + ";" + value.getName() + ";" + value.getImage());
-			}
-
-			pw.close();
-
-			System.out.println("[PROCESS FILES] datos de Intolerances guardados");
-
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-
-		} catch (Exception e) {
-			return false;
-		}
-
-		return todoOK;
-
-	}
+	// TODO Guardar las monedas
+//	public boolean saveIntolerances(HashMap<Integer, Intolerance> intolerances) {
+//
+//		boolean todoOK = true;
+//
+//		try {
+//			File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
+//			PrintWriter pw = new PrintWriter(FileCurrency);
+//
+//			for (Integer key : intolerances.keySet()) {
+//				Intolerance value = intolerances.get(key);
+//				pw.println(Integer.toString(value.getId()) + ";" + value.getName() + ";" + value.getImage());
+//			}
+//
+//			pw.close();
+//
+//			System.out.println("[PROCESS FILES] datos de Intolerances guardados");
+//
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//
+//		} catch (Exception e) {
+//			return false;
+//		}
+//
+//		return todoOK;
+//
+//	}
 
 	// struct files
 
