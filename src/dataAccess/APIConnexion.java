@@ -13,6 +13,7 @@ import auxiliar.ApiRequests;
 import auxiliar.UsageProperties;
 import models.Catalog;
 import models.Intolerance;
+import models.Usuario;
 
 public class APIConnexion {
 
@@ -35,11 +36,11 @@ public class APIConnexion {
 			objPeticion.put("type", "start");
 			objPeticion.put("machine_id", prop.getId());
 			String json = objPeticion.toJSONString();
-			
+
 			System.out.println(prop.getPath());
 			System.out.println(json);
 			HashMap<String, String> rawResponse = con.postRequest(prop.getPath(), json);
-			
+
 			switch (Integer.parseInt(rawResponse.get("code"))) {
 
 			case 200:
@@ -56,15 +57,15 @@ public class APIConnexion {
 			default: {
 				response = "ERROR CONEXION API: " + rawResponse.get("msg");
 				System.out.println(response);
-			}}
+			}
+			}
 
 			System.out.println(response); // Traza para pruebas
-			
 
 			JSONObject respuesta = (JSONObject) JSONValue.parse(response);
 
 			// Crear objetos con datos de configuracion
-			//HashMap<String, String> configList = formatConfig(respuesta);
+			// HashMap<String, String> configList = formatConfig(respuesta);
 
 			// Crear objetos con los datos de productos
 			HashMap<Integer, Catalog> prodList = formatProducts(respuesta);
@@ -143,7 +144,65 @@ public class APIConnexion {
 
 		return intoleranceList;
 	}
-	
+
+	public Usuario getUser(String idcliente) {
+
+		String response = "";
+		JSONObject objPeticion = new JSONObject();
+		JSONObject obSubPeticion = new JSONObject();
+
+		Usuario data;
+
+		try {
+
+			objPeticion.put("type", "login");
+			objPeticion.put("machine_id", prop.getId());
+
+			obSubPeticion.put("card_number", idcliente);
+			objPeticion.put("data", obSubPeticion);
+			String json = objPeticion.toJSONString();
+
+			System.out.println(prop.getPath());
+			System.out.println(json);
+			HashMap<String, String> rawResponse = con.postRequest(prop.getPath(), json);
+
+			switch (Integer.parseInt(rawResponse.get("code"))) {
+
+			case 200:
+			case 201:
+			case 204:
+				// Manejar respuesta exitosa
+				response = rawResponse.get("msg");
+				break;
+			case 400: // Manejar error de solicitud incorrecta
+			case 401: // Error acceso denegado
+			case 403: // Error sin acceso al servidor
+			case 404: // Error de recurso no encontrado
+			case 500: // Error interno del servidor
+			default: {
+				response = "ERROR CONEXION API: " + rawResponse.get("msg");
+				System.out.println(response);
+			}
+			}
+
+			System.out.println(response); // Traza para pruebas
+
+			JSONObject respuesta = (JSONObject) JSONValue.parse(response);
+
+			float amount = Float.parseFloat(respuesta.get("credit").toString());
+			return new Usuario(respuesta.get("name").toString(), amount);
+
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 //	private HashMap<Integer, Intolerance> formatIntolerances(JSONObject respuesta) {
 //		HashMap<Integer, Intolerance> intoleranceList = new HashMap<Integer, Intolerance>();
 //		//JSONArray rawIntolerancias = (JSONArray) respuesta.get("intolerancias");

@@ -114,38 +114,6 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	}
 
-	public HashMap<String, Usuario> getUsersData() {
-		HashMap<String, Usuario> actualUsers = new HashMap<String, Usuario>();
-		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
-
-		BufferedReader reader = null;
-
-		try {
-			reader = new BufferedReader(new FileReader(FileUsers));
-			String text = null;
-			Usuario users = null;
-			String clave = null;
-
-			while ((text = reader.readLine()) != null) {
-
-				String[] splitData = text.split(";");
-				clave = splitData[0].toString();
-				users = new Usuario(clave, splitData[1], Float.parseFloat(splitData[2]));
-
-				actualUsers.put(clave, users);
-			}
-
-			System.out.println("[PROCESS FILES] datos de Users descargados");
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return actualUsers;
-	}
-
-
 	public HashMap<String, Intolerance> getIntoleranceData() {
 		HashMap<String, Intolerance> actualUsers = new HashMap<String, Intolerance>();
 
@@ -286,33 +254,33 @@ public class LocalModelConnexion implements I_Data_Access {
 		return todoOK;
 	}
 
-// Guardar los usuarios registrados
-	public boolean saveUser(HashMap<String, Usuario> users) {
-
-		boolean todoOK = true;
-		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
-
-		try {
-			PrintWriter pw = new PrintWriter(FileUsers);
-
-			for (String key : users.keySet()) {
-				Usuario value = users.get(key);
-				pw.println(key + ";" + value.getName() + ";" + value.getSaldo());
-			}
-
-			pw.close();
-
-			System.out.println("[PROCESS FILES] datos de Users guardados");
-
-
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (Exception e) {
-			return false;
-		}
-
-		return todoOK;
-	}
+//// Guardar los usuarios registrados
+//	public boolean saveUser(HashMap<String, Usuario> users) {
+//
+//		boolean todoOK = true;
+//		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
+//
+//		try {
+//			PrintWriter pw = new PrintWriter(FileUsers);
+//
+//			for (String key : users.keySet()) {
+//				Usuario value = users.get(key);
+//				pw.println(key + ";" + value.getName() + ";" + value.getSaldo());
+//			}
+//
+//			pw.close();
+//
+//			System.out.println("[PROCESS FILES] datos de Users guardados");
+//
+//
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (Exception e) {
+//			return false;
+//		}
+//
+//		return todoOK;
+//	}
 
 // Guardar las intolerancias registrados
 	public boolean saveIntolerance(HashMap<Integer, Intolerance> intolerances) {
@@ -406,7 +374,6 @@ public class LocalModelConnexion implements I_Data_Access {
 	}
 
 	public int getTimeOut() {
-		// TODO Auto-generated method stub
 		return prop.getTimeOut();
 	}
 }

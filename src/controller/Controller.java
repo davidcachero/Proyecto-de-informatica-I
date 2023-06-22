@@ -34,19 +34,16 @@ public class Controller {
 
 	public void start() {
 
-
 		updateApiData();
 
 		HashMap<Float, Currency> currency = localAccess.getCurrencyData();
 		HashMap<String, Catalog> catalog = localAccess.getCatalogData();
-		HashMap<String, Usuario> users = localAccess.getUsersData();
 		HashMap<String, Intolerance> intolerances = localAccess.getIntoleranceData();
 
-
-		if ((catalog != null) && (currency != null) && (users != null)) {
+		if ((catalog != null) && (currency != null)) {
 			System.out.println("[DEV] finded data");
 
-			machine = new LogicalController(currency, catalog, users, intolerances);
+			machine = new LogicalController(currency, catalog, intolerances);
 
 			if (machine != null) {
 
@@ -93,8 +90,8 @@ public class Controller {
 
 	// Conexion con visual - usuarios
 
-	public void setUserLogged(String idcliente) {
-		machine.setUserLogged(idcliente);
+	public void setUserLogged() {
+		machine.setUserLogged();
 
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(machine.getUserLogged().getName());
@@ -118,8 +115,15 @@ public class Controller {
 		return machine.getUserLogged();
 	}
 
-	public boolean hasUser(String idcliente) {
-		return machine.hasUserLogged(idcliente);
+	public boolean userExist(String idcliente) {
+		Usuario usr = apiAccess.getUser(idcliente);
+
+		if (usr != null) {
+			machine.setuser(usr);
+			return true;
+
+		}
+		return false;
 	}
 
 	// Conexion con visual - monedas
@@ -147,9 +151,10 @@ public class Controller {
 
 		boolean saveCurrency = localAccess.saveCurrency(machine.getCurrencyData());
 		boolean saveCatalog = localAccess.saveCatalog(machine.getCatalogData());
-		boolean saveUsers = localAccess.saveUser(machine.getUserData());
+		
+		// TODO API LOGOUT
 
-		if (saveCurrency && saveCatalog && saveUsers) {
+		if (saveCurrency && saveCatalog) {
 			System.out.println("[PROCESS PC] BBDD ACTUALIZADA");
 
 		} else {

@@ -97,14 +97,28 @@ public class UsageProperties {
 	public int getTimeOut() {
 		try {
 			configInput = new FileInputStream(new File("Files/config/propiedades.properties"));
-			configUrl.load(configInput);
+			config.load(configInput);
 
-			url = config.getProperty("TIMEOUT");
+			int time = Integer.parseInt((String) config.getProperty("TIMEOUT"));
 
+			return time;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	public String getUser() {
+		try {
+			configInput = new FileInputStream(new File("Files/config/propiedades.properties"));
+			config.load(configInput);
+
+			url = config.getProperty("SERVER_PATH");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return url;
 	}
 
 	

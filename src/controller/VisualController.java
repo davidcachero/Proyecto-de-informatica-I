@@ -143,11 +143,12 @@ public class VisualController implements ActionListener {
 
 			if (idcliente != null) {
 				System.out.println("[PROCESS VISUAL] ENTRANDO AL USUARIO POR ID: " + idcliente);
-				if (!controller.hasUser(idcliente)) {
+				if (!controller.userExist(idcliente)) {
 					showError("Tarjeta incorrecta");
 					JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+
 				} else {
-					controller.setUserLogged(idcliente);
+					controller.setUserLogged();
 					screen.setUserLoggedName(controller.getUser(idcliente).getName());
 				}
 			}
@@ -185,8 +186,8 @@ public class VisualController implements ActionListener {
 			screen.setSelectedProd(prod.getKey());
 			screen.setTextFieldProduct(prod.getName());
 			screen.setTextFieldStatus("Producto " + prod.getName() + " comprado");
-			
-			if(timer != null)
+
+			if (timer != null)
 				logOffUser(true);
 
 		} else if (msg.getType() == "ERR") {
@@ -219,28 +220,29 @@ public class VisualController implements ActionListener {
 // Interaccion con los datos de los usuarios
 	public void logOffUser(boolean timerOn, int restTime) {
 		if (timerOn) {
-			
+
 			timer.cancel();
 			screen.setEndTimeout();
+			JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(screen, "Sesion terminada", "Information", JOptionPane.INFORMATION_MESSAGE);
 		}
-		
+
 		controller.logOffUser(restTime);
-		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
 	}
-	
-	
+
 	public void updateTimeOut(int restTime) {
 		timeOut = restTime;
 	}
-	
+
 	public void logOffUser(boolean timerOn) {
 		if (timerOn) {
 
 			timer.cancel();
 			screen.setEndTimeout();
 		}
-		
+
 		controller.logOffUser(timeOut);
 		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
@@ -282,7 +284,7 @@ public class VisualController implements ActionListener {
 	public void setIntoleranceList(HashMap<String, Intolerance> intolerances) {
 		screen.hideIntolerances();
 		screen.setIntoleranceList(intolerances);
-		
+
 	}
 
 }
