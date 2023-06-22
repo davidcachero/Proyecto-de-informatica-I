@@ -103,6 +103,7 @@ public class Controller {
 
 	public void logOffUser(int restTime) {
 		// TODO CREAR EVENTO LOG OFF - INICIARLO EN ESTA LINEA
+		apiAccess.logOffUser(machine.getUserLogged().getId(), restTime, "TBD");
 		machine.logOffUser();
 		view.updateBalance(machine.getAllBalance());
 		view.updateUserName(null);

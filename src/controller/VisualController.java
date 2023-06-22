@@ -238,14 +238,18 @@ public class VisualController implements ActionListener {
 
 	public void logOffUser(boolean timerOn) {
 		if (timerOn) {
-
 			timer.cancel();
 			screen.setEndTimeout();
+			JOptionPane.showMessageDialog(screen, "Sesion finalizada", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} else {
+
+			JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
+
 		}
 
 		controller.logOffUser(timeOut);
-		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
-
+		
 	}
 
 	public void updateUserName(String name) {

@@ -32,12 +32,12 @@ public class LogicalController {
 		this.currency = currency;
 		this.catalog = catalog;
 		this.intolerances = intolerances;
-		this.users = new HashMap<String, Usuario> ();
+		this.users = new HashMap<String, Usuario>();
 		this.balance = 0;
 
 	}
-	
-	public void setuser (Usuario usr){
+
+	public void setuser(Usuario usr) {
 
 		users.put("0", usr);
 	}

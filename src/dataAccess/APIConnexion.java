@@ -190,7 +190,7 @@ public class APIConnexion {
 			JSONObject respuesta = (JSONObject) JSONValue.parse(response);
 
 			float amount = Float.parseFloat(respuesta.get("credit").toString());
-			return new Usuario(respuesta.get("name").toString(), amount);
+			return new Usuario(idcliente, respuesta.get("name").toString(), amount);
 
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
@@ -201,6 +201,64 @@ public class APIConnexion {
 		}
 
 		return null;
+	}
+
+	public boolean logOffUser(String idcliente, int timeLeft, String status) {
+		String response = "";
+		JSONObject objPeticion = new JSONObject();
+		JSONObject obSubPeticion = new JSONObject();
+
+		Usuario data;
+
+		try {
+
+			objPeticion.put("type", "logout");
+			objPeticion.put("machine_id", prop.getId());
+
+			obSubPeticion.put("card_number", idcliente);
+			obSubPeticion.put("time", timeLeft);
+			obSubPeticion.put("status", status);
+			objPeticion.put("data", obSubPeticion);
+			String json = objPeticion.toJSONString();
+
+			System.out.println(prop.getPath());
+			System.out.println(json);
+			HashMap<String, String> rawResponse = con.postRequest(prop.getPath(), json);
+
+			switch (Integer.parseInt(rawResponse.get("code"))) {
+
+			case 200:
+			case 201:
+			case 204:
+				// Manejar respuesta exitosa
+				response = rawResponse.get("msg");
+				break;
+			case 400: // Manejar error de solicitud incorrecta
+			case 401: // Error acceso denegado
+			case 403: // Error sin acceso al servidor
+			case 404: // Error de recurso no encontrado
+			case 500: // Error interno del servidor
+			default: {
+				response = "ERROR CONEXION API: " + rawResponse.get("msg");
+				System.out.println(response);
+			}
+			}
+
+			System.out.println(response); // Traza para pruebas
+
+			JSONObject respuesta = (JSONObject) JSONValue.parse(response);
+
+			return respuesta.get("message") == "Logout successful";
+
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 //	private HashMap<Integer, Intolerance> formatIntolerances(JSONObject respuesta) {
