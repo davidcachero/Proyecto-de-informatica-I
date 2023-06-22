@@ -31,6 +31,12 @@ public class Usuario {
 		this.name = name;
 		this.saldo = saldo;
 	}
+	
+	public Usuario(String name, float saldo) {
+		this.id = "0";
+		this.name = name;
+		this.saldo = saldo;
+	}
 
 	// METODOS DE USO DE DATOS
 

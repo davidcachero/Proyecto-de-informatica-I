@@ -8,18 +8,20 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import models.Catalog;
+import models.Intolerance;
 import models.VisualMsg;
 import vista.VendingMachine;
 
@@ -35,6 +37,7 @@ public class VisualController implements ActionListener {
 	VendingMachine screen;
 	DecimalFormat df;
 	Timer timer;
+	int timeOut;
 
 	public VisualController(Controller controller) {
 
@@ -46,7 +49,7 @@ public class VisualController implements ActionListener {
 
 	// Abre la ventana al iniciar la aplicacion
 
-	public void open() {
+	public void open(HashMap<String, Catalog> prod, HashMap<String, Intolerance> intolerances) {
 
 		System.out.println("[PROCESS VISUAL] INICIANDO LA APLICACION");
 		screen.setVisible(true);
@@ -57,18 +60,20 @@ public class VisualController implements ActionListener {
 				System.out.println("[PROCESS VISUAL] CERRANDO PROGRAMA");
 			}
 		});
-		
+
+		screen.setProductList(prod);
+		screen.setIntoleranceList(intolerances);
 
 		screen.setTextFieldBalance(df.format(controller.showCurrency()));
-		screen.hideIntolerance();
+		// TODO screen.hideIntolerance();
 
 	}
 
 	// Inserccion de las imagenes guardadas en archivos
 
 	public Image getImage(String name, String format, int x, int y) { // Utilizacion del Logo_CoffeeBreak
-		Image image;
 
+		Image image;
 		BufferedImage bufferedImage;
 		try {
 			bufferedImage = ImageIO.read(new File("Files/assets/" + name + "." + format));
@@ -76,7 +81,29 @@ public class VisualController implements ActionListener {
 
 		} catch (IOException e) {
 			System.err.println("[ERROR VISUAL] fallo icono");
-			image = new ImageIcon("Files/assets/" + name + ".png").getImage();
+			image = new ImageIcon("Files/assets/product_logo/not_found.png").getImage();
+
+		}
+
+		return image;
+	}
+
+	public Image getImageURL(String path, int x, int y) {
+
+		if (path == null)
+			return new ImageIcon("Files/assets/product_logo/not_found.png").getImage().getScaledInstance(y, x, 0);
+
+		Image image;
+		BufferedImage bufferedImage;
+
+		try {
+			URL url = new URL(path);
+
+			bufferedImage = ImageIO.read(url);
+			image = bufferedImage.getScaledInstance(x, y, Image.SCALE_DEFAULT);
+		} catch (IOException e) {
+			System.err.println("[ERROR VISUAL] fallo icono");
+			image = new ImageIcon("Files/assets/product_logo/not_found.png").getImage();
 
 		}
 
@@ -99,13 +126,13 @@ public class VisualController implements ActionListener {
 
 			if (listTypes.contains(optionstr)) {
 				VisualMsg msg = controller.insertCoins(Float.parseFloat(optionstr));
-				
-				if (msg.getType() == "MSG") 
+
+				if (msg.getType() == "MSG")
 					screen.setTextFieldBalance((Float) msg.getMsg());
-				
+
 				else if (msg.getType() == "ERR")
 					showError((String) msg.getMsg());
-				
+
 			}
 
 		}
@@ -116,11 +143,12 @@ public class VisualController implements ActionListener {
 
 			if (idcliente != null) {
 				System.out.println("[PROCESS VISUAL] ENTRANDO AL USUARIO POR ID: " + idcliente);
-				if (!controller.hasUser(idcliente)) {
+				if (!controller.userExist(idcliente)) {
 					showError("Tarjeta incorrecta");
 					JOptionPane.showMessageDialog(screen, "Tarjeta incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+
 				} else {
-					controller.setUserLogged(idcliente);
+					controller.setUserLogged();
 					screen.setUserLoggedName(controller.getUser(idcliente).getName());
 				}
 			}
@@ -159,7 +187,8 @@ public class VisualController implements ActionListener {
 			screen.setTextFieldProduct(prod.getName());
 			screen.setTextFieldStatus("Producto " + prod.getName() + " comprado");
 
-			logOffUser(true);
+			if (timer != null)
+				logOffUser(true);
 
 		} else if (msg.getType() == "ERR") {
 			screen.setTextFieldProduct(idProd);
@@ -189,16 +218,38 @@ public class VisualController implements ActionListener {
 	}
 
 // Interaccion con los datos de los usuarios
-	public void logOffUser(boolean timerOn) {
+	public void logOffUser(boolean timerOn, int restTime) {
 		if (timerOn) {
-			
+
 			timer.cancel();
 			screen.setEndTimeout();
+			JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(screen, "Sesion terminada", "Information", JOptionPane.INFORMATION_MESSAGE);
 		}
-		
-		controller.logOffUser();
-		JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
 
+		controller.logOffUser(restTime);
+
+	}
+
+	public void updateTimeOut(int restTime) {
+		timeOut = restTime;
+	}
+
+	public void logOffUser(boolean timerOn) {
+		if (timerOn) {
+			timer.cancel();
+			screen.setEndTimeout();
+			JOptionPane.showMessageDialog(screen, "Sesion finalizada", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} else {
+
+			JOptionPane.showMessageDialog(screen, "Sesion expirada", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		}
+
+		controller.logOffUser(timeOut);
+		
 	}
 
 	public void updateUserName(String name) {
@@ -218,54 +269,26 @@ public class VisualController implements ActionListener {
 
 // Interaccion con los datos de las intolerancias
 	public void updateIntolerances(String[] productIntolerances) {
-
-		List<String> listTypes = new ArrayList<>(Arrays.asList(productIntolerances));
-
-		if (listTypes.contains("1")) {
-			screen.showIntoleranceFrutSecos();
-
-		}
-		if (listTypes.contains("2")) {
-			screen.showIntoleranceGlucosa();
-
-		}
-		if (listTypes.contains("3")) {
-			screen.showIntoleranceGluten();
-
-		}
-		if (listTypes.contains("4")) {
-			screen.showIntoleranceSulfitos();
-
-		}
-	}
-
-	public void resetIntolerancesVisibility() {
-		screen.hideIntolerance();
+		screen.showIntolerance(productIntolerances);
 
 	}
 
-	public void showIntolerance() {
-		screen.showIntolerance();
-
-	}
-
-	
 	// interaccion con cronometro
 	public void startTimeOut(int startTime) {
 		this.timer = new Timer();
-        screen.createTimeOut(startTime, timer);
-		
+		screen.createTimeOut(startTime, timer);
+
 	}
-	
-	
+
 	// TODO ver si se puede quitar
 	public void countMinum(int time) {
 		System.out.println("count: " + time);
 	}
 
+	public void setIntoleranceList(HashMap<String, Intolerance> intolerances) {
+		screen.hideIntolerances();
+		screen.setIntoleranceList(intolerances);
 
-
-
-
+	}
 
 }

@@ -7,12 +7,10 @@ public class Catalog {
 	/*
 	 * Aributos
 	 * 
-	 * id - Codigo de identificacion en el modelo de datos 
-	 * key - clave de identificacion en el modelo de datos 
-	 * name - nombre del tipo de moneda 
-	 * price - valor del producto 
-	 * amount - cantidad de productos del mismo tipo 
-	 * intolerances - Listado de Strings que muestran las intolerancias de cada producto
+	 * id - Codigo de identificacion en el modelo de datos key - clave de
+	 * identificacion en el modelo de datos name - nombre del tipo de moneda price -
+	 * valor del producto amount - cantidad de productos del mismo tipo intolerances
+	 * - Listado de Strings que muestran las intolerancias de cada producto
 	 * 
 	 */
 	private int id;
@@ -21,6 +19,8 @@ public class Catalog {
 	private float price;
 	private int amount;
 	private String image;
+
+
 	private String[] intolerances;
 
 	/*
@@ -38,7 +38,7 @@ public class Catalog {
 	 * cada producto
 	 * 
 	 */
-	public Catalog(String key, String name, Float price, int initialAmount, String[] intolerances) {
+	public Catalog(String key, String name, float price, int initialAmount, String[] intolerances) {
 		this.key = key;
 		this.name = name;
 		this.amount = initialAmount;
@@ -122,13 +122,26 @@ public class Catalog {
 	}
 
 	/*
+	 * Metodos de recogida y el ajuste de la url de la imagen que se descarga de
+	 * internet
+	 * 
+	 */
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	/*
 	 * Metodos de recogida y el ajuste de las intolerancias del producto
 	 * 
 	 * Solo tiene metodo get por que no es un dato que se pueda cambiar en el
 	 * programa
 	 * 
 	 */
-	public String[] getIntolerances() {
+	public String[] getIntoleranceId() {
 		return intolerances;
 	}
 

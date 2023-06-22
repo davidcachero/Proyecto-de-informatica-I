@@ -1,8 +1,5 @@
-acua;Aquarius;1.2;4;2:4
-cafe;Cafe;3.5;12;2:3
-coca;Coca-Cola;1.05;2;2:4
-fantal;Fanta Limon;2.1;10;2:4
-fantan;Fanta Naranja;1.9;4;2:4
-Colacao;ColaCao;0.9;6;1:2:4
-nestea;Nestea;1.2;0;2:4
-agua;Agua;0.8;0
+1;Coca Cola;3.0;4;http://coffeebreak.davidnaviaweb.com/storage/products/jrxzuTBGarDwXkxX7yW6c9zYLS6eo9Tik7QXvYxj.png;7
+2;Coca Cola Zero;3.0;7;http://coffeebreak.davidnaviaweb.com/storage/products/4SFOgV9f30HnNtdPWsCWL45Lij7EC9v5IsPjQES7.png
+3;Fanta Limón;3.0;10;http://coffeebreak.davidnaviaweb.com/storage/products/wLDKVfk4ggyNHQkQaGWwzmxxiWYa8FU7bCU387kj.png;7
+4;Fanta Naranja;3.0;12;http://coffeebreak.davidnaviaweb.com/storage/products/kqqnnCc5LGNogI3575y9hoZS87uSaEeUPdZoPNaJ.png;7
+7;Cerveza Alhambra 33CL;5.0;8;http://coffeebreak.davidnaviaweb.com/storage/products/r41iAQ3m51yj08i391FmY2AcX4LWqk20gEi3t2lU.png;20:null

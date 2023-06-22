@@ -1,0 +1,20 @@
+1;Trans fat;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0000_trans-fat.png
+2;Celery;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0001_celery.png
+3;Egg;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0002_egg.png
+4;Gluten;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0003_gluten.png
+5;Mustard;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0004_mustard.png
+6;Gmo;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0005_gmo.png
+7;Sugar;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0006_sugar.png
+8;Lactose;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0007_lactose.png
+9;Pork;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0008_pork.png
+10;Meat;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0009_meat.png
+11;Shellfish;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0010_shellfish.png
+12;Peanuts;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0011_peanuts.png
+13;Vegan;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0012_vegan.png
+14;Fish;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0013_fish.png
+15;Corn;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0014_corn.png
+16;Sulphites;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0015_sulphites.png
+17;Soy;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0016_soy.png
+18;Molluscs;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0017_molluscs.png
+19;Nuts;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0018_nuts.png
+20;Alcohol;http://coffeebreak.davidnaviaweb.com/assets/img/allergies/allergy_0019_alcohol.png

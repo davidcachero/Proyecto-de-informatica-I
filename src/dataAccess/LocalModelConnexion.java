@@ -6,11 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
+import auxiliar.ConnectionFiles;
 import auxiliar.I_Data_Access;
+import auxiliar.UsageProperties;
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 
 /**
@@ -23,19 +28,10 @@ import models.Usuario;
 
 public class LocalModelConnexion implements I_Data_Access {
 
-	private String usersAddress;
-	private String catalogAddress;
-	private String currencyAddress;
-	private String filesCurrecytypes;
+	private UsageProperties prop;
 
 	public LocalModelConnexion() {
-		// Local BBDD
-		usersAddress = "Files/data/Users.txt";
-		catalogAddress = "Files/data/Catalog.txt";
-		currencyAddress = "Files/data/Currency.txt";
-		// Data types
-		filesCurrecytypes = "Files/struct/CurrencyTypes.txt";
-
+		prop = new UsageProperties();
 	}
 
 	// data files
@@ -43,7 +39,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public HashMap<Float, Currency> getCurrencyData() {
 
 		HashMap<Float, Currency> actualCurrency = new HashMap<Float, Currency>();
-		File FileCurrency = new File(currencyAddress);
+		File FileCurrency = new File( prop.conexionFiles(ConnectionFiles.CURRENCY) );
 
 		BufferedReader reader = null;
 
@@ -62,8 +58,8 @@ public class LocalModelConnexion implements I_Data_Access {
 				actualCurrency.put(id, currency);
 
 			}
-			
-		System.out.println("[PROCESS FILES] datos de Currency descargados");
+
+			System.out.println("[PROCESS FILES] datos de Currency descargados");
 
 		} catch (FileNotFoundException e) {
 			System.err.println("[ERROR FILES] CONNECTIONS");
@@ -80,7 +76,7 @@ public class LocalModelConnexion implements I_Data_Access {
 	public HashMap<String, Catalog> getCatalogData() {
 
 		HashMap<String, Catalog> actualCatalog = new HashMap<String, Catalog>();
-		File FileCatalog = new File(catalogAddress);
+		File FileCatalog = new File(prop.conexionFiles(ConnectionFiles.CATALOG));
 
 		BufferedReader reader = null;
 
@@ -89,19 +85,20 @@ public class LocalModelConnexion implements I_Data_Access {
 			String text = null;
 			Catalog catalog = null;
 			String clave = null;
-			String[] intolerances = null;
+			String[] intolerancesID = null;
 
 			while ((text = reader.readLine()) != null) {
 
 				String[] splitData = text.split(";");
 				clave = splitData[0].toString();
 				try {
-					intolerances = splitData[4].split(":");
+					intolerancesID = splitData[5].split(":");
+					
 				} catch (IndexOutOfBoundsException e) {
-					intolerances = new String[0];
+					intolerancesID = new String[0];
 				}
 				catalog = new Catalog(clave, splitData[1].toString(), Float.parseFloat(splitData[2]),
-						Integer.parseInt(splitData[3]), intolerances);
+						Integer.parseInt(splitData[3]), splitData[4], intolerancesID);
 
 				actualCatalog.put(clave, catalog);
 			}
@@ -117,29 +114,29 @@ public class LocalModelConnexion implements I_Data_Access {
 
 	}
 
-	public HashMap<String, Usuario> getUsersData() {
-		HashMap<String, Usuario> actualUsers = new HashMap<String, Usuario>();
-		File FileUsers = new File(usersAddress);
+	public HashMap<String, Intolerance> getIntoleranceData() {
+		HashMap<String, Intolerance> actualUsers = new HashMap<String, Intolerance>();
 
 		BufferedReader reader = null;
 
 		try {
+			File FileUsers = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
 			reader = new BufferedReader(new FileReader(FileUsers));
 			String text = null;
-			Usuario users = null;
-			String clave = null;
+			
+			String id;
 
 			while ((text = reader.readLine()) != null) {
 
 				String[] splitData = text.split(";");
-				clave = splitData[0].toString();
-				users = new Usuario(clave, splitData[1], Float.parseFloat(splitData[2]));
+				id = splitData[0].toString();
+				Intolerance intolerance = new Intolerance(Integer.parseInt(id), splitData[1].toString(), splitData[2].toString());
 
-				actualUsers.put(clave, users);
+				actualUsers.put(id, intolerance);
 			}
 
-			System.out.println("[PROCESS FILES] datos de Users descargados");
-			
+			System.out.println("[PROCESS FILES] datos de Intolerances descargados");
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -148,11 +145,52 @@ public class LocalModelConnexion implements I_Data_Access {
 		return actualUsers;
 	}
 
+	public HashMap<String, Intolerance>  getIntoleranceNames(String[] searchID) {
+
+		HashMap<String, Intolerance> intolerances = new HashMap<String, Intolerance>();
+		File fileIntolerances = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
+
+		BufferedReader reader = null;
+
+		try {
+			reader = new BufferedReader(new FileReader(fileIntolerances));
+			String text = null;
+
+
+			while ((text = reader.readLine()) != null) {
+
+				String[] data = text.split(";");
+
+				String id = data[0];
+
+				if (Arrays.asList(searchID).contains(id)) {
+					
+					Intolerance intolerance = new Intolerance(Integer.parseInt(id), data[1], data[2]);
+
+					intolerances.put(id, intolerance);
+				}
+			}
+			
+			reader.close();
+
+			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return intolerances;
+	}
+
+
+	
 // Guardar las monedas
 	public boolean saveCurrency(HashMap<Float, Currency> currency) {
 
 		boolean todoOK = true;
-		File FileCurrency = new File(currencyAddress);
+		File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.CURRENCY));
 
 		try {
 			PrintWriter pw = new PrintWriter(FileCurrency);
@@ -181,18 +219,18 @@ public class LocalModelConnexion implements I_Data_Access {
 	public boolean saveCatalog(HashMap<String, Catalog> catalog) {
 
 		boolean todoOK = true;
-		File FileCatalog = new File(catalogAddress);
+		String FileCatalog = prop.conexionFiles(ConnectionFiles.CATALOG);
 
 		try {
-			PrintWriter pw = new PrintWriter(FileCatalog);
+			PrintWriter pw = new PrintWriter(new File(FileCatalog));
+			
+			for (Entry<String, Catalog> entry : catalog.entrySet()) {
+				Catalog value = entry.getValue();
 
-			for (String key : catalog.keySet()) {
-				Catalog value = catalog.get(key);
-
-				String valueString = key + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount();
+				String valueString = value.getKey() + ";" + value.getName() + ";" + value.getprice() + ";" + value.getAmount() + ";" + value.getImage();
 
 				String valueIntolerances = ";";
-				for (String idIntolerance : value.getIntolerances()) {
+				for (String idIntolerance : value.getIntoleranceId()) {
 					valueIntolerances += idIntolerance + ":";
 				}
 				valueIntolerances = valueIntolerances.substring(0, valueIntolerances.length() - 1);
@@ -209,31 +247,59 @@ public class LocalModelConnexion implements I_Data_Access {
 			e1.printStackTrace();
 			return false;
 		} catch (Exception e) {
-			System.err.println(e.fillInStackTrace());
+			System.err.println(e.getMessage());
 			return false;
 		}
 
 		return todoOK;
 	}
 
-// Guardar los usuarios registrados
-	public boolean saveUser(HashMap<String, Usuario> users) {
+//// Guardar los usuarios registrados
+//	public boolean saveUser(HashMap<String, Usuario> users) {
+//
+//		boolean todoOK = true;
+//		File FileUsers = new File(prop.conexionFiles(ConnectionFiles.USERS));
+//
+//		try {
+//			PrintWriter pw = new PrintWriter(FileUsers);
+//
+//			for (String key : users.keySet()) {
+//				Usuario value = users.get(key);
+//				pw.println(key + ";" + value.getName() + ";" + value.getSaldo());
+//			}
+//
+//			pw.close();
+//
+//			System.out.println("[PROCESS FILES] datos de Users guardados");
+//
+//
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (Exception e) {
+//			return false;
+//		}
+//
+//		return todoOK;
+//	}
+
+// Guardar las intolerancias registrados
+	public boolean saveIntolerance(HashMap<Integer, Intolerance> intolerances) {
 
 		boolean todoOK = true;
-		File FileUsers = new File(usersAddress);
+		File fileIntolerances = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
 
 		try {
-			PrintWriter pw = new PrintWriter(FileUsers);
+			PrintWriter pw = new PrintWriter(fileIntolerances);
 
-			for (String key : users.keySet()) {
-				Usuario value = users.get(key);
-				pw.println(key + ";" + value.getName() + ";" + value.getSaldo());
+			for (Integer key : intolerances.keySet()) {
+				Intolerance value = intolerances.get(key);
+				pw.println(Integer.toString(key) + ";" + value.getName() + ";" + value.getImage());
 			}
 
 			pw.close();
 
 			System.out.println("[PROCESS FILES] datos de Users guardados");
-			
+
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (Exception e) {
@@ -243,12 +309,41 @@ public class LocalModelConnexion implements I_Data_Access {
 		return todoOK;
 	}
 
+	// TODO Guardar las monedas
+//	public boolean saveIntolerances(HashMap<Integer, Intolerance> intolerances) {
+//
+//		boolean todoOK = true;
+//
+//		try {
+//			File FileCurrency = new File(prop.conexionFiles(ConnectionFiles.INTOLERANCE));
+//			PrintWriter pw = new PrintWriter(FileCurrency);
+//
+//			for (Integer key : intolerances.keySet()) {
+//				Intolerance value = intolerances.get(key);
+//				pw.println(Integer.toString(value.getId()) + ";" + value.getName() + ";" + value.getImage());
+//			}
+//
+//			pw.close();
+//
+//			System.out.println("[PROCESS FILES] datos de Intolerances guardados");
+//
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//
+//		} catch (Exception e) {
+//			return false;
+//		}
+//
+//		return todoOK;
+//
+//	}
+
 	// struct files
 
 	public String[] getCurrencyTypes() {
 
 		String[] types;
-		File FileCurrecyTypes = new File(filesCurrecytypes);
+		File FileCurrecyTypes = new File(prop.conexionFiles(ConnectionFiles.CURRENCY_TYPE));
 
 		BufferedReader reader = null;
 
@@ -260,7 +355,7 @@ public class LocalModelConnexion implements I_Data_Access {
 			reader.close();
 
 			System.out.println("[PROCESS FILES] datos de CurrencyType descargados");
-			
+
 			return types;
 
 		} catch (FileNotFoundException e) {
@@ -272,4 +367,13 @@ public class LocalModelConnexion implements I_Data_Access {
 		return new String[0];
 	}
 
+	// Config functions
+
+	public void setConfig(HashMap<String, String> config) {
+		prop.setTimeOut(config.get("TIMEOUT"));
+	}
+
+	public int getTimeOut() {
+		return prop.getTimeOut();
+	}
 }

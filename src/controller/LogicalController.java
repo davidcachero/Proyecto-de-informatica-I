@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import models.Catalog;
 import models.Currency;
+import models.Intolerance;
 import models.Usuario;
 import models.VisualMsg;
 
@@ -21,17 +22,24 @@ public class LogicalController {
 	private HashMap<Float, Currency> currency;
 	private HashMap<String, Catalog> catalog;
 	private HashMap<String, Usuario> users;
+	private HashMap<String, Intolerance> intolerances;
 	private float balance;
 	private Usuario userLogged;
 
 	public LogicalController(HashMap<Float, Currency> currency, HashMap<String, Catalog> catalog,
-			HashMap<String, Usuario> users) {
+			HashMap<String, Intolerance> intolerances) {
 
 		this.currency = currency;
 		this.catalog = catalog;
-		this.users = users;
+		this.intolerances = intolerances;
+		this.users = new HashMap<String, Usuario>();
 		this.balance = 0;
 
+	}
+
+	public void setuser(Usuario usr) {
+
+		users.put("0", usr);
 	}
 
 	// Insertar moneda y guardarla en la misma sesion
@@ -85,12 +93,13 @@ public class LogicalController {
 	// Comprobacion de la existencia del producto y la capacidad de compra
 	public VisualMsg takeProduct(String prodId) {
 		Catalog prod = catalog.get(prodId);
-		
+
 		System.out.println("[DEV] saldo actual: " + this.getAllBalance() + " | precio producto: " + prod.getprice());
 
 		// Restar del saldo el precio del producto
 		if (this.getAllBalance() >= prod.getprice()) {
-			System.out.println("[LC 1] SALDO ANTES DE VENTA: " + getAllBalance() + " -- SE LE RESTA -- " + prod.getprice());
+			System.out.println(
+					"[LC 1] SALDO ANTES DE VENTA: " + getAllBalance() + " -- SE LE RESTA -- " + prod.getprice());
 
 			lessBalance(prod.getprice());
 
@@ -155,10 +164,9 @@ public class LogicalController {
 		return userLogged;
 	}
 
-	
-	public void setUserLogged(String idcliente) {
+	public void setUserLogged() {
 
-		userLogged = users.get(idcliente);
+		userLogged = users.get("0");
 
 	}
 
@@ -167,8 +175,18 @@ public class LogicalController {
 
 	}
 
-	public String[] getProductIntolerances(String prod) {
-		return catalog.get(prod).getIntolerances();
+	public String[] getProductIntolerancesId(String prod) {
+		return catalog.get(prod).getIntoleranceId();
 	}
+
+//	public String[] getIntoleranceNames(String[] intoleranceId) {
+//		String[] names = new String[intoleranceId.length];
+//		for (int i = 0; i< intoleranceId.length; i++) {
+//			
+//			if(intolerances.get(intoleranceId[i]) != null) 
+//				names[i] = intolerances.get(intoleranceId[i]).getName();
+//		}
+//		return names;
+//	}
 
 }
